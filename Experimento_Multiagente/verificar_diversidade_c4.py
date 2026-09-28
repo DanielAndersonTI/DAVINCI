@@ -34,7 +34,7 @@ from agentes.agent2_1architect_b_fs import (  # noqa: E402
     criar_task_arquitetura as criar_task_arquitetura_2_1,
 )
 
-INPUTS_DIR = EXPERIMENT_DIR / "Dates-FSE-2026" / "davinci_inputs"
+INPUTS_DIR = EXPERIMENT_DIR / "Dates" / "davinci_inputs"
 
 
 def carregar_sistema(nome: str):

@@ -1,6 +1,6 @@
-# Implementation Plan: VIRTUS Microservice Architecture Generation Interface
+# Implementation Plan: DAVINCI Microservice Architecture Generation Interface
 
-**Branch**: `001-virtus-architecture-interface` | **Date**: 2026-08-19 | **Spec**: [spec.md](spec.md)
+**Branch**: `001-davinci-architecture-interface` | **Date**: 2026-08-19 | **Spec**: [spec.md](spec.md)
 
 **Input**: Feature specification from `Interface/spec/spec.md`
 
@@ -39,7 +39,7 @@ All future real-pipeline integration will remain behind the mock execution bound
 - **Mocked pipeline boundary**: The run route will return deterministic mock data and will not import, execute, or modify `Experimento_Multiagente/`.
 - **Future integration markers**: The mock execution boundary will contain `# TODO: Integrate with pipeline_runner here` to identify the later adapter location.
 - **Complete prototype workflow**: The plan covers dynamic systems, run, reset, results, error scenarios, and PDF download.
-- **VIRTUS identity**: CSS variables and Bootstrap overrides will implement the required navy, white, light-gray, and gold palette with uppercase headings.
+- **DAVINCI identity**: CSS variables and Bootstrap overrides will implement the required navy, white, light-gray, and gold palette with uppercase headings.
 - **Generalization**: Mock fixtures and UI structures will use generic system/proposal terminology and will not encode benchmark-specific architecture data.
 - **Reproducibility protection**: Existing pipeline files, historical results, and experiment configuration remain untouched.
 
@@ -61,7 +61,7 @@ Interface/
 ├── static/
 │   ├── index.html            # Input page and results view shell
 │   ├── css/
-│   │   └── styles.css        # VIRTUS theme and responsive overrides
+│   │   └── styles.css        # DAVINCI theme and responsive overrides
 │   └── js/
 │       └── app.js            # Form state, AJAX calls, rendering, and reset logic
 ├── tests/
@@ -239,7 +239,7 @@ Interface/
 
 **Completion criterion**: Reset works from both input and results states, and the PDF opens as a test report containing all required sections for one or multiple systems.
 
-### 8. Apply VIRTUS Styling and Responsive Behavior
+### 8. Apply DAVINCI Styling and Responsive Behavior
 
 **Objective**: Make the complete workflow visually consistent and usable on desktop and mobile screens.
 
@@ -258,7 +258,7 @@ Interface/
 - Visual distinction between primary actions, destructive removal, validation errors, and successful results.
 - English-only visible text and accessible focus/label states.
 
-**Completion criterion**: The main input and results workflows remain usable at desktop and mobile viewport widths, and the interface visibly follows the VIRTUS palette and typography rules.
+**Completion criterion**: The main input and results workflows remain usable at desktop and mobile viewport widths, and the interface visibly follows the DAVINCI palette and typography rules.
 
 ### 9. Run End-to-End Prototype Validation and Document Operation
 

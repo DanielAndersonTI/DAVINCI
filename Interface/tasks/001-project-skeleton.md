@@ -1,7 +1,7 @@
 # Task 001: Create the Interface Project Skeleton
 
 ## Objective
-Create the initial directory and file structure for the VIRTUS web prototype without touching any file outside `Interface/`.
+Create the initial directory and file structure for the DAVINCI web prototype without touching any file outside `Interface/`.
 
 ## Files Affected
 

@@ -160,7 +160,7 @@ def empty_system_definition() -> dict:
     }
 
 
-class VirtusRequestHandler(BaseHTTPRequestHandler):
+class DavinciRequestHandler(BaseHTTPRequestHandler):
     """Serve the prototype page and its initial JSON API."""
 
     server_version = "DAVINCIArchitectInterface/0.1"
@@ -227,7 +227,7 @@ class VirtusRequestHandler(BaseHTTPRequestHandler):
             return
         self.send_response(HTTPStatus.OK)
         self.send_header("Content-Type", "application/pdf")
-        self.send_header("Content-Disposition", "attachment; filename=virtus-architecture-report.pdf")
+        self.send_header("Content-Disposition", "attachment; filename=davinci-architecture-report.pdf")
         self.send_header("Content-Length", str(len(content)))
         self.end_headers()
         self.wfile.write(content)
@@ -243,7 +243,7 @@ class VirtusRequestHandler(BaseHTTPRequestHandler):
         content = build_pdf_specification(report_run)
         self.send_response(HTTPStatus.OK)
         self.send_header("Content-Type", "application/pdf")
-        self.send_header("Content-Disposition", "attachment; filename=virtus-architectural-specification.pdf")
+        self.send_header("Content-Disposition", "attachment; filename=davinci-architectural-specification.pdf")
         self.send_header("Content-Length", str(len(content)))
         self.end_headers()
         self.wfile.write(content)
@@ -493,7 +493,7 @@ class VirtusRequestHandler(BaseHTTPRequestHandler):
 
 def create_server(host: str = HOST, port: int = PORT) -> ThreadingHTTPServer:
     """Create the local threaded HTTP server."""
-    return ThreadingHTTPServer((host, port), VirtusRequestHandler)
+    return ThreadingHTTPServer((host, port), DavinciRequestHandler)
 
 
 def build_pdf_report(run: dict) -> bytes:
@@ -616,9 +616,9 @@ def build_pdf_report(run: dict) -> bytes:
             y -= 16 if style not in {"title", "section", "final_section", "final_title"} else 22
         if page_entries is pages[-1]:
             credit_lines = (
-                ("Developed by Daniel Anderson", 150, 42),
-                ("In partnership with Virtus UFCG", 178, 30),
-                ("Contact: daniel.silva@virtus-cc.ufcg.edu.br", 145, 18),
+                ("Anonymized research artifact", 150, 42),
+                ("Multi-agent pipeline artifact", 178, 30),
+                ("Contact: see the artifact README", 145, 18),
                 ("© 2026 DAVINCI Architect. All rights reserved.", 164, 6),
             )
             for credit, x, y_position in credit_lines:

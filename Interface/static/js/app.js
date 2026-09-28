@@ -250,13 +250,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	if (downloadReportButton) {
 		downloadReportButton.addEventListener("click", () => {
-			downloadPdf("/api/report/pdf", "virtus-architecture-report.pdf");
+			downloadPdf("/api/report/pdf", "davinci-architecture-report.pdf");
 		});
 	}
 
 	if (downloadSpecificationButton) {
 		downloadSpecificationButton.addEventListener("click", () => {
-			downloadPdf("/api/report/specification-pdf", "virtus-architectural-specification.pdf");
+			downloadPdf("/api/report/specification-pdf", "davinci-architectural-specification.pdf");
 		});
 	}
 

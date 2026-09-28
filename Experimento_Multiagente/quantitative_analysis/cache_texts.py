@@ -21,7 +21,7 @@ from _source_scan import discover_bundles, read_text  # noqa: E402
 
 BASE_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
-    "2027-FSE-Report-and-Dates",
+    "Report-and-Dates",
 )
 CACHE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_text_cache.json")
 

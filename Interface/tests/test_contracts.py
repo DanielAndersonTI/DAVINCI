@@ -1,4 +1,4 @@
-"""Mock API contract tests for the VIRTUS interface."""
+"""Mock API contract tests for the DAVINCI interface."""
 
 import json
 import threading
@@ -96,9 +96,9 @@ class ContractTests(unittest.TestCase):
 			b"SECTION 4 - EVALUATION METRICS",
 			b"Evaluation Metrics",
 			b"SECTION 5 - BEST RESULTS",
-			b"Developed by Daniel Anderson",
-			b"In partnership with Virtus UFCG",
-			b"Contact: daniel.silva@virtus-cc.ufcg.edu.br",
+			b"Anonymized research artifact",
+			b"Multi-agent pipeline artifact",
+			b"Contact: see the artifact README",
 			b"2026 DAVINCI Architect. All rights reserved.",
 			b"/Im1 Do",
 		):

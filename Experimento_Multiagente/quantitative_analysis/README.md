@@ -55,7 +55,7 @@ the analysis.
 ## Outputs
 
 Every result is written to
-`2027-FSE-Report-and-Dates/Quantitative-Analysis/`:
+`Report-and-Dates/Quantitative-Analysis/`:
 
 ```
 Quantitative-Analysis/

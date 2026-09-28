@@ -30,7 +30,7 @@ from _source_scan import (  # noqa: E402
 
 BASE_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
-    "2027-FSE-Report-and-Dates",
+    "Report-and-Dates",
 )
 
 

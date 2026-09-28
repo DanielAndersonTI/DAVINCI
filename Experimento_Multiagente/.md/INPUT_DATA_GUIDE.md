@@ -1,6 +1,6 @@
 # Input Data Guide
 
-This document explains the role of each input required by the VIRTUS Microservice Architecture Workbench and how to collect it.
+This document explains the role of each input required by the DAVINCI Microservice Architecture Workbench and how to collect it.
 
 ---
 
@@ -94,4 +94,4 @@ Map each alternative to the canonical service name used in the reference list. T
 | Reference Interactions | No | Yes |
 | Name Normalization Map | No | Yes |
 
-The VIRTUS Workbench uses only the requirements to generate candidate architectures, while the reference data and normalization map are used exclusively to compute the evaluation metrics shown in the results.
+The DAVINCI Workbench uses only the requirements to generate candidate architectures, while the reference data and normalization map are used exclusively to compute the evaluation metrics shown in the results.

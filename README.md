@@ -4,7 +4,7 @@
 
 DAVINCI Architect is an AI-based tool for automated software architecture migration. It transforms textual system requirements into a recommended microservices architecture, using a specialized multi-agent pipeline guided by Domain-Driven Design (DDD) and bounded-context principles.
 
-The tool ships with a local web interface where requirements and reference data are entered, and it is also the artifact under study in the current research cycle: an ablation of five agent configurations executed by three LLMs over eight open-source subject systems (see [Experiment (FSE 2027)](#experiment-fse-2027)).
+The tool ships with a local web interface where requirements and reference data are entered, and it is also the artifact under study in the current research cycle: an ablation of five agent configurations executed by three LLMs over eight open-source subject systems (see [Experiment (DAVINCI 2027)](#experiment-davinci-2027)).
 
 ---
 
@@ -16,7 +16,7 @@ The tool ships with a local web interface where requirements and reference data 
 * [Web Interface](#web-interface)
 * [Inputs](#inputs)
 * [Outputs](#outputs)
-* [Experiment (FSE 2027)](#experiment-fse-2027)
+* [Experiment (DAVINCI 2027)](#experiment-davinci-2027)
 * [Environment](#environment)
 * [Installation](#installation)
 * [Running the Web Interface](#running-the-web-interface)
@@ -32,7 +32,7 @@ The tool ships with a local web interface where requirements and reference data 
 
 ## Overview
 
-DAVINCI Architect was developed by **Daniel Anderson** in partnership with **Virtus UFCG**. It is designed as a research prototype for generating and evaluating microservice decompositions from natural-language requirements.
+DAVINCI Architect is a research prototype for generating and evaluating microservice decompositions from natural-language requirements. It is designed as a reusable operational layer: the same pipeline and the same agent definitions are executed for every subject system.
 
 The pipeline is implemented in Python on top of **CrewAI** and is model-agnostic: the LLM provider is selected through the `DAVINCI_LLM_PROVIDER` environment variable, with **Anthropic (Claude) as the default**, and `deepseek` and `gemini` as supported alternatives. The web interface is built with the Python standard library on the backend and HTML, CSS, Bootstrap 5, and vanilla JavaScript on the frontend. It does not require Flask, FastAPI, or other web frameworks.
 
@@ -44,7 +44,7 @@ The pipeline is implemented in Python on top of **CrewAI** and is model-agnostic
 DAVINCI/
 ├── Interface/                    # local web interface (backend + UI + tests)
 ├── Experimento_Multiagente/      # multi-agent pipeline and the experiment inputs
-├── 2027-FSE-Report-and-Dates/    # frozen artifacts of the FSE 2027 study + analyses + reports
+├── Report-and-Dates/             # frozen artifacts of the DAVINCI 2027 study + analyses + reports
 ├── result/                       # pipeline outputs (created locally, ignored by Git)
 ├── execuion-metadados-C1-Gemini-FS1.json   # execution metadata of a reference run
 └── LICENSE- Deed - Attribution 4.0 International - Creative Commons.pdf
@@ -53,8 +53,8 @@ DAVINCI/
 | Path | What it contains |
 |---|---|
 | `Interface/` | Local HTTP server (`server.py`), user interface (`static/index.html`, `static/css/styles.css`, `static/js/app.js`), pipeline bridge (`utils/pipeline_runner.py`), parsers (`utils/parsers.py`), automated tests (`tests/`) and the interface specification (`spec/`, `tasks/`) |
-| `Experimento_Multiagente/` | Pipeline entry point (`main_fewshot.py`), agents (`agentes/`), execution tracing (`execution_tracker.py`), quantitative analysis (`quantitative_analysis/`), subject systems and static analysis (`Dates-FSE-2027/`), benchmark monolithic systems (`monolits/`), research notes (`.md/`, `.txt/`) |
-| `2027-FSE-Report-and-Dates/` | Per-(model, configuration, round) artifacts — metrics PDFs, YAML specifications and execution metadata JSONs — plus the prompts used by each agent, the frozen quantitative analysis, the extended re-analysis, the qualitative synthesis and the consolidated report |
+| `Experimento_Multiagente/` | Pipeline entry point (`main_fewshot.py`), agents (`agentes/`), execution tracing (`execution_tracker.py`), quantitative analysis (`quantitative_analysis/`), subject systems and static analysis (`Dates/`), benchmark monolithic systems (`monolits/`), research notes (`.md/`, `.txt/`) |
+| `Report-and-Dates/` | Per-(model, configuration, round) artifacts — metrics PDFs, YAML specifications and execution metadata JSONs — plus the prompts used by each agent, the frozen quantitative analysis, the extended re-analysis, the qualitative synthesis and the consolidated report |
 | `result/` | Output directory of the pipeline; it is created on demand and ignored by Git (`.gitignore`) |
 
 ---
@@ -167,7 +167,7 @@ The `result/` directory is generated locally and is not versioned. The web inter
 
 ---
 
-## Experiment (FSE 2027)
+## Experiment (DAVINCI 2027)
 
 The pipeline is evaluated as an ablation with the following design:
 
@@ -184,20 +184,20 @@ The pipeline is evaluated as an ablation with the following design:
 ### Where the artifacts live
 
 ```text
-2027-FSE-Report-and-Dates/
+Report-and-Dates/
 ├── Gemini/  DeepSeek/  Claude/          # <Model>/<C0..C4>/Test-1..3 + TXT synthesised per cell
 ├── Prompts-used-in-the-agents/          # Agent-1, Agent-2, Agent-2_1, Agent-3, Agent-4, Agent-5
 ├── Requirements/Requirements-used-as-input/   # the 8 systems: requirements, reference services, reference interactions
 ├── Quantitative-Analysis/               # frozen analysis (Gemini + DeepSeek, C0-C3)
 ├── Quantitative-Analysis-Updated/       # re-analysis of the extended corpus (3 LLMs x C0-C4)
 ├── Qualitative-Analysis/                # qualitative evaluation protocol
-└── DAVINCI-FSE2027-Consolidated-Report.md
+└── DAVINCI-Consolidated-Report.md
 ```
 
-Every round leaves three artifacts inside the model tree: a metrics report (PDF), a YAML specification and an execution metadata JSON. The subject systems themselves (source code used for the static analysis) and the input bundles consumed by the pipeline are under `Experimento_Multiagente/Dates-FSE-2027/`:
+Every round leaves three artifacts inside the model tree: a metrics report (PDF), a YAML specification and an execution metadata JSON. The subject systems themselves (source code used for the static analysis) and the input bundles consumed by the pipeline are under `Experimento_Multiagente/Dates/`:
 
 ```text
-Experimento_Multiagente/Dates-FSE-2027/
+Experimento_Multiagente/Dates/
 ├── systems/                  # source code of the 8 subject systems (monolithic versions)
 ├── static analysis/          # source-based offline analyzer (analyze_systems.py); vendored SootUp tree is not used
 ├── static-analysis-systems/  # frozen static-analysis snapshot (6 artifacts per system + consolidated index)
@@ -205,7 +205,7 @@ Experimento_Multiagente/Dates-FSE-2027/
 └── davinci_inputs/           # per-system bundle: requirements, reference_services, reference_interactions, name map
 ```
 
-That directory has its own README with the per-system inventory, the artifact semantics, the scope limits of the source-based analysis and the known inconsistencies: [`Experimento_Multiagente/Dates-FSE-2027/README.md`](Experimento_Multiagente/Dates-FSE-2027/README.md).
+That directory has its own README with the per-system inventory, the artifact semantics, the scope limits of the source-based analysis and the known inconsistencies: [`Experimento_Multiagente/Dates/README.md`](Experimento_Multiagente/Dates/README.md).
 
 ### Analyses and reports
 
@@ -214,7 +214,7 @@ That directory has its own README with the per-system inventory, the artifact se
 | `Quantitative-Analysis/` | Frozen analysis of the two-model, four-configuration corpus (Gemini + DeepSeek, C0-C3): descriptive statistics, Wilcoxon paired tests, Spearman correlations, figures and `report.md` |
 | `Quantitative-Analysis-Updated/` | Extended corpus (three LLMs x C0-C4): cost, per-system behaviour, precision/recall, ranking, C4 proposals, YAML validity, `report.md`, `report.html` and `verify_report.py` for integrity checks |
 | `Qualitative-Analysis/` | Protocol used for the qualitative evaluation of the generated architectures |
-| `DAVINCI-FSE2027-Consolidated-Report.md` | Single-document consolidation of the whole tree: artifact inventory, run calendar, re-analysis of the extended corpus, the fifteen qualitative syntheses and the integrated conclusions |
+| `DAVINCI-Consolidated-Report.md` | Single-document consolidation of the whole tree: artifact inventory, run calendar, re-analysis of the extended corpus, the fifteen qualitative syntheses and the integrated conclusions |
 
 ---
 
@@ -303,7 +303,7 @@ Fill in the required fields and click **Run Pipeline**. The execution may take a
 python Experimento_Multiagente\quantitative_analysis\run_all.py
 
 # extended re-analysis (three LLMs x C0-C4) -> CSVs, figures, report.md/html
-cd 2027-FSE-Report-and-Dates\Quantitative-Analysis-Updated
+cd Report-and-Dates\Quantitative-Analysis-Updated
 python run_all.py
 python verify_report.py
 cd ..\..
@@ -311,7 +311,7 @@ cd ..\..
 
 Use `--refresh-cache` with `quantitative_analysis\run_all.py` to force the re-extraction of the text from every PDF, which is only needed when the source artifacts change.
 
-The consolidated report (`DAVINCI-FSE2027-Consolidated-Report.md`) is generated by the scratch scripts documented in its Appendix A. It reads the experiment tree as read-only input: the PDFs, YAML specifications, metadata JSONs, TXT syntheses and the whole `Quantitative-Analysis/` directory are never modified.
+The consolidated report (`DAVINCI-Consolidated-Report.md`) is generated by the scratch scripts documented in its Appendix A. It reads the experiment tree as read-only input: the PDFs, YAML specifications, metadata JSONs, TXT syntheses and the whole `Quantitative-Analysis/` directory are never modified.
 
 ---
 
@@ -338,7 +338,7 @@ The remaining scripts under `Experimento_Multiagente/` (`testar_agente1.py`, `te
 
 ## Current Status
 
-DAVINCI Architect is an ongoing research prototype. The current cycle (FSE 2027) evaluates it as an ablation over eight open-source systems, three LLMs and five configurations, with three rounds per cell. The artifacts are frozen in `2027-FSE-Report-and-Dates/` and consolidated in `DAVINCI-FSE2027-Consolidated-Report.md`: the complete pipeline and its variants reach high service-identification F1 on the subject systems, the individual contributions of the refinement stage (Agent 4) and of the second independent proposal (Agent 2) are measurable but configuration-dependent, and YAML validity depends on the model as much as on the pipeline.
+DAVINCI Architect is an ongoing research prototype. The current cycle (DAVINCI 2027) evaluates it as an ablation over eight open-source systems, three LLMs and five configurations, with three rounds per cell. The artifacts are frozen in `Report-and-Dates/` and consolidated in `DAVINCI-Consolidated-Report.md`: the complete pipeline and its variants reach high service-identification F1 on the subject systems, the individual contributions of the refinement stage (Agent 4) and of the second independent proposal (Agent 2) are measurable but configuration-dependent, and YAML validity depends on the model as much as on the pipeline.
 
 The tool is intended to generalize to new systems. It does not contain hardcoded domain-specific rules, and the same agent definitions can be reused for different sets of requirements and reference data. In the experiments the few-shot examples are deliberately taken from systems outside the corpus, so that no example leaks information about the subject systems.
 
@@ -349,28 +349,23 @@ The tool is intended to generalize to new systems. It does not contain hardcoded
 * `Experimento_Multiagente/.env.example` still lists the legacy OpenRouter variables; the [Environment](#environment) section is the authoritative list of supported providers.
 * `Experimento_Multiagente/requirements-fixed.txt` is a legacy relaxed dependency list; use `requirements.txt`.
 * `Experimento_Multiagente/main.py`, `experimento_completo.py` and the `*.py` diagnostic scripts (`diagnosticar_openrouter.py`, `testar_*.py`, `teste_*.py`, `verificar_*.py`) are earlier iterations and exploratory utilities kept for provenance; the current entry point is `main_fewshot.py`.
-* The PDFs generated by the interface are named `virtus-architecture-report.pdf` and `virtus-architectural-specification.pdf` — a legacy of the previous name of the tool.
-* `Experimento_Multiagente/h origin mainclear` is a stray file created by a malformed shell command; no script reads it.
-* The artifacts of the previous study were removed from this repository (commit `5d35770`, "Remove Reproduction_Artifacts (not used in the final article)"); the corpus of the current paper is the one in `2027-FSE-Report-and-Dates/`.
+* The PDFs generated by the interface are named `davinci-architecture-report.pdf` and `davinci-architectural-specification.pdf`.
+* The artifacts of the previous study were removed from this repository (commit `5d35770`, "Remove Reproduction_Artifacts (not used in the final article)"); the corpus of the current paper is the one in `Report-and-Dates/`.
 * `result/` and the virtual environments are not versioned: runs and environments are local artifacts.
 
 ---
 
 ## Citation
 
-The results collected in this repository are part of a study currently under review. The full citation entry (authors, title, venue and DOI) will be added here once the paper is published. Until then, please refer to the consolidated report:
+The results collected in this repository belong to a study that is currently under review; no citation is available yet. The full citation entry (title, venue and DOI) will be added once the paper is published. Until then, please refer to the consolidated report:
 
-> *DAVINCI Architect — Consolidated Experimental Report (FSE 2027)*, `2027-FSE-Report-and-Dates/DAVINCI-FSE2027-Consolidated-Report.md`.
+> *DAVINCI Architect — Consolidated Experimental Report (DAVINCI 2027)*, `Report-and-Dates/DAVINCI-Consolidated-Report.md`.
 
 ---
 
 ## Credits
 
-**Developed by Daniel Anderson**
-
-In partnership with **Virtus UFCG**
-
-Contact: `daniel.silva@virtus-cc.ufcg.edu.br`
+**DAVINCI Architect** — research prototype for LLM-driven microservice decomposition.
 
 © 2026 DAVINCI Architect. All rights reserved.
 
@@ -380,4 +375,4 @@ Contact: `daniel.silva@virtus-cc.ufcg.edu.br`
 
 This project is part of ongoing academic research. Non-commercial use is permitted. For other uses, please contact the authors.
 
-Third-party material redistributed in this repository keeps its original licensing: the two publications stored as `LICENSE- Deed - Attribution 4.0 International - Creative Commons.pdf` (root and `Experimento_Multiagente/`) are licensed under **CC BY 4.0**, and the source code of the subject systems under `Experimento_Multiagente/Dates-FSE-2027/systems/` keeps the license of each upstream project (see the `LICENSE` file of each system).
+Third-party material redistributed in this repository keeps its original licensing: the two publications stored as `LICENSE- Deed - Attribution 4.0 International - Creative Commons.pdf` (root and `Experimento_Multiagente/`) are licensed under **CC BY 4.0**, and the source code of the subject systems under `Experimento_Multiagente/Dates/systems/` keeps the license of each upstream project (see the `LICENSE` file of each system).

@@ -292,7 +292,7 @@ def split_yaml_systems(path: str) -> Dict[str, str]:
         start = marker.end()
         end = markers[index + 1].start() if index + 1 < len(markers) else len(text)
         body = text[start:end]
-        body = body.split("Developed by Daniel Anderson")[0]
+        body = body.split("Anonymized research artifact")[0]
         blocks[system] = body.strip("\n")
     return blocks
 

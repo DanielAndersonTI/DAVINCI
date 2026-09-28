@@ -2,8 +2,6 @@
 
 **Multi-Agent Pipeline for Microservice Architecture Generation**
 
-**Author:** Daniel Anderson de Souza Silva
-**Partnership:** Virtus UFCG
 **Main Model:** Google Gemini (`gemini/gemini-flash-latest`)
 **Temperature:** `0.0`
 **Current Artifact:** DAVINCI Architect
@@ -780,10 +778,6 @@ The **DAVINCI Architect** application serves as the reusable operational layer f
 
 # Credits
 
-**Developed by Daniel Anderson de Souza Silva**
-
-In partnership with **Virtus UFCG**
-
-Contact: `daniel.silva@virtus-cc.ufcg.edu.br`
+**DAVINCI Architect** — multi-agent pipeline for microservice architecture generation.
 
 © 2026 DAVINCI Architect. All rights reserved.

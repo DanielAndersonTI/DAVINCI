@@ -1,4 +1,4 @@
-# VIRTUS Microservice Architecture Interface Constitution
+# DAVINCI Microservice Architecture Interface Constitution
 
 ## Core Principles
 
@@ -14,8 +14,8 @@ Until the real integration is approved, backend pipeline responses MUST be simul
 ### IV. Complete Prototype Workflow
 The interface MUST support adding up to ten systems dynamically through AJAX. Each system MUST provide fields for system name, requirements, reference services, and reference interactions. The workflow MUST provide `Run Pipeline`, `New Decomposition`, a results page with Services, Interactions, and Best Results tables, and `Download Full Report (PDF)`. The report download may remain a simulated or simple test PDF response during this phase.
 
-### V. VIRTUS Visual Identity
-The interface MUST use the VIRTUS visual language: navy primary `#0A1E5C`, white background `#FFFFFF`, light-gray fields `#F2F2F2`, and gold accent `#E9C46A`. Typography MUST be sans-serif, headings MUST use uppercase text, and body copy MUST remain legible. All visible interface text MUST be in English.
+### V. DAVINCI Visual Identity
+The interface MUST use the DAVINCI visual language: navy primary `#0A1E5C`, white background `#FFFFFF`, light-gray fields `#F2F2F2`, and gold accent `#E9C46A`. Typography MUST be sans-serif, headings MUST use uppercase text, and body copy MUST remain legible. All visible interface text MUST be in English.
 
 ### VI. Generalized, System-Agnostic Design
 The interface and its mock data MUST use generalized structures and terminology. No system-specific services, interactions, normalization rules, or architecture assumptions may be hard-coded into reusable UI or server logic. System-specific values may appear only as user-provided input or isolated mock fixtures used to demonstrate the contract.

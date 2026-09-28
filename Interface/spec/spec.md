@@ -1,6 +1,6 @@
-# Feature Specification: VIRTUS Microservice Architecture Generation Interface
+# Feature Specification: DAVINCI Microservice Architecture Generation Interface
 
-**Feature Branch**: `001-virtus-architecture-interface`
+**Feature Branch**: `001-davinci-architecture-interface`
 
 **Created**: 2026-08-19
 
@@ -112,7 +112,7 @@ As an architecture researcher, I want to start a new decomposition so that I can
 - **FR-021**: All visible interface text and user-facing error messages MUST be in English.
 - **FR-022**: The interface MUST use Bootstrap 5, responsive layout rules, plain JavaScript, and AJAX without a frontend framework.
 - **FR-023**: The backend MUST use Python's standard-library `http.server` without a web framework.
-- **FR-024**: The interface MUST use the VIRTUS colors `#0A1E5C`, `#FFFFFF`, `#F2F2F2`, and `#E9C46A`, with sans-serif typography and uppercase headings.
+- **FR-024**: The interface MUST use the DAVINCI colors `#0A1E5C`, `#FFFFFF`, `#F2F2F2`, and `#E9C46A`, with sans-serif typography and uppercase headings.
 - **FR-025**: Every future real-pipeline integration location MUST contain an explicit TODO comment, such as `# TODO: Integrate with pipeline_runner here`.
 - **FR-026**: No implementation in this phase MAY modify files outside `Interface/`, including `Experimento_Multiagente/main_fewshot.py` and the existing agent modules.
 - **FR-027**: Reusable UI and mock contracts MUST remain system-agnostic and MUST NOT embed benchmark-specific services, interactions, or normalization maps.
