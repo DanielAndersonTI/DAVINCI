@@ -47,15 +47,24 @@ REQUIRED_SYSTEM_FIELDS = (
     "reference_interactions",
 )
 
-# The second proposal comes from Agent 2 in C1/C2 and from Agent 2.1 in C4, so the
-# report label follows the configuration sent by the interface. Runs restored from
-# disk (no mode available) keep the default label used by C1/C2.
+# The second proposal comes from Agent 2 in C1/C2/C5 and from Agent 2.1 in C4, so
+# the report label follows the configuration sent by the interface. Runs restored
+# from disk (no mode available) keep the default label used by C1/C2.
+# C5 is listed even though it matches the default: it generates Proposal B with
+# Agent 2 like C1, and naming it keeps the ablation's report self-describing.
 AGENT_B_LABELS = {
     "c1": "Agent B (Communication Specialist)",
     "c2": "Agent B (Communication Specialist)",
     "c4": "Agent B (Software Architect 2.1)",
+    "c5": "Agent B (Communication Specialist)",
 }
 DEFAULT_AGENT_B_LABEL = "Agent B (Communication Specialist)"
+
+# Run directories that hold persisted artifacts. C0-C4 write to
+# `result_generalized_fewshot`; C5 writes to `c5_fewshot` so that its ablation
+# arms never mix with the other configurations' data. Both are scanned, newest
+# run first, so a report always shows the run that actually just executed.
+PERSISTED_RUN_DIRNAMES = ("result_generalized_fewshot", "c5_fewshot")
 
 
 def _agent_b_label(system: dict) -> str:
@@ -64,17 +73,27 @@ def _agent_b_label(system: dict) -> str:
     return AGENT_B_LABELS.get(mode, DEFAULT_AGENT_B_LABEL)
 
 
+def _persisted_run_dirs(system_dir: Path) -> list[Path]:
+    """Return every persisted run dir of one system, newest name first.
+
+    Run dirs are named `run_<YYYYmmdd_HHMMSS_microseconds>`, so ordering by name
+    orders them chronologically, whichever configuration wrote them.
+    """
+    run_dirs = []
+    for dirname in PERSISTED_RUN_DIRNAMES:
+        root = system_dir / dirname
+        if root.is_dir():
+            run_dirs.extend(path for path in root.glob("run_*") if path.is_dir())
+    return sorted(run_dirs, key=lambda path: path.name, reverse=True)
+
+
 def _latest_persisted_proposals(system_name: str) -> dict[str, str]:
     """Return the newest saved agent proposals for one system, when available."""
-    run_root = RESULTS_DIR / system_name.lower() / "result_generalized_fewshot"
-    if not run_root.is_dir():
+    system_dir = RESULTS_DIR / system_name.lower()
+    if not system_dir.is_dir():
         return {}
 
-    for run_dir in sorted(
-        (path for path in run_root.glob("run_*") if path.is_dir()),
-        key=lambda path: path.name,
-        reverse=True,
-    ):
+    for run_dir in _persisted_run_dirs(system_dir):
         proposals = {}
         for result_key, filename in (
             ("agent_a", "proposta_a.csv"),
@@ -106,7 +125,7 @@ def _persisted_report_run() -> dict | None:
         saved_proposals = _latest_persisted_proposals(system_dir.name)
         if not saved_proposals:
             continue
-        run_dirs = [path for path in (system_dir / "result_generalized_fewshot").glob("run_*") if path.is_dir()]
+        run_dirs = _persisted_run_dirs(system_dir)
         if run_dirs:
             latest_timestamp = max(latest_timestamp, max(path.stat().st_mtime for path in run_dirs))
         proposals.append({"system": system_dir.name, **saved_proposals})

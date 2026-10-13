@@ -8,7 +8,7 @@ This document explains the role of each input required by the DAVINCI Microservi
 
 ### System Requirements
 
-The textual requirements describe what the system must do. They are the **only input used during architecture generation**. The LLM agents read the requirements to:
+The textual requirements describe what the system must do. They are the **only input the generating agents receive** (Agents 1, 2 and 4); the consolidator (Agent 3) additionally receives the evaluation metrics of the two proposals, as described below. The LLM agents read the requirements to:
 
 - identify distinct business capabilities;
 - group related responsibilities into cohesive services;
@@ -18,15 +18,20 @@ Requirements must be as complete and precise as possible, because they are the s
 
 ### Reference Services
 
-The reference services list represents the expected set of microservices for the system. It is **not used during generation**. It is used only after generation to evaluate how well the proposed services match the expected decomposition.
+The reference services list represents the expected set of microservices for the system. Agents 1 and 2 (and the refiner, Agent 4) never see it: the proposals are generated from the requirements alone.
 
-Evaluation metrics such as Precision, Recall, and F1-score compare the generated service names with this reference list.
+The reference has two uses:
+
+- **Evaluation:** Precision, Recall and F1-score compare the proposed service names with this reference list, for the two proposals and for the final consolidated architecture.
+- **Consolidation signal (C1, C2 and C4):** the same metrics of the two proposals are passed to Agent 3, which uses them to choose the strongest base and to combine complementary interactions. Agent 3 does not generate services; it consolidates what Agents 1 and 2 produced.
+
+If the reference is not provided, the metrics are computed against an empty reference and come out zeroed.
 
 ### Reference Interactions
 
-The reference interactions describe which pairs of services are expected to communicate. Like the reference services, they are used **only for evaluation**. Each interaction is an unordered pair of service names, e.g., `order-service <-> payment-service`.
+The reference interactions describe which pairs of services are expected to communicate. Each interaction is an unordered pair of service names, e.g., `order-service <-> payment-service`.
 
-They allow the calculation of interaction-level metrics and help determine whether the pipeline identified the necessary dependencies.
+The same two uses apply: evaluation of the two proposals and of the final architecture, and — in C1, C2 and C4 — as part of the metrics passed to the consolidator (Agent 3). They allow the calculation of interaction-level metrics and help determine whether the pipeline identified the necessary dependencies.
 
 ### Name Normalization Map
 
@@ -87,11 +92,11 @@ Map each alternative to the canonical service name used in the reference list. T
 
 ## Summary
 
-| Input | Used for generation? | Used for evaluation? |
-|-------|----------------------|----------------------|
-| System Requirements | Yes | No |
-| Reference Services | No | Yes |
-| Reference Interactions | No | Yes |
-| Name Normalization Map | No | Yes |
+| Input | Used by Agents 1/2/4 (generation and refinement)? | Used for evaluation? | Used by Agent 3 (consolidation)? |
+|-------|----------------------|----------------------|----------------------|
+| System Requirements | Yes | No | Yes — as context |
+| Reference Services | No | Yes | Yes — metrics of the two proposals (C1, C2, C4) |
+| Reference Interactions | No | Yes | Yes — metrics of the two proposals (C1, C2, C4) |
+| Name Normalization Map | No | Yes | No |
 
-The DAVINCI Workbench uses only the requirements to generate candidate architectures, while the reference data and normalization map are used exclusively to compute the evaluation metrics shown in the results.
+The DAVINCI Workbench generates the candidate architectures from the requirements alone. The reference data and the normalization map are used to compute the evaluation metrics; in the configurations that run the consolidator (C1, C2 and C4), the metrics of the two proposals are also passed to Agent 3 as its selection signal — Agent 3 consolidates the proposals, it does not generate architecture.

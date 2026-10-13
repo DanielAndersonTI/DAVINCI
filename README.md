@@ -69,7 +69,7 @@ The pipeline is composed of five specialized agents (plus a variant of Agent 2).
 | **Agent 2 — Microservice Communication Specialist** | Produces an independent architecture with special attention to inter-service interactions. It uses a large library of abstract, domain-independent reasoning patterns to infer only necessary dependencies. |
 | **Agent 2.1 — Generalized Architect (C4)** | Drop-in replacement for Agent 2 in configuration C4: the same prompt as Agent 1, differentiated only by a distinct few-shot example, so that the second proposal comes from a generalist instead of a specialist. |
 | **Agent 4 — Domain-Driven Refiner** | Refines the proposals from Agents 1 and 2. It removes only unsupported communications, without adding or deleting services. |
-| **Agent 3 — Architecture Validator / Consolidator** | Consolidates the refined proposals. It receives the evaluation metrics of both proposals and uses them to choose the best base architecture, combining complementary interactions when supported by the requirements. |
+| **Agent 3 — Architecture Validator / Consolidator** | Consolidates the refined proposals. It does not generate architecture: it receives both proposals and their evaluation metrics — computed against the reference — and uses them to choose the best base architecture, combining complementary interactions when supported by the requirements. |
 | **Agent 5 — Architectural Spec Exporter** | Serialises the final architecture into `especificacao_arquitetural.yaml`, the machine-readable specification consumed by the interface and by the analysis scripts. |
 
 All agents use `temperature=0.0`. Every agent has a few-shot variant (`agentes/agent*_fs.py`, the ones used by the experiments) and the three original roles also exist in a zero-shot variant under `agentes/zero-shot-agents/`.
@@ -118,11 +118,18 @@ Each system block receives three kinds of input.
 
 ### System Requirements
 
-The natural-language description of the software system to be decomposed. This is the only input the agents use to reason; it is the textual source of the bounded contexts, services and interactions.
+The natural-language description of the software system to be decomposed. This is the only input the generating agents (1, 2 and 4) use to reason; it is the textual source of the bounded contexts, services and interactions.
 
 ### Reference Services
 
-The expected list of microservices for that system, written one per line. This is used **only for evaluation, not for generation**. It allows the computation of Precision, Recall, and F1-score for the service identification task.
+The expected list of microservices for that system, written one per line. It allows the computation of Precision, Recall, and F1-score for the service identification task.
+
+The reference is used in two ways:
+
+* **Evaluation** — every architecture the pipeline produces (the two proposals and the final result) is scored against it. In C0 and C3 this is its only use.
+* **Consolidation signal (C1, C2, C4)** — the metrics of the two candidate proposals are also passed to Agent 3, which uses them to choose the strongest base and to combine complementary interactions. Agent 3 does not generate architecture: it consolidates what Agents 1 and 2 produced. Agents 1 and 2 never see the reference.
+
+If the reference is not provided, the pipeline still runs, but the metrics are computed against an empty reference and come out zeroed, so the consolidator receives no usable signal.
 
 ```text
 order-service
@@ -132,13 +139,15 @@ inventory-service
 
 ### Reference Interactions
 
-The expected communication pairs between services. Like reference services, this is used only for evaluation. Each interaction is an unordered pair, such as:
+The expected communication pairs between services. Each interaction is an unordered pair, such as:
 
 ```text
 order-service <-> payment-service
 ```
 
-These evaluation-oriented inputs are optional if the user only wants an architecture recommendation without metrics.
+The same two uses of the reference services apply here: evaluation of every architecture the pipeline produces, and — in C1, C2 and C4 — as part of the metrics passed to Agent 3.
+
+These evaluation-oriented inputs are optional if the user only wants an architecture recommendation without metrics; without them, the consolidator receives zeroed metrics (see above).
 
 ---
 

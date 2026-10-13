@@ -1,0 +1,191 @@
+
+digraph Pipeline {
+    graph [
+        rankdir=TB,
+        compound=true,
+        newrank=true,
+        splines=polyline,
+        nodesep=0.08,
+        ranksep=0.13,
+        margin=0,
+        pad=0.02,
+        bgcolor="white",
+        fontname="Helvetica",
+        fontsize=6
+    ];
+
+    node [
+        shape=box,
+        style="rounded,filled",
+        fillcolor="#EEEEEE",
+        color="#555555",
+        fontcolor="black",
+        fontname="Helvetica",
+        fontsize=6,
+        margin="0.035,0.018",
+        height=0.22
+    ];
+
+    edge [
+        color="#333333",
+        penwidth=0.55,
+        arrowsize=0.45
+    ];
+
+    Req [
+        label="Requirements",
+        fillcolor="#DCEAF7"
+    ];
+
+    subgraph cluster_C0 {
+        label="C0";
+        labeljust=l;
+        labelloc=t;
+        fontsize=6;
+        color="#AAAAAA";
+        margin=4;
+        graph [rankdir=LR];
+
+        c0a1 [label="A1"];
+        c0arch [label="Architecture", fillcolor="#DDEEDB"];
+        c0a5 [label="A5"];
+
+        c0a1 -> c0arch -> c0a5;
+    }
+
+    subgraph cluster_C1 {
+        label="C1";
+        labeljust=l;
+        labelloc=t;
+        fontsize=6;
+        color="#AAAAAA";
+        margin=4;
+        graph [rankdir=LR];
+
+        c1a1 [label="A1"];
+        c1a2 [label="A2"];
+        c1a4 [label="A4"];
+        c1a3 [label="A3\n+score"];
+        c1arch [label="Architecture", fillcolor="#DDEEDB"];
+        c1a5 [label="A5"];
+
+        {rank=same; c1a1; c1a2;}
+        c1a1 -> c1a4;
+        c1a2 -> c1a4;
+        c1a4 -> c1a3 -> c1arch -> c1a5;
+    }
+
+    subgraph cluster_C2 {
+        label="C2";
+        labeljust=l;
+        labelloc=t;
+        fontsize=6;
+        color="#AAAAAA";
+        margin=4;
+        graph [rankdir=LR];
+
+        c2a1 [label="A1"];
+        c2a2 [label="A2"];
+        c2a3 [label="A3"];
+        c2arch [label="Architecture", fillcolor="#DDEEDB"];
+        c2a5 [label="A5"];
+
+        {rank=same; c2a1; c2a2;}
+        c2a1 -> c2a3;
+        c2a2 -> c2a3;
+        c2a3 -> c2arch -> c2a5;
+    }
+
+    subgraph cluster_C3 {
+        label="C3";
+        labeljust=l;
+        labelloc=t;
+        fontsize=6;
+        color="#AAAAAA";
+        margin=4;
+        graph [rankdir=LR];
+
+        c3a1 [label="A1"];
+        c3a4 [label="A4"];
+        c3arch [label="Architecture", fillcolor="#DDEEDB"];
+        c3a5 [label="A5"];
+
+        c3a1 -> c3a4 -> c3arch -> c3a5;
+    }
+
+    subgraph cluster_C4 {
+        label="C4";
+        labeljust=l;
+        labelloc=t;
+        fontsize=6;
+        color="#AAAAAA";
+        margin=4;
+        graph [rankdir=LR];
+
+        c4a1 [label="A1"];
+        c4a21 [label="A2.1"];
+        c4a4 [label="A4"];
+        c4a3 [label="A3"];
+        c4arch [label="Architecture", fillcolor="#DDEEDB"];
+        c4a5 [label="A5"];
+
+        {rank=same; c4a1; c4a21;}
+        c4a1 -> c4a4;
+        c4a21 -> c4a4;
+        c4a4 -> c4a3 -> c4arch -> c4a5;
+    }
+
+    subgraph cluster_C5 {
+        label="C5";
+        labeljust=l;
+        labelloc=t;
+        fontsize=6;
+        color="#AAAAAA";
+        margin=4;
+        graph [rankdir=LR];
+
+        c5a1 [label="A1"];
+        c5a2 [label="A2"];
+
+        // MODIFIED: A4 is included as the refinement stage after A1 and A2.
+        c5a4 [label="A4"];
+
+        c5a3 [label="A3\n+score"];
+        c5a31 [label="A3.1\nno score",
+               style="rounded,filled,dashed"];
+
+        c5cs [label="Arch. +score", fillcolor="#DDEEDB"];
+        c5cn [label="Arch. no score",
+              fillcolor="#DDEEDB", style="rounded,filled,dashed"];
+        c5cmp [label="Compare"];
+        c5a5 [label="A5"];
+
+        {rank=same; c5a1; c5a2;}
+        {rank=same; c5a3; c5a31;}
+        {rank=same; c5cs; c5cn;}
+
+        // MODIFIED: A1 and A2 now both feed into A4.
+        c5a1 -> c5a4;
+        c5a2 -> c5a4;
+
+        // MODIFIED: A4 sends the refined candidates to both evaluation paths.
+        c5a4 -> c5a3;
+        c5a4 -> c5a31 [style=dashed];
+
+        // UNCHANGED: Evaluation, architecture comparison, and final stage.
+        c5a3 -> c5cs;
+        c5a31 -> c5cn [style=dashed];
+        c5cs -> c5cmp;
+        c5cn -> c5cmp [style=dashed];
+        c5cmp -> c5a5;
+    }
+
+    Req -> c0a1 [lhead=cluster_C0];
+    Req -> c1a1 [lhead=cluster_C1];
+    Req -> c2a1 [lhead=cluster_C2];
+    Req -> c3a1 [lhead=cluster_C3];
+    Req -> c4a1 [lhead=cluster_C4];
+    Req -> c5a1 [lhead=cluster_C5];
+
+    {rank=same; Req; c0a1;}
+}

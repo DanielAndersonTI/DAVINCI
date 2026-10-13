@@ -1,0 +1,127 @@
+ANALYSIS OF THE TWO C5 TESTS (GEMINI, A3 WITHOUT REFERENCE METRICS)
+Scope note: Both C5 tests were executed on Gemini only. In these tests, Agent 3 performs consolidation without access to reference-based Precision/Recall/F1. The metric tables below are computed offline against the reference, after the pipeline finished, and were not shown to A3. They are used here only to evaluate how the reference-free consolidator performed.
+
+TEST 1 — Run ID 20261007_203345_949178
+Services (F1-score)
+System	A	B	Consolidated
+7ep	1.0000	1.0000	1.0000
+AcmeAir	1.0000	1.0000	1.0000
+Cargo-Tracker	0.9091	0.7692	0.7692
+DayTrader7	1.0000	1.0000	1.0000
+Jokul	1.0000	1.0000	1.0000
+JPetStore	1.0000	1.0000	1.0000
+PetClinic	1.0000	1.0000	1.0000
+TNTConcept	0.9231	0.9231	0.9231
+Commentary:
+Service agreement was stable in 7/8 systems. Cargo-Tracker is the only case where the reference-free consolidator changed the service F1: A and B differed (0.9091 vs. 0.7692), and A3 selected B, the proposal with lower service agreement. Without the reference score, A3 had no signal to prefer A. TNTConcept remained at 0.9231, reflecting the same missing implicit service (Logistics Network) already observed in the C1 runs.
+
+Interactions (F1-score)
+System	A	B	Consolidated
+7ep	0.9524	0.9524	0.9524
+AcmeAir	1.0000	1.0000	1.0000
+Cargo-Tracker	0.0000	0.6087	0.6087
+DayTrader7	0.9091	0.9091	0.9091
+Jokul	0.6667	0.6667	0.6667
+JPetStore	0.9412	0.9412	0.9412
+PetClinic	1.0000	1.0000	1.0000
+TNTConcept	0.7647	0.7647	0.7647
+Commentary:
+Cargo-Tracker is again the decisive case: A had interaction F1 = 0.0000, B had 0.6087, and A3 selected B, which happened to be the better choice on interactions — but also the worse choice on services. The selection was therefore a trade-off made without metric information. In all other systems, A and B had identical or near-identical interaction F1, so consolidation could not change the outcome. No case of interaction combination occurred in this test, unlike C1 Test 2 for 7ep.
+
+YAML
+Commentary:
+YAML output was well-formed for all eight systems. Cargo-Tracker's consolidated architecture inherited B's extra services (Location Management, Voyage Management) while omitting the reference's Logistics Network Service — consistent with the observed F1 of 0.7692. TNTConcept's YAML remained structurally consistent despite the missing implicit service. No corruption or truncation was observed. Endpoints remain generic (/api/<service>), limiting practical usefulness.
+
+Tracer (token cost)
+Agent	7ep	AcmeAir	Cargo	DayTrader7	Jokul	JPetStore	PetClinic	TNTConcept	Total
+Agent 1	5350	4753	8588	5867	4070	6101	4896	5799	45424
+Agent 2	20943	21143	26418	23788	20629	21922	25687	23402	183932
+Agent 3	12425	11383	27322	34556	15547	15179	15505	36603	168520
+Agent 4	8454	6992	20713	16977	5745	9412	5501	10064	83858
+Agent 5 (unknown)	7590	7033	7593	8049	6189	7656	11402	3809	59321
+Total per system	54762	51304	90634	89237	52180	60270	62991	79677	541055
+Total for Test 1: 541,055 tokens.
+
+Highlights:
+
+Agent 2 is the largest consumer (34.0%), consistent with its role as the interaction-focused specialist.
+
+Agent 3 is anomalously expensive (31.1%), driven by extra calls in Cargo-Tracker (3 calls), Jokul (3 calls), and TNTConcept (4 calls). Without a metric signal, A3 appears to retry or re-invoke itself without converging.
+
+Cargo-Tracker is the most expensive system (90,634 tokens), reflecting the divergence between A and B and A3's repeated consolidation attempts.
+
+Observability issues persist: prompt_tokens recorded as 0, and Agent 5 labeled unknown.
+
+TEST 2 — Run ID 20261007_210531_921518
+Services (F1-score)
+System	A	B	Consolidated
+7ep	1.0000	1.0000	1.0000
+AcmeAir	1.0000	1.0000	1.0000
+Cargo-Tracker	0.9091	0.9091	0.9091
+DayTrader7	1.0000	1.0000	1.0000
+Jokul	1.0000	1.0000	1.0000
+JPetStore	1.0000	1.0000	1.0000
+PetClinic	1.0000	1.0000	1.0000
+TNTConcept	0.9231	0.9231	0.9231
+Commentary:
+Service agreement was perfectly stable across all eight systems, with no difference between A, B, and the consolidated output. Unlike Test 1, Cargo-Tracker's two proposals converged on services (both 0.9091), removing the trade-off that had driven A3's choice in the previous run.
+
+Interactions (F1-score)
+System	A	B	Consolidated
+7ep	1.0000	0.9524	1.0000
+AcmeAir	1.0000	1.0000	1.0000
+Cargo-Tracker	0.0000	0.5263	0.0000
+DayTrader7	0.9091	0.9091	0.9091
+Jokul	0.6667	0.6667	0.6667
+JPetStore	0.9412	0.9412	0.9412
+PetClinic	1.0000	1.0000	1.0000
+TNTConcept	0.7647	0.7761	0.7647
+Commentary:
+Test 2 exposes the instability of reference-free consolidation in two systems:
+
+Cargo-Tracker: A had F1 = 0.0000, B had 0.5263, and A3 selected A, producing a consolidated interaction F1 of 0.0000. This is the worst possible outcome and the clearest failure of the reference-free configuration. In Test 1, A3 had chosen B; here it chose A. The choice is unstable across runs, and in this case collapsed the communication topology entirely.
+
+TNTConcept: A had 0.7647, B had 0.7761, and A3 selected A, missing the slightly better proposal. The difference is small but consistent with the reference-free consolidator's inability to discriminate.
+
+7ep: A3 correctly selected A (1.0000), the superior proposal. This is the only case in Test 2 where the reference-free choice coincided with the better candidate.
+
+YAML
+Commentary:
+YAML was well-formed for seven systems. Cargo-Tracker's YAML is corrupted: dependency fields contain fragments of responsibilities wrongly parsed as service names ("destination", "load", "last known location", "integration services"), and interaction entries point to those non-services. This is the same class of failure observed in the reference-informed C1 Test 3, but here it occurred without any metric signal and directly reflects A3's malformed output. The corruption propagated to Agent 5 and produced a final architecture whose structure is not trustworthy. This incident should be reported as a concrete failure mode of the reference-free configuration.
+
+Tracer (token cost)
+Agent	7ep	AcmeAir	Cargo	DayTrader7	Jokul	JPetStore	PetClinic	TNTConcept	Total
+Agent 1	5372	17796	7754	8414	4291	8243	8349	6074	66293
+Agent 2	22691	21112	24474	23711	21060	22264	21239	22111	178662
+Agent 3	10903	13146	12449	23292	9012	36708	11779	23700	140989
+Agent 4	9538	11894	10917	14635	5479	6926	5826	12445	77660
+Agent 5 (unknown)	6909	6957	7109	7887	5767	7040	5723	7118	54510
+Total per system	55413	70905	62703	77939	45609	81181	52916	71448	518114
+Total for Test 2: 518,114 tokens.
+
+Highlights:
+
+Cost slightly lower than Test 1 (−4.2%).
+
+Agent 2 remains the largest consumer (34.5%).
+
+Agent 3 returned to a more typical share (27.2%), except in JPetStore, where A3 consumed 36,708 tokens across 4 calls — an outlier worth investigating.
+
+Agent 1 in AcmeAir consumed 17,796 tokens, more than double its Test 1 value; this may reflect a longer or retried generation.
+
+Observability issues persist (prompt_tokens = 0, Agent 5 labeled unknown).
+
+GENERAL SYNTHESIS FOR THE PAPER
+Services remain robust and stable. Across both C5 tests, 6/8 systems reached F1 = 1.0000 in services. The two exceptions are the same as in C1: Cargo-Tracker (missing implicit service in the reference) and TNTConcept (missing Logistics Network). Consolidation without metrics did not change service F1 in 7/8 systems in Test 1 and in 8/8 systems in Test 2. The single exception was Cargo-Tracker in Test 1, where the consolidator followed the proposal with lower service agreement — a choice the reference-informed configuration would likely have corrected.
+
+Interactions are the main locus of instability. In the reference-free configuration, A3's choice is unstable across runs for the only systems where A and B genuinely differ (Cargo-Tracker and, marginally, TNTConcept). In Test 1, A3 chose B in Cargo-Tracker (interactions 0.6087); in Test 2, A3 chose A in the same system (interactions 0.0000). This run-to-run divergence is the clearest empirical signature of what is lost when A3 has no metric signal.
+
+A3 is a double-edged sword in the reference-free setting. In Test 1, it made a defensible but unverifiable choice (better interactions, worse services). In Test 2, it made a clearly inferior choice (interactions 0.0000 when B offered 0.5263) and produced corrupted YAML. The reference-free configuration therefore adds a failure mode that did not appear with the same frequency in the metric-conditioned C1 runs.
+
+Cost profile differs from C1. Agent 2 accounts for ~34% of tokens in both C5 tests, well below the ~46% observed in C1. This is because Agent 3 consumed more tokens per run (especially in Test 1), likely due to retries and longer outputs in the absence of a converging score. Total cost is high (≈518k–541k tokens per run) and roughly comparable to C1, confirming that removing the reference from A3 does not reduce cost; it only removes A3's ability to discriminate.
+
+Observability and YAML limitations. The tracker still does not separate prompt tokens, labels Agent 5 as unknown, and records anomalous behavior for Agent 3 (multiple retries, corrupted output in Cargo-Tracker Test 2). YAML output is generally consistent, but the Cargo-Tracker Test 2 corruption is a concrete limitation that propagates from A3 to Agent 5 and should be reported.
+
+Requirements remain the dominant factor. The two systems with imperfect reference alignment (Cargo-Tracker and TNTConcept) are the only ones where configuration choices matter. In the other six systems, A and B converge, and the reference-free consolidator has no room to differentiate itself. This reinforces the broader finding of the paper: the ceiling is set by the requirements and by the reference itself, not by the orchestration.
+
+Scope statement for the paper. The C5 results should be reported as: verified on Gemini, where the C1–C3 and C2–C3 contrasts for interactions were significant. In the reference-free configuration, the consolidator fails to recover the better candidate in the one system where the difference is largest (Cargo-Tracker Test 2), and its choices are not stable across runs. This supports the paper's argument that consolidation gains are conditioned on the availability of the reference, and that reference-free consolidation remains an open design problem.

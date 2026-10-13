@@ -20,6 +20,7 @@ try:
         executar_pipeline_c2,
         executar_pipeline_c3,
         executar_pipeline_c4,
+        executar_pipeline_c5,
     )
 except ModuleNotFoundError:
     executar_pipeline = None
@@ -27,6 +28,7 @@ except ModuleNotFoundError:
     executar_pipeline_c2 = None
     executar_pipeline_c3 = None
     executar_pipeline_c4 = None
+    executar_pipeline_c5 = None
 
 from .parsers import (
     parse_reference_interactions,
@@ -53,7 +55,7 @@ def run_real_pipeline(system_data: dict, tracer_run_id: str | None = None) -> di
         interaction_reference = parse_reference_interactions(system_data["reference_interactions"])
 
        
-        global executar_pipeline, executar_pipeline_c0, executar_pipeline_c2, executar_pipeline_c3, executar_pipeline_c4
+        global executar_pipeline, executar_pipeline_c0, executar_pipeline_c2, executar_pipeline_c3, executar_pipeline_c4, executar_pipeline_c5
 
         mode = str(system_data.get("mode", "c0")).lower()
 
@@ -82,12 +84,28 @@ def run_real_pipeline(system_data: dict, tracer_run_id: str | None = None) -> di
                 executar_pipeline_c4 = pipeline_entrypoint
             pipeline_entrypoint = executar_pipeline_c4
 
+        elif mode == "c5":
+            # C5 não gera propostas: ele relê os candidatos congelados de uma
+            # execução anterior. O run dir dessa execução vem no campo
+            # `frozen_run_dir` do sistema.
+            if executar_pipeline_c5 is None:
+                from main_fewshot import executar_pipeline_c5 as pipeline_entrypoint
+                executar_pipeline_c5 = pipeline_entrypoint
+            pipeline_entrypoint = executar_pipeline_c5
+
         else:
-           
+
             if executar_pipeline_c0 is None:
                 from main_fewshot import executar_pipeline_c0 as pipeline_entrypoint
                 executar_pipeline_c0 = pipeline_entrypoint
             pipeline_entrypoint = executar_pipeline_c0
+
+        # C0-C4 recebem apenas os argumentos comuns; C5 acrescenta o run dir dos
+        # candidatos congelados. O dicionário fica vazio nas demais configurações
+        # para que a chamada abaixo permaneça idêntica.
+        extra_kwargs = {}
+        if mode == "c5":
+            extra_kwargs["frozen_run_dir"] = system_data.get("frozen_run_dir")
 
         results, metrics = pipeline_entrypoint(
             system_name,
@@ -95,6 +113,7 @@ def run_real_pipeline(system_data: dict, tracer_run_id: str | None = None) -> di
             reference_services,
             interaction_reference,
             tracer_run_id=tracer_run_id,
+            **extra_kwargs,
         )
 
         f1_values = [

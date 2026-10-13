@@ -23,7 +23,7 @@ runtime, and no file here is written to during an experiment.
 | `systems/` | The eight upstream Java projects (monolithic), each with its own `LICENSE` plus the added requirements CSV `Requisitos - sistemas - <system>.csv` | Origin of the requirements and of the static evidence; never executed | 3,354 |
 | `static analysis/` | `analyze_systems.py` (the analyzer that was actually used), a vendored copy of the SootUp source tree and a short PT-BR README | Tooling that produced the structural evidence; the vendored SootUp copy is **not** invoked | 3,278 |
 | `static-analysis-systems/` | The frozen snapshot: six artifacts per system plus three consolidated files | Structural evidence used when the architectural prompts were built | 51 |
-| `ground true/` | Eight reference-architecture CSVs | Evaluation only (Precision, Recall, F1); never used for generation | 8 |
+| `ground true/` | Eight reference-architecture CSVs | Evaluation (Precision, Recall, F1); in C1/C2/C4 also the origin of the metrics Agent 3 uses to consolidate; never seen by Agents 1, 2 and 4 | 8 |
 | `davinci_inputs/` | Per-system bundle: requirements, reference services, reference interactions, name map, plus a README with per-system notes | Exactly what is pasted into the web interface to run a system | 33 |
 
 Total: 6,725 tracked files (most of them source code of the subject systems and of the
@@ -201,7 +201,7 @@ Three details are worth knowing before quoting this snapshot:
 
 ---
 
-## `ground true/` — Reference Architectures (Evaluation Only)
+## `ground true/` — Reference Architectures (Evaluation and Consolidation Signal)
 
 One CSV per system, with the header `Microservice Name,Description,Communicate With`. The
 `Communicate With` cell is a semicolon-separated list of partner services, or `None` when
@@ -210,12 +210,15 @@ undirected interaction pairs**.
 
 * These files hold the *expected* decomposition taken from the reference architectures of
   the original study; they were never produced by DAVINCI and are never shown to the
-  agents.
-* They are used at evaluation time only: the pipeline compares the generated architecture
-  with this reference through the semantic comparison implemented by
-  `are_services_equivalent` / `are_interactions_equivalent` in
-  `Experimento_Multiagente/main_fewshot.py` (normalization plus synonym and domain-token
-  rules, applied only when the metrics are computed).
+  generating agents (1, 2, 2.1 and 4).
+* They are used at evaluation time: the pipeline compares the generated architecture with
+  this reference through the semantic comparison implemented by `are_services_equivalent`
+  / `are_interactions_equivalent` in `Experimento_Multiagente/main_fewshot.py`
+  (normalization plus synonym and domain-token rules, applied only when the metrics are
+  computed). In addition, in the configurations that run the consolidator (C1, C2 and C4),
+  the metrics computed from this reference for the two proposals are passed to Agent 3 as
+  its selection signal — Agent 3 consolidates the proposals, it does not generate
+  architecture.
 * The directory name keeps the space (`ground true`) because documents, prompts and the
   bundle README refer to it literally.
 * A single reference set per system — and therefore the interpretation of Precision,

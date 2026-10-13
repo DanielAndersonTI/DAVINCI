@@ -74,6 +74,23 @@ except Exception as _erro_agente2_1:  # pragma: no cover
     criar_task_arquitetura_2_1 = None
 
 
+# ---------------------------------------------------------------------------
+# Agente 3 sem placar (configuração C5)
+# ---------------------------------------------------------------------------
+# Variante do Agente 3 que consolida sem receber as métricas das propostas.
+# Segue o mesmo padrão do Agente 2.1 acima: o try/except garante que um problema
+# nesse arquivo não derrube C0, C1, C2, C3 e C4.
+try:
+    from agentes.agent3_1_validator_fs import (
+        criar_agente3_sem_placar,
+        criar_task_consolidacao_sem_placar,
+    )
+except Exception as _erro_agente3_1:  # pragma: no cover
+    print(f"⚠ Agente 3 sem placar indisponível: {type(_erro_agente3_1).__name__}: {_erro_agente3_1}")
+    criar_agente3_sem_placar = None
+    criar_task_consolidacao_sem_placar = None
+
+
 RESULTS_ROOT = Path("result")
 
 SYNONYM_MAP = {
@@ -1475,3 +1492,417 @@ def executar_pipeline_c3(system_name: str,
         "tracer_run_id": tracer_run_id or timestamp,
     }
     return _executar_experimento_c3(llm, system_name, config, timestamp, example)
+
+
+# ===========================================================================
+# Configuração C5 — ablação do Agente 3
+# ===========================================================================
+# O C5 mede o efeito do placar na decisão do Agente 3. Ele gera as Propostas A e
+# B exatamente como a C1 (Agentes 1 e 2, com o refinamento do Agente 4), congela
+# os dois candidatos e roda o Agente 3 DUAS VEZES sobre exatamente os mesmos
+# textos:
+#
+#   - braço "com placar": o Agente 3 original, que decide usando Precision,
+#     Recall e F1 de cada proposta calculados contra a referência. É o mesmo
+#     Agente 3 da C1, reexecutado como controle pareado;
+#   - braço "sem placar": a variante do Agente 3, que decide apenas confrontando
+#     as propostas com os requisitos.
+#
+# Como os candidatos são gerados uma única vez e alimentam os dois braços, a
+# diferença entre eles isola o efeito do placar e não se mistura com a variação
+# da geração. A saída oficial do C5 é o braço sem placar — é ele que vira a
+# "consolidada" do run, o PDF e o YAML; o braço com placar fica gravado ao lado,
+# como controle. Os dois braços registram se caíram no fallback para a Proposta
+# A, distinção que a execução original da C1 não permitia recuperar depois.
+#
+# Se `frozen_run_dir` for informado, o C5 pula a geração e relê os candidatos
+# gravados por uma execução anterior (proposta_a.csv e proposta_b.csv). Serve
+# para repetir a consolidação sobre exatamente os mesmos candidatos de uma
+# rodada já publicada, sem gastar chamadas de geração.
+
+C5_RUN_DIRNAME = "c5_fewshot"
+
+# Orçamento de saída usado pelos DOIS braços do Agente 3.
+#
+# O prompt sem placar obriga o modelo a deliberar — confrontar as duas propostas
+# com os requisitos — em vez de ler números prontos. O thinking do Gemini
+# consome o mesmo orçamento da resposta, e com os 4096 usados pelas demais
+# configurações a resposta volta truncada no meio de uma linha, é reprovada na
+# validação e cai no fallback (medido: 0/3 respostas válidas em 4096, 3/3 em
+# 8192 e 3/3 em 16384). O valor é igual nos dois braços, para que a única
+# diferença entre eles continue sendo o placar.
+C5_MAX_TOKENS = int(os.getenv("C5_MAX_TOKENS", "16384"))
+
+
+def criar_diretorio_run_c5(system_name: str, timestamp: str) -> Path:
+    """Run dir do C5, separado dos run dirs da C1 (result_generalized_fewshot)."""
+    run_dir = RESULTS_ROOT / system_name.lower() / C5_RUN_DIRNAME / f"run_{timestamp}"
+    run_dir.mkdir(parents=True, exist_ok=True)
+    return run_dir
+
+
+def carregar_candidatos_congelados(frozen_run_dir: Path) -> tuple:
+    """Relê as duas propostas gravadas por uma execução anterior.
+
+    Devolve o texto das Propostas A e B no formato de três colunas usado pelo
+    pipeline (`Microservice,Responsibilities,Communicates With`). O texto
+    reconstruído alimenta OS DOIS braços do C5, de modo que ambos recebam
+    entradas idênticas.
+
+    O texto exato entregue ao Agente 3 na execução original não é persistido
+    (a saída bruta só é impressa no console), então a reconstrução parte do CSV
+    normalizado por `salvar_proposta`, que é o artefato auditável que restou.
+    """
+    def _ler(nome_arquivo: str) -> str:
+        caminho = Path(frozen_run_dir) / nome_arquivo
+        linhas = []
+        with open(caminho, newline="", encoding="utf-8") as arquivo:
+            for indice, linha in enumerate(csv.reader(arquivo)):
+                if indice == 0:
+                    linhas.append("Microservice,Responsibilities,Communicates With")
+                    continue
+                if len(linha) >= 3 and linha[0].strip():
+                    linhas.append(",".join(campo.strip() for campo in linha[:3]))
+        return "\n".join(linhas)
+
+    return _ler("proposta_a.csv"), _ler("proposta_b.csv")
+
+
+def _gerar_candidatos_c5(llm, example: str, requirements: str) -> tuple:
+    """Gera as Propostas A e B como a C1: Agente 1 / Agente 2 + refinamento.
+
+    Reproduz o fluxo da C1, inclusive o descarte do refinamento quando ele reduz
+    o número de serviços, para que os candidatos do C5 nasçam sob as mesmas
+    condições dos da C1. Usa o LLM compartilhado (orçamento das demais
+    configurações) — o orçamento maior vale só para os braços do Agente 3.
+    """
+    agente1 = criar_agente1(llm)
+    agente2 = criar_agente2(llm)
+    agente4 = criar_agente4(llm)
+
+    task1 = criar_task_arquitetura(agente1)
+    task2 = criar_task_arquitetura_alternativa(agente2)
+    task4 = criar_task_refinamento(agente4)
+
+    def _propor(agente, task, rotulo: str) -> str:
+        crew = Crew(agents=[agente], tasks=[task], verbose=rotulo == "a")
+        saida = silent_kickoff(crew, {"example": example, "requirements": requirements})
+        _debug_raw_output(f"c5/agent_{rotulo}/proposta", str(saida))
+        limpo = extrair_csv_do_output(normalizar_output_llm(str(saida)))
+        original = limpo
+
+        # Refinamento: mantém o original se o refinado perder serviços.
+        try:
+            crew4 = Crew(agents=[agente4], tasks=[task4], verbose=False)
+            refinado = silent_kickoff(crew4, {
+                "original_architecture": limpo,
+                "requirements": requirements,
+            })
+            _debug_raw_output(f"c5/agent_4/refined_{rotulo}", str(refinado))
+            limpo = extrair_csv_do_output(normalizar_output_llm(str(refinado)))
+            if len(set(parse_csv_architecture(limpo))) < len(set(parse_csv_architecture(original))):
+                limpo = original
+        except Exception:
+            limpo = original
+
+        return limpo
+
+    return _propor(agente1, task1, "a"), _propor(agente2, task2, "b")
+
+
+def _rodar_braco_agente3(agente, task, entradas: dict, texto_fallback: str) -> tuple:
+    """Executa um braço do Agente 3 e devolve (consolidada, caiu_no_fallback).
+
+    Reproduz o comportamento da C1: se a resposta não for um CSV de arquitetura
+    válido, ou se a chamada falhar, a Proposta A é usada como fallback. A
+    diferença é que aqui o fallback também fica registrado, para que a análise
+    consiga separar "decidiu pela Proposta A" de "caiu no fallback".
+    """
+    try:
+        crew = Crew(agents=[agente], tasks=[task], verbose=False)
+        saida = silent_kickoff(crew, entradas)
+        texto = extrair_csv_do_output(normalizar_output_llm(str(saida)))
+        if _is_valid_architecture_csv(texto):
+            return texto, False
+        print("⚠️ Consolidação inválida. Usando Proposta A como fallback.")
+        return texto_fallback, True
+    except Exception as erro:
+        print(f"✗ Erro no Agente 3: {type(erro).__name__}: {erro}")
+        traceback.print_exc()
+        return texto_fallback, True
+
+
+def _rodar_bracos_c5(llm, texto_a: str, texto_b: str, requirements: str,
+                     metricas_pre: dict) -> tuple:
+    """Roda os dois braços do Agente 3 sobre exatamente os mesmos candidatos.
+
+    O orçamento maior (C5_MAX_TOKENS) vale só durante a consolidação: a geração
+    dos candidatos continua com o orçamento das demais configurações e o LLM
+    compartilhado é restaurado no fim, para que nada mude fora do C5.
+
+    Devolve (sem_placar, fallback_sem_placar, com_placar, fallback_com_placar).
+    """
+    orcamento_anterior = getattr(llm, "max_tokens", None)
+    llm.max_tokens = C5_MAX_TOKENS
+    try:
+        # --- Braço com placar (controle pareado: é o Agente 3 da C1) ---
+        agente3 = criar_agente3(llm)
+        task3 = criar_task_consolidacao(agente3)
+        com_placar, fallback_com = _rodar_braco_agente3(
+            agente3,
+            task3,
+            {
+                "architecture_a": texto_a,
+                "architecture_b": texto_b,
+                "metrics_a": _format_metrics_for_prompt(
+                    metricas_pre.get("proposta_a"), metricas_pre.get("proposta_a_inter")
+                ),
+                "metrics_b": _format_metrics_for_prompt(
+                    metricas_pre.get("proposta_b"), metricas_pre.get("proposta_b_inter")
+                ),
+                "requirements": requirements,
+            },
+            texto_a,
+        )
+        _debug_raw_output("c5/agent_3_com_placar/consolidada", com_placar)
+
+        # --- Braço sem placar (saída oficial do C5) ---
+        agente3_sem_placar = criar_agente3_sem_placar(llm)
+        task3_sem_placar = criar_task_consolidacao_sem_placar(agente3_sem_placar)
+        sem_placar, fallback_sem = _rodar_braco_agente3(
+            agente3_sem_placar,
+            task3_sem_placar,
+            {
+                "architecture_a": texto_a,
+                "architecture_b": texto_b,
+                "requirements": requirements,
+            },
+            texto_a,
+        )
+        _debug_raw_output("c5/agent_3_sem_placar/consolidada", sem_placar)
+    finally:
+        llm.max_tokens = orcamento_anterior
+
+    return sem_placar, fallback_sem, com_placar, fallback_com
+
+
+def _registrar_bracos_c5(run_dir: Path, origem_candidatos: str, texto_a: str,
+                         texto_b: str, fallback_com_placar: bool,
+                         fallback_sem_placar: bool, metricas: dict) -> None:
+    """Grava proveniência e resultado dos dois braços do C5.
+
+    Best-effort: nunca interrompe a execução do pipeline.
+    """
+    try:
+        def _resumo(chave):
+            servico = metricas.get(chave)
+            interacao = metricas.get(f"{chave}_inter")
+            return {
+                "servicos": {
+                    k: servico[k] for k in
+                    ("precision", "recall", "f1_score", "match_count", "generated_count")
+                } if servico else None,
+                "interacoes": {
+                    k: interacao[k] for k in
+                    ("precision", "recall", "f1_score", "tp_count", "fp_count", "fn_count")
+                } if interacao else None,
+            }
+
+        registro = {
+            "system": run_dir.parent.parent.name,
+            "candidatos_origem": origem_candidatos,
+            "candidato_a_sha256": hashlib.sha256(texto_a.encode("utf-8")).hexdigest(),
+            "candidato_b_sha256": hashlib.sha256(texto_b.encode("utf-8")).hexdigest(),
+            "max_tokens_bracos": C5_MAX_TOKENS,
+            "saida_oficial": "sem_placar",
+            "bracos": {
+                "sem_placar": {
+                    "arquivo": "consolidada.csv",
+                    "agente": "agent3_1_validator_fs.criar_agente3_sem_placar",
+                    "fallback_proposta_a": fallback_sem_placar,
+                    **_resumo("consolidada"),
+                },
+                "com_placar": {
+                    "arquivo": "consolidada_com_placar.csv",
+                    "agente": "agent3_validator_fs.criar_agente3",
+                    "fallback_proposta_a": fallback_com_placar,
+                    **_resumo("consolidada_com_placar"),
+                },
+            },
+        }
+        (run_dir / "c5_bracos.json").write_text(
+            json.dumps(registro, indent=2, ensure_ascii=False), encoding="utf-8"
+        )
+
+        cabecalho = ["Braco", "Precision", "Recall", "F1", "TP", "Total_Gerado", "FP", "FN"]
+        linhas = []
+        for chave, rotulo in (("proposta_a", "proposta_a"),
+                              ("proposta_b", "proposta_b"),
+                              ("consolidada", "consolidada_sem_placar"),
+                              ("consolidada_com_placar", "consolidada_com_placar")):
+            m = metricas.get(chave)
+            i = metricas.get(f"{chave}_inter")
+            if not m or not i:
+                continue
+            linhas.append([
+                rotulo, i["precision"], i["recall"], i["f1_score"], i["tp_count"],
+                i["tp_count"] + i["fp_count"],
+                ";".join(f"{a}-{b}" for a, b in i["fp"]),
+                ";".join(f"{a}-{b}" for a, b in i["fn"]),
+            ])
+        if linhas:
+            salvar_csv(run_dir / "metricas_c5_bracos.csv", cabecalho, linhas)
+    except Exception:
+        pass
+
+
+@track_execution
+def _executar_experimento_c5(llm, system_name: str, config: dict, timestamp: str, example: str):
+    """C5: ablação do Agente 3 sobre os candidatos congelados de uma execução C1.
+
+    Ver o bloco de comentário acima para o desenho dos dois braços.
+    """
+    if criar_agente3_sem_placar is None or criar_task_consolidacao_sem_placar is None:
+        raise RuntimeError(
+            "Agente 3 sem placar indisponível: verifique "
+            "agentes/agent3_1_validator_fs.py (funções criar_agente3_sem_placar e "
+            "criar_task_consolidacao_sem_placar)."
+        )
+
+    system_name = config["name"]
+    requirements = config["requirements"]
+    reference_services = config["reference_services"]
+    interaction_reference = config["interaction_reference"]
+
+    run_dir = criar_diretorio_run_c5(system_name, timestamp)
+
+    # Candidatos: gerados agora (fluxo da interface, igual à C1) ou relidos de
+    # uma execução anterior, quando `frozen_run_dir` é informado.
+    frozen_run_dir = config.get("frozen_run_dir")
+    if frozen_run_dir:
+        texto_a, texto_b = carregar_candidatos_congelados(Path(frozen_run_dir))
+        origem_candidatos = str(frozen_run_dir)
+    else:
+        print("→ Gerando as Propostas A e B (Agentes 1 e 2 + refinamento)")
+        texto_a, texto_b = _gerar_candidatos_c5(llm, example, requirements)
+        origem_candidatos = "gerados_na_execucao"
+
+    if not texto_a or not texto_b:
+        raise RuntimeError(
+            "C5: não foi possível obter as duas propostas — a consolidação do "
+            "Agente 3 precisa das Propostas A e B."
+        )
+
+    # Os candidatos entram no run dir do C5 e ficam também em .txt, para que a
+    # entrada exata dos dois braços permaneça auditável depois.
+    (run_dir / "entrada_a.txt").write_text(texto_a, encoding="utf-8")
+    (run_dir / "entrada_b.txt").write_text(texto_b, encoding="utf-8")
+    salvar_proposta(run_dir, "proposta_a", texto_a)
+    salvar_proposta(run_dir, "proposta_b", texto_b)
+
+    # Placar das duas propostas contra a referência, exatamente como na C1.
+    metricas_pre = {}
+    for chave, texto in (("proposta_a", texto_a), ("proposta_b", texto_b)):
+        try:
+            metricas_pre[chave] = calculate_metrics(
+                parse_csv_architecture(texto), reference_services
+            )
+            metricas_pre[f"{chave}_inter"] = evaluate_interactions(
+                parse_csv_interactions(texto), interaction_reference
+            )
+        except Exception:
+            metricas_pre[chave] = None
+            metricas_pre[f"{chave}_inter"] = None
+
+    # Os dois braços rodam sobre os mesmos candidatos e com o mesmo orçamento,
+    # para que a única diferença entre eles seja o placar.
+    (
+        consolidada_sem_placar,
+        fallback_sem_placar,
+        consolidada_com_placar,
+        fallback_com_placar,
+    ) = _rodar_bracos_c5(llm, texto_a, texto_b, requirements, metricas_pre)
+
+    resultados = {
+        "proposta_a": texto_a,
+        "proposta_b": texto_b,
+        "consolidada": consolidada_sem_placar,
+        "consolidada_com_placar": consolidada_com_placar,
+    }
+    salvar_proposta(run_dir, "consolidada", consolidada_sem_placar)
+    salvar_proposta(run_dir, "consolidada_com_placar", consolidada_com_placar)
+
+    metricas = {}
+    for chave in ("proposta_a", "proposta_b", "consolidada", "consolidada_com_placar"):
+        texto = resultados.get(chave)
+        if texto:
+            try:
+                metricas[chave] = calculate_metrics(
+                    parse_csv_architecture(texto), reference_services
+                )
+                metricas[f"{chave}_inter"] = evaluate_interactions(
+                    parse_csv_interactions(texto), interaction_reference
+                )
+            except Exception:
+                metricas[chave] = None
+                metricas[f"{chave}_inter"] = None
+        else:
+            metricas[chave] = None
+            metricas[f"{chave}_inter"] = None
+
+    especificacao_yaml = gerar_especificacao_yaml(system_name, resultados["consolidada"] or "")
+    (run_dir / "especificacao_arquitetural.yaml").write_text(especificacao_yaml, encoding="utf-8")
+    resultados["especificacao_yaml"] = especificacao_yaml
+
+    # Arquivos no mesmo formato das outras configurações; a "consolidada" é o
+    # braço sem placar. O braço com placar não entra no metricas_servicos.csv
+    # para não alterar o formato consumido pela análise quantitativa — ele vai
+    # para os artefatos próprios do C5 (metricas_c5_bracos.csv e c5_bracos.json).
+    salvar_metricas(run_dir, metricas)
+    salvar_sumario_json(run_dir, metricas)
+    salvar_relatorio_md(run_dir, system_name, metricas)
+    _registrar_bracos_c5(
+        run_dir, origem_candidatos, texto_a, texto_b,
+        fallback_com_placar, fallback_sem_placar, metricas,
+    )
+    return resultados, metricas
+
+
+def executar_pipeline_c5(system_name: str,
+                         requirements: str,
+                         reference_services: list,
+                         interaction_reference: set,
+                         example: str = EXAMPLE_GENERIC,
+                         frozen_run_dir: str | Path | None = None,
+                         tracer_run_id: str | None = None) -> tuple:
+    """Run C5: ablação do Agente 3.
+
+    Sem `frozen_run_dir`, o C5 gera as Propostas A e B como a C1 (Agentes 1 e 2
+    com refinamento) e roda o Agente 3 duas vezes sobre elas — é o caminho usado
+    pela interface, que só recebe requisitos e referências.
+
+    Com `frozen_run_dir`, apontando para o run dir de uma execução anterior (por
+    exemplo `result/<sistema>/result_generalized_fewshot/run_<timestamp>`) que
+    contenha `proposta_a.csv` e `proposta_b.csv`, o C5 pula a geração e relê
+    esses candidatos, rodando o Agente 3 com e sem o placar sobre entradas
+    idênticas.
+    """
+    frozen_path = None
+    if frozen_run_dir:
+        frozen_path = Path(frozen_run_dir)
+        if not (frozen_path / "proposta_a.csv").exists() or not (frozen_path / "proposta_b.csv").exists():
+            raise FileNotFoundError(
+                f"C5: '{frozen_path}' não contém proposta_a.csv e proposta_b.csv."
+            )
+
+    llm = criar_llm()
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+    config = {
+        "name": system_name,
+        "requirements": requirements,
+        "reference_services": reference_services,
+        "interaction_reference": interaction_reference,
+        "tracer_run_id": tracer_run_id or timestamp,
+        "frozen_run_dir": str(frozen_path) if frozen_path else None,
+    }
+    return _executar_experimento_c5(llm, system_name, config, timestamp, example)

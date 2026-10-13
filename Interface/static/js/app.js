@@ -107,7 +107,14 @@ document.addEventListener("DOMContentLoaded", () => {
 	const collectSystems = () => [...systemsContainer.querySelectorAll("[data-system-block]")].map((block) => {
 		const system = {};
 		block.querySelectorAll("[data-field]").forEach((field) => { system[field.dataset.field] = field.value; });
-		system.mode = "c4";
+		// Configuração executada pela interface. Deixe ativa UMA única linha:
+		// comente a que está em uso e descomente a que for rodar.
+		// system.mode = "c0";
+		// system.mode = "c1";
+		// system.mode = "c2";
+		// system.mode = "c3";
+		// system.mode = "c4";
+		system.mode = "c5";
 		return system;
 	});
 	let lastSystems = null;

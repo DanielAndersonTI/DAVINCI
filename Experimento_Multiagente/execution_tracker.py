@@ -7,6 +7,7 @@ import functools
 import json
 import threading
 import time
+from collections import deque
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -56,8 +57,12 @@ def _now() -> datetime:
     return datetime.now(timezone.utc)
 
 
-def _iso(value: datetime) -> str:
-    return value.isoformat(timespec="milliseconds")
+def _iso(value) -> str | None:
+    """Serialize a timestamp, tolerating values that are not datetimes."""
+    try:
+        return value.isoformat(timespec="milliseconds")
+    except Exception:
+        return None
 
 
 def _provider(model: str | None) -> str | None:
@@ -89,13 +94,80 @@ def _usage_value(usage: dict | None, *names: str) -> int | None:
     return None
 
 
+def _counter(process: object, name: str) -> int:
+    """Read one of the running counters of an agent's TokenProcess."""
+    value = getattr(process, name, None)
+    return value if isinstance(value, int) and not isinstance(value, bool) else 0
+
+
+def _event_key(event: object) -> str | None:
+    """Identity of one LLM call, when the CrewAI version provides one.
+
+    CrewAI 0.193 removed `call_id` from the LLM events, so this returns None
+    there and the tracker pairs calls by arrival order instead (see
+    `ExecutionTracker._take_started`).
+    """
+    call_id = getattr(event, "call_id", None)
+    return str(call_id) if call_id else None
+
+
+def _token_processes(event: object) -> tuple:
+    """TokenProcess instances carried by the callbacks of a started event.
+
+    CrewAI gives every agent a `TokenCalcHandler` wrapping that agent's
+    `TokenProcess`. The started event carries the callbacks and the completed
+    one does not, which is why the counters are snapshotted on start.
+    """
+    processes = []
+    callbacks = getattr(event, "callbacks", None) or ()
+    try:
+        for callback in callbacks:
+            process = getattr(callback, "token_cost_process", None)
+            if process is not None:
+                processes.append(process)
+    except Exception:
+        return ()
+    return tuple(processes)
+
+
+def _token_snapshot(processes: tuple) -> tuple:
+    """Counter values observed when a call starts, to measure its growth."""
+    return tuple(
+        (process, _counter(process, "prompt_tokens"), _counter(process, "completion_tokens"))
+        for process in processes
+    )
+
+
+def _delta_tokens(snapshot: tuple) -> "tuple[int | None, int | None]":
+    """Tokens consumed by one call, measured as the growth of its counters.
+
+    A call that moved no counter either did not reach the provider or failed,
+    and is reported as unknown rather than as zero, matching the historical
+    files where failed calls carry null tokens.
+    """
+    prompt = None
+    completion = None
+    for process, prompt_before, completion_before in snapshot:
+        prompt_delta = max(_counter(process, "prompt_tokens") - prompt_before, 0)
+        completion_delta = max(_counter(process, "completion_tokens") - completion_before, 0)
+        prompt = prompt_delta if prompt is None else prompt + prompt_delta
+        completion = completion_delta if completion is None else completion + completion_delta
+    if not prompt and not completion:
+        return None, None
+    return prompt, completion
+
+
 class ExecutionTracker:
     """Collects LLM events for one execution and never raises to the pipeline."""
 
     def __init__(self, execution_id: str):
         self.execution_id = execution_id
         self.started_at = _now()
-        self._started_calls: dict[str, tuple[float, object]] = {}
+        self._started_calls: dict[str, tuple] = {}
+        # Calls that could not be keyed (CrewAI without `call_id`) wait here, per
+        # thread: LLM calls are sequential within a thread, so the oldest pending
+        # start of the thread is the one that just finished.
+        self._pending: dict[int, deque] = {}
         self._calls: list[dict] = []
         self._token = None
 
@@ -123,41 +195,60 @@ class ExecutionTracker:
 
     def _record_started(self, event: object) -> None:
         try:
-            call_id = str(event.call_id)
-            self._started_calls[call_id] = (time.perf_counter(), event)
+            entry = (time.perf_counter(), event, _token_snapshot(_token_processes(event)))
+            key = _event_key(event)
+            if key is not None:
+                self._started_calls[key] = entry
+            else:
+                self._pending.setdefault(threading.get_ident(), deque()).append(entry)
         except Exception:
             pass
 
-    def _record_finished(self, event: object, failed: bool = False) -> None:
+    def _take_started(self, event: object) -> tuple | None:
+        """Match a finished call to the start recorded for it."""
+        key = _event_key(event)
+        if key is not None:
+            return self._started_calls.pop(key, None)
+        queue = self._pending.get(threading.get_ident())
+        if not queue:
+            return None
         try:
-            call_id = str(event.call_id)
-            started = self._started_calls.pop(call_id, None)
-            started_clock = started[0] if started else time.perf_counter()
-            source = started[1] if started else event
-            duration_ms = round((time.perf_counter() - started_clock) * 1000, 3)
-            usage = getattr(event, "usage", None)
-            model = getattr(event, "model", None) or getattr(source, "model", None)
-            agent_role = getattr(event, "agent_role", None) or getattr(source, "agent_role", None)
-            agent = _CURRENT_AGENT_LABEL.get() or _agent_name(agent_role)
-            prompt_tokens = _usage_value(usage, "prompt_tokens", "input_tokens")
-            completion_tokens = _usage_value(usage, "completion_tokens", "output_tokens")
-            total_tokens = _usage_value(usage, "total_tokens")
-            if total_tokens is None and prompt_tokens is not None and completion_tokens is not None:
-                total_tokens = prompt_tokens + completion_tokens
-            self._calls.append({
-                "agent": agent,
-                "model": model,
-                "provider": _provider(model),
-                "started_at": _iso(getattr(source, "timestamp", _now())),
-                "finished_at": _iso(getattr(event, "timestamp", _now())),
-                "duration_ms": duration_ms,
-                "prompt_tokens": prompt_tokens,
-                "completion_tokens": completion_tokens,
-                "total_tokens": total_tokens,
-                "status": "failed" if failed else "completed",
-            })
-        except Exception:
-            pass
+            return queue.popleft()
+        except IndexError:
+            return None
+
+    def _record_finished(self, event: object, failed: bool = False) -> None:
+        # Every value below is read through a helper that cannot raise: a single
+        # unexpected attribute in a future CrewAI release used to abort this
+        # method before the append, which silently emptied the whole report.
+        started = self._take_started(event)
+        started_clock = started[0] if started else time.perf_counter()
+        source = started[1] if started else event
+        snapshot = started[2] if started else ()
+        duration_ms = round((time.perf_counter() - started_clock) * 1000, 3)
+        usage = getattr(event, "usage", None)
+        model = getattr(event, "model", None) or getattr(source, "model", None)
+        agent_role = getattr(event, "agent_role", None) or getattr(source, "agent_role", None)
+        agent = _CURRENT_AGENT_LABEL.get() or _agent_name(agent_role)
+        prompt_tokens = _usage_value(usage, "prompt_tokens", "input_tokens")
+        completion_tokens = _usage_value(usage, "completion_tokens", "output_tokens")
+        total_tokens = _usage_value(usage, "total_tokens")
+        if prompt_tokens is None and completion_tokens is None:
+            prompt_tokens, completion_tokens = _delta_tokens(snapshot)
+        if total_tokens is None and (prompt_tokens is not None or completion_tokens is not None):
+            total_tokens = (prompt_tokens or 0) + (completion_tokens or 0)
+        self._calls.append({
+            "agent": agent,
+            "model": model,
+            "provider": _provider(model),
+            "started_at": _iso(getattr(source, "timestamp", _now())),
+            "finished_at": _iso(getattr(event, "timestamp", _now())),
+            "duration_ms": duration_ms,
+            "prompt_tokens": prompt_tokens,
+            "completion_tokens": completion_tokens,
+            "total_tokens": total_tokens,
+            "status": "failed" if failed else "completed",
+        })
 
     def _metadata(self, finished_at: datetime) -> dict:
         agents = {}
