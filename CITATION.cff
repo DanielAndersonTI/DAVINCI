@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "DAVINCI: multi-agent pipeline for monolith-to-microservice decomposition"
+type: software
+authors:
+  - family-names: Silva
+    given-names: Daniel Anderson de Souza
+    email: daniel.silva@embedded.ufcg.edu.br
+    affiliation: "Universidade Federal de Campina Grande (UFCG)"
+version: 0.1.0
+date-released: 2026-10-29
+url: "https://github.com/DanielAndersonTI/DAVINCI"
+license: MIT
+# Descomente e preencha quando quiser vincular o deposito do Zenodo:
+# identifiers:
+#   - type: doi
+#     value: 10.5281/zenodo.XXXXXXX

@@ -374,14 +374,12 @@ The results collected in this repository belong to a study that is currently und
 
 ## Credits
 
-**DAVINCI Architect** — research prototype for LLM-driven microservice decomposition.
-
-© 2026 DAVINCI Architect. All rights reserved.
+**DAVINCI Architect** — research prototype for LLM-driven microservice decomposition, developed at the Federal University of Campina Grande (UFCG).
 
 ---
 
 ## License
 
-This project is part of ongoing academic research. Non-commercial use is permitted. For other uses, please contact the authors.
+The source code of this repository is released under the **MIT License**. See the [`LICENSE`](LICENSE) file for the full text.
 
 Third-party material redistributed in this repository keeps its original licensing: the two publications stored as `LICENSE- Deed - Attribution 4.0 International - Creative Commons.pdf` (root and `Experimento_Multiagente/`) are licensed under **CC BY 4.0**, and the source code of the subject systems under `Experimento_Multiagente/Dates/systems/` keeps the license of each upstream project (see the `LICENSE` file of each system).
