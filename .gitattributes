@@ -1,3 +1,11 @@
-Interface/** linguist-vendored
+# Third-party subject systems and benchmark monoliths used as experimental corpus
+Experimento_Multiagente/Dates/systems/** linguist-vendored
+Experimento_Multiagente/monolits/** linguist-vendored
+
+# Experimental data, reports and analysis output are not source code
 Report-and-Dates/** linguist-documentation
+"Experimento_Multiagente/Dates/static analysis/**" linguist-documentation
 *.pdf linguist-documentation
+
+# Third-party static-analysis toolkit
+"Experimento_Multiagente/Dates/static analysis/SootUp/**" linguist-vendored
