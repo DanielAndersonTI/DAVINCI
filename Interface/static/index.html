@@ -22,18 +22,57 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="container py-4">
-      <div class="brand-lockup"><img class="brand-logo" src="/img/Logo-DAVINCI.png" alt="DAVINCI Architect logo"><div><div class="brand-mark">DAVINCI Architect</div>
-      <p class="header-kicker mb-0">Multi-Agent Software Architect</p></div></div>
+    <div class="container py-3">
+      <div class="header-row">
+        <div class="brand-lockup"><img class="brand-logo" src="/img/Logo-DAVINCI.png" alt="DAVINCI Architect logo"><div><div class="brand-mark">DAVINCI Architect</div>
+        <p class="header-kicker mb-0">Multi-Agent Software Architect</p></div></div>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a class="nav-link is-active" href="/" aria-current="page">HOME</a>
+          <a class="nav-link" href="/user-guide">USER GUIDE</a>
+        </nav>
+      </div>
     </div>
   </header>
 
   <main class="container py-5" id="app">
+    <section class="run-setup mb-4" aria-label="Run settings">
+      <div class="setup-group" data-setup-group="configuration">
+        <span class="setup-label" id="configuration-label">PIPELINE CONFIGURATION</span>
+        <button type="button" class="setup-toggle" id="configuration-toggle" aria-expanded="false" aria-controls="configuration-menu" aria-labelledby="configuration-label configuration-current">
+          <span id="configuration-current">C1</span><span class="setup-caret" aria-hidden="true"></span>
+        </button>
+        <div class="setup-menu d-none" id="configuration-menu" role="listbox" aria-labelledby="configuration-label"></div>
+      </div>
+
+      <div class="setup-group" data-setup-group="provider">
+        <span class="setup-label" id="provider-label">AI PROVIDER</span>
+        <button type="button" class="setup-toggle" id="provider-toggle" aria-expanded="false" aria-controls="provider-menu" aria-labelledby="provider-label provider-current">
+          <span id="provider-current">DeepSeek</span><span class="setup-caret" aria-hidden="true"></span>
+        </button>
+        <div class="setup-menu setup-panel d-none" id="provider-menu" aria-labelledby="provider-label">
+          <div id="provider-options" role="listbox" aria-label="AI provider options"></div>
+          <div class="key-panel" id="key-panel">
+            <p class="key-status" id="key-status" role="status"></p>
+            <div class="key-options" id="key-options"></div>
+            <label class="setup-label key-form-label" for="new-api-key">ADD A NEW API KEY (OPTIONAL)</label>
+            <div class="key-input-row">
+              <input class="form-control" id="new-api-key" type="password" autocomplete="new-password" spellcheck="false" placeholder="Paste the API key">
+              <button type="button" class="btn btn-outline-primary" id="save-key-button">SAVE KEY</button>
+            </div>
+            <label class="key-check" for="set-active-key"><input type="checkbox" id="set-active-key"> <span>Set as the active key for this AI</span></label>
+            <p class="key-note">Keys stay on the server. They are never shown on this page after saving.</p>
+            <p class="key-feedback d-none" id="key-feedback" role="status"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <div id="pipeline-loading" class="pipeline-loading d-none" role="status" aria-live="polite">
       <div class="loading-heading"><span class="loading-pulse"></span><span>PIPELINE IN PROGRESS</span><strong id="pipeline-percent">0%</strong></div>
       <div class="progress-track" role="progressbar" aria-label="Pipeline progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="pipeline-progress-bar" class="progress-bar"></div></div>
       <div id="pipeline-status" class="loading-status">Preparing systems...</div>
     </div>
+
     <section id="input-view" aria-labelledby="input-title">
       <div class="intro-row mb-4">
         <div>
@@ -59,6 +98,7 @@
     <section id="results-view" class="d-none" aria-labelledby="results-title">
       <p class="section-label mb-2">ARCHITECTURE OUTPUT</p>
       <h1 id="results-title">ARCHITECTURE RESULTS</h1>
+      <p id="run-settings-summary" class="run-summary d-none"></p>
       <div id="results-alert" class="alert d-none" role="alert"></div>
       <div class="results-actions mb-4">
         <button type="button" class="btn btn-outline-primary" id="new-decomposition-button">NEW DECOMPOSITION</button>
@@ -153,6 +193,19 @@
     </article>
   </template>
 
+  <div id="confirm-backdrop" class="confirm-backdrop d-none">
+    <div class="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-title" aria-describedby="confirm-message">
+      <p class="section-label mb-2">CONFIRM CHANGE</p>
+      <h2 class="confirm-title" id="confirm-title">APPLY THIS SELECTION?</h2>
+      <p class="confirm-message" id="confirm-message"></p>
+      <div class="confirm-actions">
+        <button type="button" class="btn btn-outline-primary" id="confirm-discard">DISCARD</button>
+        <button type="button" class="btn btn-gold" id="confirm-accept">CONFIRM</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/ui-state.js" defer></script>
   <script src="/static/js/app.js" defer></script>
 </body>
 </html>

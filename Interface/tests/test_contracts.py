@@ -66,6 +66,21 @@ class ContractTests(unittest.TestCase):
 		self.assertEqual(len(result["proposals"]), 1)
 		self.assertIn("Microservice,Responsibilities,Communicates With", result["proposals"][0]["agent_a"])
 
+	def test_pipeline_failure_is_reported(self):
+		failure = {
+			"ok": False,
+			"run_id": "mock-failure",
+			"metrics": {},
+			"error": "The pipeline returned no proposals. Check the server console for the LLM error.",
+		}
+		with patch("Interface.server.run_real_pipeline", return_value=failure):
+			result = json.loads(self.run_payload({"systems": [SYSTEM]}).read())
+		self.assertFalse(result["ok"])
+		self.assertEqual(
+			result["errors"],
+			[{"system": "Contract Demo", "message": failure["error"]}],
+		)
+
 	def test_ten_systems_are_returned_in_results_and_report(self):
 		systems = [{**SYSTEM, "system_name": f"Contract Demo {index}"} for index in range(1, 11)]
 		with patch("Interface.server.run_real_pipeline", return_value=MOCK_RUN):

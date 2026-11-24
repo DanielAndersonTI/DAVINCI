@@ -175,6 +175,27 @@ SYNONYM_MAP = {
     "administration": "administration",
 }
 
+def _apply_ca_bundle() -> None:
+    """Trust an extra CA bundle configured in the .env file.
+
+    Antivirus and corporate proxies may intercept TLS with a local root that is
+    not in certifi, which makes httpx fail with CERTIFICATE_VERIFY_FAILED.
+    DAVINCI_CA_BUNDLE points to a PEM file that contains the normal roots plus
+    that local root. Verification stays enabled; only the trust store changes,
+    and an explicit SSL_CERT_FILE set by the caller is preserved.
+    """
+    configured = os.getenv("DAVINCI_CA_BUNDLE", "").strip()
+    if not configured:
+        return
+    bundle = Path(configured).expanduser()
+    if not bundle.is_file():
+        print(f"⚠ DAVINCI_CA_BUNDLE not found: {bundle}")
+        return
+    for variable in ("SSL_CERT_FILE", "REQUESTS_CA_BUNDLE", "CURL_CA_BUNDLE"):
+        if not os.environ.get(variable):
+            os.environ[variable] = str(bundle)
+
+
 def criar_llm() -> LLM:
     """Create the LLM shared by every agent of every configuration (C0-C4).
 
@@ -196,6 +217,7 @@ def criar_llm() -> LLM:
         load_dotenv(env_path)
     else:
         load_dotenv()
+    _apply_ca_bundle()
 
     provider = os.getenv("DAVINCI_LLM_PROVIDER", "anthropic").strip().lower()
     if provider in ("claude", "anthropic"):

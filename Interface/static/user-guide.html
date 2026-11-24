@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User Guide | DAVINCI Architect</title>
+  <meta name="description" content="User guide for the DAVINCI Architect multi-agent software architecture interface.">
+  <meta name="theme-color" content="#0A1E5C">
+  <link rel="icon" type="image/png" href="/img/Logo-DAVINCI.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/css/styles.css" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container py-3">
+      <div class="header-row">
+        <div class="brand-lockup"><img class="brand-logo" src="/img/Logo-DAVINCI.png" alt="DAVINCI Architect logo"><div><div class="brand-mark">DAVINCI Architect</div>
+        <p class="header-kicker mb-0">Multi-Agent Software Architect</p></div></div>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a class="nav-link" href="/">HOME</a>
+          <a class="nav-link is-active" href="/user-guide" aria-current="page">USER GUIDE</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-5" id="guide">
+    <p class="section-label mb-2">USER GUIDE</p>
+    <h1>HOW TO USE DAVINCI ARCHITECT</h1>
+    <p class="lead-copy mb-5">This guide explains the pipeline, the configuration selector, the AI provider selector, the API key manager, the metrics on the results page, and the two PDF reports.</p>
+
+    <section class="guide-section" aria-labelledby="overview-heading">
+      <h2 id="overview-heading">1. WHAT THE PIPELINE DOES</h2>
+      <p>DAVINCI converts a system description into a microservice architecture. Each system is described by a name, an architecture target, functional requirements, reference services, and reference interactions. The reference lists are used only to score the generated architecture; they are not given to the language model as an answer key.</p>
+      <p>The pipeline is a sequence of agents. Every agent receives the previous artifact and returns a new one, so the final architecture is the product of the whole chain, not of a single prompt.</p>
+      <div class="guide-grid">
+        <div class="guide-card"><span class="guide-tag">AGENT 1</span><h3>Initial proposal</h3><p>Reads the requirements and produces the first service and interaction decomposition.</p></div>
+        <div class="guide-card"><span class="guide-tag">AGENT 2</span><h3>Second proposal</h3><p>Produces an independent second decomposition from the same requirements.</p></div>
+        <div class="guide-card"><span class="guide-tag">AGENT 2.1</span><h3>Generalist second proposal</h3><p>Replaces Agent 2 in C4. It uses the same prompt as Agent 1 with a different example.</p></div>
+        <div class="guide-card"><span class="guide-tag">AGENT 4</span><h3>Refinement</h3><p>Reviews and improves a proposal before it is consolidated or exported.</p></div>
+        <div class="guide-card"><span class="guide-tag">AGENT 3</span><h3>Consolidation</h3><p>Compares two proposals and produces the consolidated architecture.</p></div>
+        <div class="guide-card"><span class="guide-tag">AGENT 5</span><h3>Specification</h3><p>Writes the final architecture as a YAML specification.</p></div>
+      </div>
+    </section>
+
+    <section class="guide-section" aria-labelledby="configurations-heading">
+      <h2 id="configurations-heading">2. PIPELINE CONFIGURATIONS (C0 TO C5)</h2>
+      <p>The configuration selector on the main page, and on the results page, defines which agents run. The default is C1. Every option uses the same models and the same input fields; only the chain changes.</p>
+      <div class="table-responsive">
+        <table class="table guide-table">
+          <thead><tr><th>OPTION</th><th>AGENTS EXECUTED</th><th>WHAT CHANGES</th><th>WHEN TO USE IT</th></tr></thead>
+          <tbody>
+            <tr><td><strong>C0</strong></td><td>1</td><td>One proposal. No second proposal, no refinement, no consolidation, no YAML stage.</td><td>A quick baseline of the first agent.</td></tr>
+            <tr><td><strong>C1</strong></td><td>1, 2, 4, 3, 5</td><td>Two proposals, refinement, consolidation, and the YAML specification. This is the reference configuration.</td><td>Normal use and the comparison baseline for the experiment.</td></tr>
+            <tr><td><strong>C2</strong></td><td>1, 2, 3, 5</td><td>The complete pipeline without Agent 4, which isolates the contribution of refinement.</td><td>Measuring what refinement adds.</td></tr>
+            <tr><td><strong>C3</strong></td><td>1, 4, 5</td><td>One proposal is refined and exported; Agents 2 and 3 are removed together.</td><td>A single refined architecture, at lower cost.</td></tr>
+            <tr><td><strong>C4</strong></td><td>1, 2.1, 4, 3, 5</td><td>Agent 2 is replaced by Agent 2.1, a generalist with Agent 1's prompt and a different example.</td><td>Testing whether the second proposal depends on a specialized prompt.</td></tr>
+            <tr><td><strong>C5</strong></td><td>1, 2, 4, 3, 5, with 3 twice</td><td>Control condition for Agent 3. Without a frozen run directory it regenerates the proposals like C1 and runs Agent 3 twice.</td><td>Control runs only. It costs more than C1 because the second Agent 3 pass is added.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="guide-note">C5 is a control condition, not a faster or better option. Because it regenerates the proposals before the second consolidation pass, a C5 run takes longer and consumes more tokens than C1.</p>
+    </section>
+
+    <section class="guide-section" aria-labelledby="providers-heading">
+      <h2 id="providers-heading">3. AI PROVIDERS AND MODELS</h2>
+      <p>The AI provider selector defines which model family executes the agents. The model is fixed per provider, so the same configuration is comparable across runs.</p>
+      <div class="table-responsive">
+        <table class="table guide-table">
+          <thead><tr><th>PROVIDER</th><th>MODEL</th><th>ENVIRONMENT VARIABLE</th></tr></thead>
+          <tbody>
+            <tr><td>DeepSeek (default)</td><td><code>deepseek-chat</code></td><td><code>DEEPSEEK_API_KEY</code></td></tr>
+            <tr><td>Gemini</td><td><code>gemini-flash-latest</code></td><td><code>GOOGLE_API_KEY</code></td></tr>
+            <tr><td>Claude</td><td><code>claude-sonnet-4-5-20250929</code></td><td><code>ANTHROPIC_API_KEY</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Only the selected provider is used. Providers that are not selected stay inert, so a key that is inactive or expired for another provider does not affect the run.</p>
+      <p>If the selected provider has no key, the interface blocks the run with a message. This avoids starting a request that would fail at the first language model call.</p>
+    </section>
+
+    <section class="guide-section" aria-labelledby="selection-heading">
+      <h2 id="selection-heading">4. HOW A SELECTION IS CONFIRMED</h2>
+      <p>The configuration and the AI provider use the same interaction. The selector opens an in-page menu; the page is not reloaded, so anything already typed into the system form is preserved.</p>
+      <ol>
+        <li>Click the selector to open the menu.</li>
+        <li>Click an option. The choice stays pending, and the menu remains open.</li>
+        <li>Click outside the menu to finish. A popup asks you to confirm or discard the change.</li>
+        <li><strong>CONFIRM</strong> saves the choice on the server and applies it. <strong>DISCARD</strong> restores the previous value.</li>
+      </ol>
+      <p>Until the popup is confirmed, nothing is saved and no run uses the pending value. The configuration is not reset by a completed run, by <strong>NEW DECOMPOSITION</strong>, or by a page reload.</p>
+      <p>Both values are stored on the server, so they are the same in another browser tab or after a server restart. The browser does not store them in local storage.</p>
+      <p><strong>RUN AGAIN</strong> uses the configuration and provider active at the moment of the click. If the selector has an unconfirmed change, the interface asks for confirmation before starting.</p>
+    </section>
+
+    <section class="guide-section" aria-labelledby="keys-heading">
+      <h2 id="keys-heading">5. API KEYS</h2>
+      <h3>Where keys are stored</h3>
+      <p>All keys live in one file, <code>Experimento_Multiagente/.env</code>, which is ignored by Git. The interface settings file, <code>Interface/settings.json</code>, stores only the active configuration, the active provider, and the active key number for each provider. It never stores a key value.</p>
+      <h3>Numbering and activation</h3>
+      <p>Each provider has its own sequence. The key that already exists becomes <strong>Key 1</strong>; new keys become Key 2, Key 3, and so on. Adding a key never deletes the previous one. The previous key remains in the file as an inactive, commented line with its provider and number.</p>
+      <p>Only one key per provider is active at a time. The active line is the one the pipeline reads. Selecting another key rewrites that line and comments the previous one.</p>
+      <h3>Adding a key</h3>
+      <ol>
+        <li>Open the AI provider menu and select the provider.</li>
+        <li>Paste the key into the password field. The value is not sent anywhere until you click <strong>SAVE KEY</strong>.</li>
+        <li>Leave <strong>Set as the active key for this AI</strong> unchecked to register the key without activating it. Check it to make the new key active immediately.</li>
+        <li>Click <strong>SAVE KEY</strong>. The field is cleared, and the provider then lists the new key by label only.</li>
+      </ol>
+      <p>If a provider has more than one key, choosing that provider also requires choosing the key. The choice is stored per provider, and the provider and key are confirmed together by the same popup.</p>
+      <h3>What the browser receives</h3>
+      <p>The browser receives labels only, such as <code>Key 1</code> and <code>Key 2</code>, and whether the provider is configured. No key value is returned by the server, written into the page, or stored in the browser after saving. The input is a password field and is cleared after every save attempt, successful or not.</p>
+      <p class="guide-note"><strong>Declared limitation.</strong> While you type, the value exists in the password field, and at the instant you click <strong>SAVE KEY</strong> it travels in the request body, where it is visible in the browser developer tools. After the response, no key value remains in the page, in local storage, in cookies, or in any response. The server does not log the request body.</p>
+    </section>
+
+    <section class="guide-section" aria-labelledby="run-heading">
+      <h2 id="run-heading">6. RUNNING THE PIPELINE</h2>
+      <p>Fill in every required field for each system, then click <strong>RUN PIPELINE</strong>. Up to ten systems can be submitted in one run. The form accepts one system definition per block, and <strong>REMOVE</strong> deletes a block while at least one remains.</p>
+      <p>During the run, the progress bar advances slowly and continuously. It accelerates when a system completes and stops before 100 percent until the final response arrives. The status line reports how many systems have been completed, the total, and the system currently being processed. The selectors are disabled while the run is in progress.</p>
+      <p>When the run finishes, the results page shows the metrics and a summary line with the configuration and the AI used, for example <code>Run configuration: C1 | AI: DeepSeek (deepseek-chat)</code>.</p>
+    </section>
+
+    <section class="guide-section" aria-labelledby="metrics-heading">
+      <h2 id="metrics-heading">7. RESULTS AND METRICS</h2>
+      <p>The results page has three sections. Services and interactions compare the generated architecture against the reference lists provided in the form. Best results show, per system, the highest-scoring services and interactions.</p>
+      <div class="table-responsive">
+        <table class="table guide-table">
+          <thead><tr><th>COLUMN</th><th>MEANING</th></tr></thead>
+          <tbody>
+            <tr><td>System</td><td>The system name from the form.</td></tr>
+            <tr><td>Proposal</td><td>Which proposal of the run produced the value.</td></tr>
+            <tr><td>Precision</td><td>Share of generated items that match a reference item.</td></tr>
+            <tr><td>Recall</td><td>Share of reference items that the generated architecture covers.</td></tr>
+            <tr><td>F1-score</td><td>Harmonic mean of precision and recall.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Warnings and errors are listed above the tables. A system that fails does not prevent the other systems in the same run from being reported.</p>
+    </section>
+
+    <section class="guide-section" aria-labelledby="reports-heading">
+      <h2 id="reports-heading">8. PDF REPORTS</h2>
+      <p>Two reports are available on the results page.</p>
+      <h3>Download full report (PDF)</h3>
+      <p>Contains the system definitions, the proposals, the metrics, and the best results. The header prints the configuration and the AI with its model. Each system block repeats the configuration that produced it.</p>
+      <h3>Download YAML specification (PDF)</h3>
+      <p>Contains the architectural specification produced by Agent 5, with the same configuration and AI fields in the header and in each block.</p>
+      <p>A run restored from disk after a server restart reads a small metadata file written into the run directory. If that file predates the metadata feature, the report prints <code>not recorded</code> instead of inventing a value. No key value appears in either report.</p>
+    </section>
+
+    <section class="guide-section" aria-labelledby="troubleshooting-heading">
+      <h2 id="troubleshooting-heading">9. TROUBLESHOOTING</h2>
+      <h3>The run is blocked because the provider has no key</h3>
+      <p>Open the AI provider menu, select that provider, paste a key, and click <strong>SAVE KEY</strong>. You can also choose another provider that is already configured.</p>
+      <h3>The selection did not change</h3>
+      <p>A selector change is applied only after <strong>CONFIRM</strong> in the popup. If you clicked <strong>DISCARD</strong> or pressed Escape, the previous value is restored.</p>
+      <h3>The reports show "not recorded"</h3>
+      <p>The run was produced before the metadata file existed, or the file was removed from the run directory. The architecture and metrics are still valid; only the configuration and AI fields are missing.</p>
+      <h3>The server does not start</h3>
+      <p>Start it from the repository root with the project virtual environment active:</p>
+      <pre class="guide-code"><code>python Interface/server.py</code></pre>
+      <p>Then open <code>http://127.0.0.1:8000/</code>.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>Anonymized research artifact</div>
+    <div>Multi-agent pipeline artifact</div>
+    <div>Contact: see the artifact README</div>
+    <div>&copy; 2026 DAVINCI Architect. All rights reserved.</div>
+  </footer>
+</body>
+</html>

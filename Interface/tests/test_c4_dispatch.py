@@ -66,6 +66,19 @@ class PipelineModeDispatchTests(unittest.TestCase):
         self.assertTrue(result["ok"])
         self.assertEqual(calls["system_name"], "Dispatch Demo")
 
+    def test_empty_results_are_reported_as_failure(self):
+        def fake_entrypoint(system_name, requirements, reference_services,
+                            interaction_reference, tracer_run_id=None):
+            return {"proposta_a": "", "proposta_b": "", "consolidada": ""}, {}
+
+        with patch.object(pipeline_runner, "executar_pipeline", new=fake_entrypoint):
+            result = pipeline_runner.run_real_pipeline(
+                {**SYSTEM, "mode": "c1"}, tracer_run_id="tracer-empty"
+            )
+        self.assertFalse(result["ok"])
+        self.assertIn("no proposals", result["error"])
+        self.assertEqual(result["metrics"], {})
+
 
 if __name__ == "__main__":
     unittest.main()

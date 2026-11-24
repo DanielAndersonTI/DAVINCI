@@ -115,6 +115,22 @@ def run_real_pipeline(system_data: dict, tracer_run_id: str | None = None) -> di
             tracer_run_id=tracer_run_id,
             **extra_kwargs,
         )
+        results = results if isinstance(results, dict) else {}
+        metrics = metrics if isinstance(metrics, dict) else {}
+
+        # CrewAI may swallow an LLM transport error and return empty task
+        # outputs. Without this guard the server would report success and the
+        # interface would render a results page with no proposals.
+        if not any(
+            isinstance(results.get(key), str) and results[key].strip()
+            for key in ("proposta_a", "proposta_b", "consolidada")
+        ):
+            return {
+                "ok": False,
+                "run_id": run_id,
+                "metrics": {},
+                "error": "The pipeline returned no proposals. Check the server console for the LLM error.",
+            }
 
         f1_values = [
             metric["f1_score"]

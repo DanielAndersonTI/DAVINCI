@@ -16,8 +16,10 @@ from threading import Lock
 from urllib.parse import urlparse
 
 try:
+    from Interface.utils import settings as settings_store
     from Interface.utils.pipeline_runner import run_real_pipeline
 except ModuleNotFoundError:
+    from utils import settings as settings_store
     from utils.pipeline_runner import run_real_pipeline
 
 
@@ -66,6 +68,10 @@ DEFAULT_AGENT_B_LABEL = "Agent B (Communication Specialist)"
 # run first, so a report always shows the run that actually just executed.
 PERSISTED_RUN_DIRNAMES = ("result_generalized_fewshot", "c5_fewshot")
 
+# Metadata written next to the run artifacts so a report restored from disk after
+# a server restart still knows which configuration, AI and key label produced it.
+RUN_METADATA_FILENAME = "interface_run.json"
+
 
 def _agent_b_label(system: dict) -> str:
     """Return the Agent B label for the configuration of one system."""
@@ -85,6 +91,45 @@ def _persisted_run_dirs(system_dir: Path) -> list[Path]:
         if root.is_dir():
             run_dirs.extend(path for path in root.glob("run_*") if path.is_dir())
     return sorted(run_dirs, key=lambda path: path.name, reverse=True)
+
+
+def _read_run_metadata(system_dir: Path) -> dict:
+    """Return the interface metadata of the newest run of one system, if any."""
+    for run_dir in _persisted_run_dirs(system_dir):
+        file_path = run_dir / RUN_METADATA_FILENAME
+        if not file_path.is_file():
+            continue
+        try:
+            data = json.loads(file_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if isinstance(data, dict):
+            return data
+    return {}
+
+
+def _write_run_metadata(system_name: str, metadata: dict) -> None:
+    """Store configuration and AI labels next to the newest run artifacts."""
+    run_dirs = _persisted_run_dirs(RESULTS_DIR / system_name.lower())
+    if not run_dirs:
+        return
+    try:
+        (run_dirs[0] / RUN_METADATA_FILENAME).write_text(
+            json.dumps(metadata, indent=2, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+    except OSError:
+        pass
+
+
+def _configuration_label(value: object) -> str:
+    text = str(value or "").strip().lower()
+    return text.upper() if text in settings_store.CONFIGURATIONS else "not recorded"
+
+
+def _uniform_value(values: list) -> str | None:
+    unique = {value for value in values if value}
+    return unique.pop() if len(unique) == 1 else None
 
 
 def _latest_persisted_proposals(system_name: str) -> dict[str, str]:
@@ -128,12 +173,25 @@ def _persisted_report_run() -> dict | None:
         run_dirs = _persisted_run_dirs(system_dir)
         if run_dirs:
             latest_timestamp = max(latest_timestamp, max(path.stat().st_mtime for path in run_dirs))
-        proposals.append({"system": system_dir.name, **saved_proposals})
+        metadata = _read_run_metadata(system_dir)
+        proposals.append({
+            "system": system_dir.name,
+            **saved_proposals,
+            "configuration": metadata.get("configuration"),
+            "ai": metadata.get("ai"),
+            "model": metadata.get("model"),
+            "key_label": metadata.get("key_label"),
+        })
 
     if not proposals:
         return None
     generated_at = datetime.fromtimestamp(latest_timestamp).strftime("%Y-%m-%d %H:%M:%S") if latest_timestamp else "unknown"
-    systems = [{"system_name": item["system"]} for item in proposals]
+    systems = []
+    for item in proposals:
+        system = {"system_name": item["system"]}
+        if item.get("configuration"):
+            system["mode"] = item["configuration"]
+        systems.append(system)
     return {
         "run_id": "persisted-results",
         "generated_at": generated_at,
@@ -142,6 +200,8 @@ def _persisted_report_run() -> dict | None:
         "service_metrics": [],
         "interaction_metrics": [],
         "best_results": [],
+        "configuration": _uniform_value([item.get("configuration") for item in proposals]),
+        "ai_label": _uniform_value([item.get("ai") for item in proposals]),
     }
 
 
@@ -157,14 +217,19 @@ def _report_run() -> dict | None:
         system_name = system.get("system_name", "").strip()
         fallback = fallback_proposals.get(system_name, {})
         saved = _latest_persisted_proposals(system_name)
+        metadata = _read_run_metadata(RESULTS_DIR / system_name.lower()) if system_name else {}
         proposals.append({
             "system": system_name,
             "agent_a": saved.get("agent_a") or fallback.get("agent_a") or "",
             "agent_b": saved.get("agent_b") or fallback.get("agent_b") or "",
             "consolidated": saved.get("consolidated") or fallback.get("consolidated") or "",
             "specification": saved.get("specification") or fallback.get("specification") or "",
+            "configuration": system.get("mode") or fallback.get("configuration") or metadata.get("configuration"),
+            "ai": report_run.get("ai_label") or fallback.get("ai") or metadata.get("ai"),
         })
     report_run["proposals"] = proposals
+    if not report_run.get("configuration"):
+        report_run["configuration"] = _uniform_value([item.get("configuration") for item in proposals])
     return report_run
 
 
@@ -188,6 +253,12 @@ class DavinciRequestHandler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         if path == "/":
             self._serve_index()
+            return
+        if path == "/user-guide":
+            self._serve_static_file(STATIC_DIR / "user-guide.html")
+            return
+        if path == "/api/settings":
+            self._send_json(HTTPStatus.OK, settings_store.settings_payload())
             return
         if path == "/api/report/pdf":
             self._serve_pdf_report()
@@ -227,6 +298,17 @@ class DavinciRequestHandler(BaseHTTPRequestHandler):
             {"ok": False, "code": "not_found", "message": "Route not found."},
         )
 
+    def _write_body(self, content: bytes) -> None:
+        """Write a response body in chunks.
+
+        A single write followed by closing the connection resets the request on
+        Windows for bodies above roughly one megabyte; flushing fixed-size
+        chunks delivers the whole report reliably.
+        """
+        for offset in range(0, len(content), 65536):
+            self.wfile.write(content[offset:offset + 65536])
+            self.wfile.flush()
+
     def _serve_pdf_report(self) -> None:
         report_run = _report_run()
         if report_run is None:
@@ -249,7 +331,7 @@ class DavinciRequestHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Disposition", "attachment; filename=davinci-architecture-report.pdf")
         self.send_header("Content-Length", str(len(content)))
         self.end_headers()
-        self.wfile.write(content)
+        self._write_body(content)
 
     def _serve_specification_pdf(self) -> None:
         report_run = _report_run()
@@ -265,7 +347,7 @@ class DavinciRequestHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Disposition", "attachment; filename=davinci-architectural-specification.pdf")
         self.send_header("Content-Length", str(len(content)))
         self.end_headers()
-        self.wfile.write(content)
+        self._write_body(content)
 
     def _serve_index(self) -> None:
         content = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
@@ -287,6 +369,12 @@ class DavinciRequestHandler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         if path == "/api/pipeline/run":
             self._run_pipeline()
+            return
+        if path == "/api/settings":
+            self._update_settings()
+            return
+        if path == "/api/settings/api-key":
+            self._save_api_key()
             return
         if path != "/api/systems":
             self._send_json(
@@ -315,6 +403,106 @@ class DavinciRequestHandler(BaseHTTPRequestHandler):
             HTTPStatus.OK,
             {"ok": True, "system": empty_system_definition(), "count": current_count + 1},
         )
+
+    def _update_settings(self) -> None:
+        payload = self._read_json_body()
+        if payload is None:
+            return
+        configuration = payload.get("configuration")
+        provider = payload.get("provider")
+        key_number = payload.get("key_number")
+
+        if configuration is not None and (
+            not isinstance(configuration, str)
+            or configuration.strip().lower() not in settings_store.CONFIGURATIONS
+        ):
+            self._send_json(
+                HTTPStatus.BAD_REQUEST,
+                {"ok": False, "code": "invalid_configuration", "message": "Unknown pipeline configuration."},
+            )
+            return
+        if provider is not None and (
+            not isinstance(provider, str)
+            or provider.strip().lower() not in settings_store.PROVIDERS
+        ):
+            self._send_json(
+                HTTPStatus.BAD_REQUEST,
+                {"ok": False, "code": "invalid_provider", "message": "Unknown AI provider."},
+            )
+            return
+        if key_number is not None:
+            if provider is None:
+                self._send_json(
+                    HTTPStatus.BAD_REQUEST,
+                    {"ok": False, "code": "provider_required", "message": "Select an AI provider before selecting a key."},
+                )
+                return
+            try:
+                number = int(key_number)
+            except (TypeError, ValueError):
+                number = 0
+            available = {
+                item["number"]
+                for item in settings_store.public_keys(provider.strip().lower())
+            }
+            if isinstance(key_number, bool) or number not in available:
+                self._send_json(
+                    HTTPStatus.BAD_REQUEST,
+                    {"ok": False, "code": "key_not_found", "message": "The selected key is not registered for this AI."},
+                )
+                return
+
+        try:
+            if configuration is not None:
+                settings_store.set_configuration(configuration)
+            if provider is not None:
+                settings_store.set_provider(provider)
+            if key_number is not None:
+                settings_store.select_key(provider, number)
+        except settings_store.SettingsError as error:
+            self._send_json(
+                HTTPStatus.BAD_REQUEST,
+                {"ok": False, "code": error.code, "message": error.message},
+            )
+            return
+        self._send_json(HTTPStatus.OK, settings_store.settings_payload())
+
+    def _save_api_key(self) -> None:
+        payload = self._read_json_body()
+        if payload is None:
+            return
+        provider = payload.get("provider")
+        key = payload.get("key")
+        make_active = payload.get("make_active", False)
+        if not isinstance(provider, str) or provider.strip().lower() not in settings_store.PROVIDERS:
+            self._send_json(
+                HTTPStatus.BAD_REQUEST,
+                {"ok": False, "code": "invalid_provider", "message": "Unknown AI provider."},
+            )
+            return
+        if not isinstance(key, str) or not key.strip():
+            self._send_json(
+                HTTPStatus.BAD_REQUEST,
+                {"ok": False, "code": "empty_key", "message": "Enter an API key before saving."},
+            )
+            return
+        if not isinstance(make_active, bool):
+            self._send_json(
+                HTTPStatus.BAD_REQUEST,
+                {"ok": False, "code": "invalid_option", "message": "The activation option must be true or false."},
+            )
+            return
+        try:
+            number, active = settings_store.add_key(provider, key, make_active)
+        except settings_store.SettingsError as error:
+            self._send_json(
+                HTTPStatus.BAD_REQUEST,
+                {"ok": False, "code": error.code, "message": error.message},
+            )
+            return
+        response = settings_store.settings_payload()
+        response["saved_key"] = {"number": number, "label": f"Key {number}", "active": active}
+        self._send_json(HTTPStatus.OK, response)
 
     def _run_pipeline(self) -> None:
         global LATEST_RUN
@@ -351,6 +539,41 @@ class DavinciRequestHandler(BaseHTTPRequestHandler):
                     {"ok": False, "code": "unsupported_target", "message": "Only the Microservices target is supported."},
                 )
                 return
+            mode = system.get("mode")
+            if mode is not None and (
+                not isinstance(mode, str)
+                or mode.strip().lower() not in settings_store.CONFIGURATIONS
+            ):
+                self._send_json(
+                    HTTPStatus.BAD_REQUEST,
+                    {"ok": False, "code": "invalid_mode", "message": f"Unknown pipeline configuration for system {index}."},
+                )
+                return
+
+        provider_applied = None
+        provider_id = None
+        key_label = None
+        ai_text = None
+        if "provider" in payload:
+            provider_value = payload.get("provider")
+            if not isinstance(provider_value, str) or provider_value.strip().lower() not in settings_store.PROVIDERS:
+                self._send_json(
+                    HTTPStatus.BAD_REQUEST,
+                    {"ok": False, "code": "invalid_provider", "message": "Unknown AI provider."},
+                )
+                return
+            try:
+                provider_applied = settings_store.apply_provider_environment(provider_value)
+            except settings_store.SettingsError as error:
+                self._send_json(
+                    HTTPStatus.BAD_REQUEST,
+                    {"ok": False, "code": error.code, "message": error.message},
+                )
+                return
+            provider_id = provider_applied["provider"]
+            ai_text = f"{provider_applied['label']} ({provider_applied['model']})"
+            key_number = settings_store.load_settings()["active_key"].get(provider_id)
+            key_label = f"Key {key_number}" if key_number else None
 
         run_id = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
         generated_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -392,12 +615,25 @@ class DavinciRequestHandler(BaseHTTPRequestHandler):
                     "best_services": f"{best_service['proposal']} (F1 {best_service['f1_score']:.4f})" if best_service else "-",
                     "best_interactions": f"{best_interaction['proposal']} (F1 {best_interaction['f1_score']:.4f})" if best_interaction else "-",
                 })
+                mode_value = str(system.get("mode", "")).strip().lower() or None
                 proposals.append({
                     "system": name,
                     "agent_a": results.get("proposta_a", ""),
                     "agent_b": results.get("proposta_b", ""),
                     "consolidated": results.get("consolidada", ""),
                     "specification": results.get("especificacao_yaml", ""),
+                    "configuration": mode_value,
+                    "ai": ai_text,
+                })
+                _write_run_metadata(name, {
+                    "run_id": run_id,
+                    "system": name,
+                    "configuration": mode_value,
+                    "provider": provider_id,
+                    "ai": ai_text,
+                    "model": provider_applied["model"] if provider_applied else None,
+                    "key_label": key_label,
+                    "generated_at": generated_at,
                 })
                 if pipeline_result.get("warning"):
                     warnings.append({"system": name, "message": pipeline_result["warning"]})
@@ -423,6 +659,17 @@ class DavinciRequestHandler(BaseHTTPRequestHandler):
             "errors": errors,
             "warnings": warnings,
         }
+        systems_configurations = [
+            str(system.get("mode", "")).strip().lower()
+            for system in systems
+            if system.get("mode")
+        ]
+        result["configuration"] = _uniform_value(systems_configurations) if systems_configurations else None
+        result["configuration_label"] = _configuration_label(result["configuration"])
+        result["provider"] = provider_id
+        result["ai_label"] = ai_text
+        result["model"] = provider_applied["model"] if provider_applied else None
+        result["key_label"] = key_label
         LATEST_RUN = result
         with PROGRESS_LOCK:
             PIPELINE_PROGRESS["active"] = False
@@ -495,7 +742,7 @@ class DavinciRequestHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(content)))
         self.end_headers()
-        self.wfile.write(content)
+        self._write_body(content)
 
     def _send_json(self, status: HTTPStatus, payload: dict) -> None:
         content = json.dumps(payload).encode("utf-8")
@@ -512,6 +759,7 @@ class DavinciRequestHandler(BaseHTTPRequestHandler):
 
 def create_server(host: str = HOST, port: int = PORT) -> ThreadingHTTPServer:
     """Create the local threaded HTTP server."""
+    settings_store.sync_provider_environment()
     return ThreadingHTTPServer((host, port), DavinciRequestHandler)
 
 
@@ -537,19 +785,25 @@ def build_pdf_report(run: dict) -> bytes:
     add("Multi-Agent Software Architect", "subtitle")
     add(f"Run ID / Test Number: {run.get('run_id', 'unknown')}", "metadata")
     add(f"Generated: {run.get('generated_at', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}", "metadata")
+    add(f"Configuration: {_configuration_label(run.get('configuration'))}", "metadata")
+    add(f"AI: {run.get('ai_label') or run.get('ai') or 'not recorded'}", "metadata")
     add("", "body")
     proposals_by_system = {item["system"]: item for item in run.get("proposals", [])}
 
     for system in run.get("systems", []):
         name = system.get("system_name", "")
+        proposal_data = proposals_by_system.get(name, {})
         add(f"SYSTEM: {name}", "system")
+        system_configuration = system.get("mode") or proposal_data.get("configuration")
+        system_ai = proposal_data.get("ai") or run.get("ai_label") or run.get("ai")
+        add(f"Configuration: {_configuration_label(system_configuration)}", "metadata")
+        add(f"AI: {system_ai or 'not recorded'}", "metadata")
         add("SECTION 1 - INPUTS PROVIDED", "section")
         add_wrapped("System Requirements", system.get("requirements"))
         add_wrapped("Reference Services", system.get("reference_services"))
         add_wrapped("Reference Interactions", system.get("reference_interactions"))
         add("", "body")
 
-        proposal_data = proposals_by_system.get(name, {})
         add("SECTION 2 - AGENT PROPOSALS", "section")
         add("Agent Proposals", "subsection")
         for proposal_name, subtitle, key in (
@@ -672,8 +926,12 @@ def build_pdf_specification(run: dict) -> bytes:
     entries = [("DAVINCI Architect", "title"), ("Architectural Specification", "subtitle")]
     entries.append((f"Run ID / Test Number: {run.get('run_id', 'unknown')}", "metadata"))
     entries.append((f"Generated: {run.get('generated_at', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))}", "metadata"))
+    entries.append((f"Configuration: {_configuration_label(run.get('configuration'))}", "metadata"))
+    entries.append((f"AI: {run.get('ai_label') or run.get('ai') or 'not recorded'}", "metadata"))
     for proposal in run.get("proposals", []):
         entries.append((f"SYSTEM: {proposal.get('system', '')}", "system"))
+        entries.append((f"Configuration: {_configuration_label(proposal.get('configuration') or run.get('configuration'))}", "metadata"))
+        entries.append((f"AI: {proposal.get('ai') or run.get('ai_label') or run.get('ai') or 'not recorded'}", "metadata"))
         for line in (proposal.get("specification", "") or "").splitlines():
             entries.append((line, "yaml"))
         entries.append(("", "body"))

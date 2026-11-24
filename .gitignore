@@ -61,3 +61,8 @@ Thumbs.db
 *.zip
 *.tar.gz
 *.rar
+# ==============================
+# Interface runtime settings
+# ==============================
+Interface/settings.json
+Interface/settings.json.tmp
