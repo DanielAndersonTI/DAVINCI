@@ -1,0 +1,9 @@
+codigo,comparacao,efeito,ci_low,ci_high,p_raw,n_unidades,detalhe
+E1,"C1 - C0, defeitos estruturais",-0.071412,-0.126472,-0.024752,0.005999,24,exploratorio; p bruto; unidade: sistema x modelo
+E2,"C1 - C0, F1_inter",0.044826,0.002272,0.098951,0.074585,24,exploratorio; p bruto; unidade: sistema x modelo
+E3,"Claude - DeepSeek, defeitos estruturais",-0.126448,-0.182232,-0.075694,0.000200,40,exploratorio; p bruto; unidade: sistema x configuracao
+E4,"Claude - DeepSeek, F1_inter",0.002455,-0.063277,0.064514,0.941812,40,exploratorio; p bruto; unidade: sistema x configuracao
+E5,"Claude - Gemini, defeitos estruturais",-0.093026,-0.143502,-0.045675,0.000200,40,exploratorio; p bruto; unidade: sistema x configuracao
+E6,"Claude - Gemini, F1_inter",-0.045695,-0.085259,-0.008735,0.025595,40,exploratorio; p bruto; unidade: sistema x configuracao
+E7,"Gemini - DeepSeek, defeitos estruturais",-0.033423,-0.106905,0.036240,0.378924,40,exploratorio; p bruto; unidade: sistema x configuracao
+E8,"Gemini - DeepSeek, F1_inter",0.048151,-0.007002,0.100768,0.089382,40,exploratorio; p bruto; unidade: sistema x configuracao

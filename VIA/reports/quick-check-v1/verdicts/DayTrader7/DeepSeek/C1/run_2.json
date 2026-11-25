@@ -1,0 +1,264 @@
+{
+  "achados": [
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Authentication Service",
+        "Investor Service",
+        "Market Data Service",
+        "Order History Service",
+        "Portfolio Service",
+        "Trading Service"
+      ],
+      "evidencia": "componente fortemente conexa com 6 servicos",
+      "familia": "coerencia",
+      "id": "D04-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Authentication Service",
+        "Investor Service"
+      ],
+      "evidencia": "Authentication Service -> Investor Service; Investor Service -> Authentication Service",
+      "familia": "coerencia",
+      "id": "D04-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Authentication Service",
+        "Portfolio Service"
+      ],
+      "evidencia": "Authentication Service -> Portfolio Service; Portfolio Service -> Authentication Service",
+      "familia": "coerencia",
+      "id": "D04-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Authentication Service",
+        "Trading Service"
+      ],
+      "evidencia": "Authentication Service -> Trading Service; Trading Service -> Authentication Service",
+      "familia": "coerencia",
+      "id": "D04-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Market Data Service",
+        "Trading Service"
+      ],
+      "evidencia": "Market Data Service -> Trading Service; Trading Service -> Market Data Service",
+      "familia": "coerencia",
+      "id": "D04-005",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Order History Service",
+        "Trading Service"
+      ],
+      "evidencia": "Order History Service -> Trading Service; Trading Service -> Order History Service",
+      "familia": "coerencia",
+      "id": "D04-006",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Portfolio Service",
+        "Trading Service"
+      ],
+      "evidencia": "Portfolio Service -> Trading Service; Trading Service -> Portfolio Service",
+      "familia": "coerencia",
+      "id": "D04-007",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Authentication Service"
+      ],
+      "evidencia": "2 endpoint(s) para 9 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.222222
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Investor Service"
+      ],
+      "evidencia": "1 endpoint(s) para 6 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.166667
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Market Data Service"
+      ],
+      "evidencia": "1 endpoint(s) para 6 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.166667
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Order History Service"
+      ],
+      "evidencia": "1 endpoint(s) para 5 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.2
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Portfolio Service"
+      ],
+      "evidencia": "1 endpoint(s) para 9 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-005",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.111111
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Simulation Administration Service"
+      ],
+      "evidencia": "1 endpoint(s) para 8 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-006",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.125
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Trading Service"
+      ],
+      "evidencia": "1 endpoint(s) para 11 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-007",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.090909
+    }
+  ],
+  "avisos": [],
+  "contagens": {
+    "D04": 1,
+    "D11": 7
+  },
+  "d07_status": "not_applicable",
+  "descartados": [],
+  "entrada": {
+    "arestas": 19,
+    "duplicatas_normalizadas": [
+      "Authentication Service"
+    ],
+    "requisitos": 76,
+    "schema": "en",
+    "servicos": 7,
+    "yaml_sha256": "73fc5ed5e4cfb7b5413c71cb96665f3597874f1a04db6ec7ac9458b7bfd83ff2"
+  },
+  "execucao": {
+    "commit_davinci": null,
+    "configuracao": "C1",
+    "execution_id": "20260909_105216_434302",
+    "max_tokens": null,
+    "modelo": "DeepSeek",
+    "modelo_versao": null,
+    "rodada": 2,
+    "temperatura": null
+  },
+  "gerado_em": "2026-11-24T00:00:00+00:00",
+  "metricas": {
+    "cobertura_requisitos": null,
+    "conflitos_de_posse": null,
+    "consistencia_interna": null,
+    "densidade_ciclos": 0.142857,
+    "endpoints_por_responsabilidade": 0.148148,
+    "estabilidade_jaccard_arestas": 0.564593,
+    "estabilidade_jaccard_servicos": 0.857143,
+    "gini_granularidade": 0.142857,
+    "precisao_servicos": null,
+    "taxa_defeitos_por_servico": 1.142857
+  },
+  "metricas_status": {
+    "cobertura_requisitos": "semiautomatico_nao_executado",
+    "conflitos_de_posse": "semiautomatico_nao_executado",
+    "consistencia_interna": "d07_nao_aplicavel",
+    "densidade_ciclos": "calculado",
+    "endpoints_por_responsabilidade": "calculado",
+    "estabilidade_jaccard_arestas": "calculado",
+    "estabilidade_jaccard_servicos": "calculado",
+    "gini_granularidade": "calculado",
+    "precisao_servicos": "semiautomatico_nao_executado",
+    "taxa_defeitos_por_servico": "calculado"
+  },
+  "sistema": "DayTrader7",
+  "versao_via": "1.0.0"
+}

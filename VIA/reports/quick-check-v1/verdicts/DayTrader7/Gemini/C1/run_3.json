@@ -1,0 +1,184 @@
+{
+  "achados": [
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Portfolio Service",
+        "Trading Service"
+      ],
+      "evidencia": "componente fortemente conexa com 2 servicos",
+      "familia": "coerencia",
+      "id": "D04-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Portfolio Service",
+        "Trading Service"
+      ],
+      "evidencia": "Portfolio Service -> Trading Service; Trading Service -> Portfolio Service",
+      "familia": "coerencia",
+      "id": "D04-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Investor Account Service",
+        "total logins"
+      ],
+      "evidencia": "nome nao resolvido: total logins",
+      "familia": "coerencia",
+      "id": "D05-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Simulation Administration Service",
+        "simulation limits"
+      ],
+      "evidencia": "nome nao resolvido: simulation limits",
+      "familia": "coerencia",
+      "id": "D05-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Authentication Service"
+      ],
+      "evidencia": "1 endpoint(s) para 4 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.25
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Investor Account Service"
+      ],
+      "evidencia": "1 endpoint(s) para 5 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.2
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Market Data Service"
+      ],
+      "evidencia": "1 endpoint(s) para 5 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.2
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Portfolio Service"
+      ],
+      "evidencia": "1 endpoint(s) para 6 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.166667
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Trading Service"
+      ],
+      "evidencia": "1 endpoint(s) para 9 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-005",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.111111
+    }
+  ],
+  "avisos": [],
+  "contagens": {
+    "D04": 1,
+    "D05": 2,
+    "D11": 5
+  },
+  "d07_status": "not_applicable",
+  "descartados": [],
+  "entrada": {
+    "arestas": 10,
+    "duplicatas_normalizadas": [],
+    "requisitos": 76,
+    "schema": "en",
+    "servicos": 6,
+    "yaml_sha256": "2c4de9d9096fdef1cbe113214fb749f402a45cd648bd17a8ed6ae3a04cdd3d99"
+  },
+  "execucao": {
+    "commit_davinci": null,
+    "configuracao": "C1",
+    "execution_id": "20260903_171921_736232",
+    "max_tokens": null,
+    "modelo": "Gemini",
+    "modelo_versao": null,
+    "rodada": 3,
+    "temperatura": null
+  },
+  "gerado_em": "2026-11-24T00:00:00+00:00",
+  "metricas": {
+    "cobertura_requisitos": null,
+    "conflitos_de_posse": null,
+    "consistencia_interna": null,
+    "densidade_ciclos": 0.166667,
+    "endpoints_por_responsabilidade": 0.193548,
+    "estabilidade_jaccard_arestas": 0.320707,
+    "estabilidade_jaccard_servicos": 0.916667,
+    "gini_granularidade": 0.22043,
+    "precisao_servicos": null,
+    "taxa_defeitos_por_servico": 1.333333
+  },
+  "metricas_status": {
+    "cobertura_requisitos": "semiautomatico_nao_executado",
+    "conflitos_de_posse": "semiautomatico_nao_executado",
+    "consistencia_interna": "d07_nao_aplicavel",
+    "densidade_ciclos": "calculado",
+    "endpoints_por_responsabilidade": "calculado",
+    "estabilidade_jaccard_arestas": "calculado",
+    "estabilidade_jaccard_servicos": "calculado",
+    "gini_granularidade": "calculado",
+    "precisao_servicos": "semiautomatico_nao_executado",
+    "taxa_defeitos_por_servico": "calculado"
+  },
+  "sistema": "DayTrader7",
+  "versao_via": "1.0.0"
+}

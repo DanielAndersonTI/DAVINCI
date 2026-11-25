@@ -1,0 +1,210 @@
+{
+  "achados": [
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Cargo Management Service",
+        "Route Planning Service"
+      ],
+      "evidencia": "componente fortemente conexa com 2 servicos",
+      "familia": "coerencia",
+      "id": "D04-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Cargo Management Service",
+        "Route Planning Service"
+      ],
+      "evidencia": "Cargo Management Service -> Route Planning Service; Route Planning Service -> Cargo Management Service",
+      "familia": "coerencia",
+      "id": "D04-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Architecture A and Architecture B have identical Service metrics (Precision=1.0000",
+        "F1=0.9091)."
+      ],
+      "evidencia": "nome nao resolvido: F1=0.9091).",
+      "familia": "coerencia",
+      "id": "D05-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Architecture B has significantly higher Interaction metrics (Precision=1.0000",
+        "F1=0.8421) compared to Architecture A (Precision=0.3333"
+      ],
+      "evidencia": "nome nao resolvido: F1=0.8421) compared to Architecture A (Precision=0.3333",
+      "familia": "coerencia",
+      "id": "D05-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Output must be raw CSV with no markdown or extra text.Microservice",
+        "Communicates With"
+      ],
+      "evidencia": "nome nao resolvido: Communicates With",
+      "familia": "coerencia",
+      "id": "D05-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Cargo Management Service"
+      ],
+      "evidencia": "1 endpoint(s) para 4 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.25
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Cargo Tracking Service"
+      ],
+      "evidencia": "1 endpoint(s) para 4 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.25
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Integration Service"
+      ],
+      "evidencia": "1 endpoint(s) para 4 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.25
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Logistics Event Registration Service"
+      ],
+      "evidencia": "1 endpoint(s) para 4 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.25
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Route Planning Service"
+      ],
+      "evidencia": "1 endpoint(s) para 4 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-005",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.25
+    },
+    {
+      "codigo": "D12",
+      "confirmado": true,
+      "elementos": [],
+      "evidencia": "nenhuma mencao a autenticacao ou autorizacao no artefato",
+      "familia": "interface",
+      "id": "D12-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "baixa"
+    }
+  ],
+  "avisos": [],
+  "contagens": {
+    "D04": 1,
+    "D05": 3,
+    "D11": 5,
+    "D12": 1
+  },
+  "d07_status": "not_applicable",
+  "descartados": [],
+  "entrada": {
+    "arestas": 12,
+    "duplicatas_normalizadas": [],
+    "requisitos": 71,
+    "schema": "en",
+    "servicos": 8,
+    "yaml_sha256": "a3308b9357c840cc321c9ed13350bee561f160533bc730602d59ef2a2a99313d"
+  },
+  "execucao": {
+    "commit_davinci": null,
+    "configuracao": "C1",
+    "execution_id": "20260903_171811_012917",
+    "max_tokens": null,
+    "modelo": "Gemini",
+    "modelo_versao": null,
+    "rodada": 3,
+    "temperatura": null
+  },
+  "gerado_em": "2026-11-24T00:00:00+00:00",
+  "metricas": {
+    "cobertura_requisitos": null,
+    "conflitos_de_posse": null,
+    "consistencia_interna": null,
+    "densidade_ciclos": 0.125,
+    "endpoints_por_responsabilidade": 0.347826,
+    "estabilidade_jaccard_arestas": 0.506579,
+    "estabilidade_jaccard_servicos": 0.534722,
+    "gini_granularidade": 0.244565,
+    "precisao_servicos": null,
+    "taxa_defeitos_por_servico": 1.25
+  },
+  "metricas_status": {
+    "cobertura_requisitos": "semiautomatico_nao_executado",
+    "conflitos_de_posse": "semiautomatico_nao_executado",
+    "consistencia_interna": "d07_nao_aplicavel",
+    "densidade_ciclos": "calculado",
+    "endpoints_por_responsabilidade": "calculado",
+    "estabilidade_jaccard_arestas": "calculado",
+    "estabilidade_jaccard_servicos": "calculado",
+    "gini_granularidade": "calculado",
+    "precisao_servicos": "semiautomatico_nao_executado",
+    "taxa_defeitos_por_servico": "calculado"
+  },
+  "sistema": "Cargo-Tracker",
+  "versao_via": "1.0.0"
+}

@@ -1,0 +1,77 @@
+{"id": "R01", "linha": "1", "texto": "The system must allow visitors and customers to enter the virtual store and browse the main catalog."}
+{"id": "R02", "linha": "2", "texto": "The system must organize products by animal categories, including fish, dogs, reptiles, cats, and birds."}
+{"id": "R03", "linha": "3", "texto": "The system must allow access to categories through different navigation paths, such as the main menu, quick shortcuts, and visual elements on the home page."}
+{"id": "R04", "linha": "4", "texto": "The system must allow viewing the product list of each category."}
+{"id": "R05", "linha": "5", "texto": "The system must allow viewing the available items of each product."}
+{"id": "R06", "linha": "6", "texto": "The system must allow viewing item details, including description, identifier, price, and stock status."}
+{"id": "R07", "linha": "7", "texto": "The system must allow searching products by keyword."}
+{"id": "R08", "linha": "8", "texto": "The search must consider the product name as the basis for returning results."}
+{"id": "R09", "linha": "9", "texto": "When no keyword is provided, the system must block the search and guide the user to fill in the search field."}
+{"id": "R10", "linha": "10", "texto": "The system must maintain the catalog as a separate capability, responsible for products, categories, items, and search."}
+{"id": "R11", "linha": "11", "texto": "The catalog capability depends on inventory to provide updated stock information for items."}
+{"id": "R12", "linha": "13", "texto": "The system must allow registering new customers by filling in identification, contact, address, and access credential data."}
+{"id": "R13", "linha": "14", "texto": "The system must allow customers to authenticate using username and password."}
+{"id": "R14", "linha": "15", "texto": "The system must inform when authentication cannot be completed due to invalid username or password."}
+{"id": "R15", "linha": "16", "texto": "The system must allow customers to end their usage session."}
+{"id": "R16", "linha": "17", "texto": "The system must allow customers to edit their registration data and profile preferences."}
+{"id": "R17", "linha": "18", "texto": "The system must allow customers to define their preferred language."}
+{"id": "R18", "linha": "19", "texto": "The system must allow customers to choose a favorite category."}
+{"id": "R19", "linha": "20", "texto": "The system must allow customers to enable a personalized product list based on their favorite category."}
+{"id": "R20", "linha": "21", "texto": "The system must allow customers to enable a promotional banner related to their favorite category."}
+{"id": "R21", "linha": "22", "texto": "The system must reflect customer preferences, such as the personalized list and banner associated with the favorite category."}
+{"id": "R22", "linha": "23", "texto": "The system must maintain the customer account as a separate capability, responsible for registration, profile, and preferences."}
+{"id": "R23", "linha": "24", "texto": "The system must maintain authentication as a capability separate from the customer account, responsible for login, session, and access control."}
+{"id": "R24", "linha": "25", "texto": "The customer account capability depends on authentication to validate user access."}
+{"id": "R25", "linha": "27", "texto": "The system must allow adding items to the shopping cart from product pages and item detail pages."}
+{"id": "R26", "linha": "28", "texto": "When the same item is added more than once, the system must consolidate the item in the cart and increase its quantity."}
+{"id": "R27", "linha": "29", "texto": "The system must allow viewing the cart with selected items, quantities, unit prices, and totals by item."}
+{"id": "R28", "linha": "30", "texto": "The system must inform, for each cart item, whether it is available in stock at the time of inclusion."}
+{"id": "R29", "linha": "31", "texto": "The system must allow updating item quantities in the cart."}
+{"id": "R30", "linha": "32", "texto": "The system must allow removing items from the cart."}
+{"id": "R31", "linha": "33", "texto": "When the informed quantity for an item is less than 1, the system must remove it from the cart."}
+{"id": "R32", "linha": "34", "texto": "The system must automatically calculate the cart subtotal based on selected items and quantities."}
+{"id": "R33", "linha": "35", "texto": "The system must maintain the cart as a separate capability, responsible for the temporary selection of items."}
+{"id": "R34", "linha": "36", "texto": "The shopping cart capability depends on the catalog to identify the selected items."}
+{"id": "R35", "linha": "37", "texto": "The shopping cart capability depends on inventory to validate item availability."}
+{"id": "R36", "linha": "39", "texto": "The system must inform stock availability when viewing an item."}
+{"id": "R37", "linha": "40", "texto": "When there is no available quantity in stock, the system must indicate that the item is on backorder."}
+{"id": "R38", "linha": "41", "texto": "The system must consult stock status in an updated manner at critical points of the purchase journey."}
+{"id": "R39", "linha": "42", "texto": "When completing an order, the system must register the decrease of the purchased quantity from stock."}
+{"id": "R40", "linha": "43", "texto": "The system must maintain inventory as a separate capability, responsible for item availability and stock decrease."}
+{"id": "R41", "linha": "44", "texto": "The inventory capability depends on the catalog to identify the items whose stock is being managed."}
+{"id": "R42", "linha": "46", "texto": "The system must require the user to be authenticated to start the checkout process."}
+{"id": "R43", "linha": "47", "texto": "When starting an order, the system must use the customer registration data to initially fill in billing and delivery information."}
+{"id": "R44", "linha": "48", "texto": "The system must use the cart items to automatically compose the order."}
+{"id": "R45", "linha": "49", "texto": "The system must allow customers to inform or adjust order payment data."}
+{"id": "R46", "linha": "50", "texto": "The system must allow choosing the card type among the options available in the application."}
+{"id": "R47", "linha": "51", "texto": "The system must allow customers to indicate a delivery address different from the billing address."}
+{"id": "R48", "linha": "52", "texto": "When the customer chooses a different delivery address, the system must present a specific step for filling in that address."}
+{"id": "R49", "linha": "53", "texto": "Before finalization, the system must present a confirmation step with the informed billing and delivery data."}
+{"id": "R50", "linha": "54", "texto": "The system must complete the order only after explicit customer confirmation."}
+{"id": "R51", "linha": "55", "texto": "When completing the order, the system must generate a unique purchase identifier."}
+{"id": "R52", "linha": "56", "texto": "When completing the order, the system must record the purchase date, acquired items, quantities, values, and initial order status."}
+{"id": "R53", "linha": "57", "texto": "After purchase completion, the system must clear the customer cart."}
+{"id": "R54", "linha": "58", "texto": "After purchase completion, the system must display a confirmation message for order receipt."}
+{"id": "R55", "linha": "59", "texto": "The system must maintain the order as a separate capability, responsible for checkout and order lifecycle."}
+{"id": "R56", "linha": "60", "texto": "The order capability depends on authentication to validate access."}
+{"id": "R57", "linha": "61", "texto": "The order capability depends on the customer account to obtain registration data."}
+{"id": "R58", "linha": "62", "texto": "The order capability depends on the shopping cart to obtain the items being purchased."}
+{"id": "R59", "linha": "63", "texto": "The order capability depends on inventory to register the stock decrease."}
+{"id": "R60", "linha": "65", "texto": "The system must allow customers to consult their list of completed orders."}
+{"id": "R61", "linha": "66", "texto": "The order listing must show at least order number, date, and total value."}
+{"id": "R62", "linha": "67", "texto": "The system must allow consulting the details of a specific order."}
+{"id": "R63", "linha": "68", "texto": "The order details must show payment data, addresses, carrier, status, purchased items, quantities, prices, and total purchase value."}
+{"id": "R64", "linha": "69", "texto": "The system must restrict order viewing to the respective customer responsible for the purchase."}
+{"id": "R65", "linha": "70", "texto": "The system must protect checkout and order consultation features through customer authentication."}
+{"id": "R66", "linha": "72", "texto": "The system must properly end the customer session at logout, avoiding continued unauthorized authenticated access."}
+{"id": "R67", "linha": "73", "texto": "The system must not unnecessarily expose the customer password during navigation after login."}
+{"id": "R68", "linha": "74", "texto": "The system must maintain consistency among cart, order, and inventory, avoiding divergences between the completed purchase and registered items."}
+{"id": "R69", "linha": "75", "texto": "The system must ensure that the order is registered with all main elements, including header, status, and purchased items."}
+{"id": "R70", "linha": "76", "texto": "The system must ensure uniqueness in order numbering, allowing purchase traceability."}
+{"id": "R71", "linha": "77", "texto": "The system must automatically calculate cart and order values, reducing manual error risk."}
+{"id": "R72", "linha": "79", "texto": "The system must handle invalid inputs in a controlled way, displaying appropriate messages without compromising application continuity."}
+{"id": "R73", "linha": "80", "texto": "The system must prevent inconsistent operations, such as starting checkout without authentication or silently manipulating nonexistent items."}
+{"id": "R74", "linha": "81", "texto": "The system must preserve order history for later customer consultation."}
+{"id": "R75", "linha": "83", "texto": "The system must offer simple and understandable navigation, with clear access to categories, search, cart, customer account, and help."}
+{"id": "R76", "linha": "84", "texto": "The purchase process must be conducted in logical and progressive steps, making checkout easier to understand."}
+{"id": "R77", "linha": "85", "texto": "The system must provide guidance and confirmation messages at important flow points, such as login failure, empty search field, and completed order."}

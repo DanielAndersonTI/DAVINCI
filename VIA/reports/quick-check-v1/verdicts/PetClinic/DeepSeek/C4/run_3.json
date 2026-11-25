@@ -1,0 +1,167 @@
+{
+  "achados": [
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Veterinarian Service",
+        "Visit Service"
+      ],
+      "evidencia": "componente fortemente conexa com 2 servicos",
+      "familia": "coerencia",
+      "id": "D04-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Veterinarian Service",
+        "Visit Service"
+      ],
+      "evidencia": "Veterinarian Service -> Visit Service; Visit Service -> Veterinarian Service",
+      "familia": "coerencia",
+      "id": "D04-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Animal Service"
+      ],
+      "evidencia": "1 endpoint(s) para 8 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.125
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Interface Service"
+      ],
+      "evidencia": "1 endpoint(s) para 9 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.111111
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Owner Service"
+      ],
+      "evidencia": "1 endpoint(s) para 10 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.1
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Veterinarian Service"
+      ],
+      "evidencia": "1 endpoint(s) para 8 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.125
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Visit Service"
+      ],
+      "evidencia": "1 endpoint(s) para 8 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-005",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.125
+    },
+    {
+      "codigo": "D12",
+      "confirmado": true,
+      "elementos": [],
+      "evidencia": "nenhuma mencao a autenticacao ou autorizacao no artefato",
+      "familia": "interface",
+      "id": "D12-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "baixa"
+    }
+  ],
+  "avisos": [],
+  "contagens": {
+    "D04": 1,
+    "D11": 5,
+    "D12": 1
+  },
+  "d07_status": "not_applicable",
+  "descartados": [],
+  "entrada": {
+    "arestas": 8,
+    "duplicatas_normalizadas": [],
+    "requisitos": 52,
+    "schema": "en",
+    "servicos": 5,
+    "yaml_sha256": "dd741ccba53e59e0931e18da0eaac97cc891210b9a5ef426e7ebca932d66007c"
+  },
+  "execucao": {
+    "commit_davinci": null,
+    "configuracao": "C4",
+    "execution_id": "20260923_213900_905949",
+    "max_tokens": null,
+    "modelo": "DeepSeek",
+    "modelo_versao": null,
+    "rodada": 3,
+    "temperatura": null
+  },
+  "gerado_em": "2026-11-24T00:00:00+00:00",
+  "metricas": {
+    "cobertura_requisitos": null,
+    "conflitos_de_posse": null,
+    "consistencia_interna": null,
+    "densidade_ciclos": 0.2,
+    "endpoints_por_responsabilidade": 0.116279,
+    "estabilidade_jaccard_arestas": 0.944444,
+    "estabilidade_jaccard_servicos": 1.0,
+    "gini_granularidade": 0.046512,
+    "precisao_servicos": null,
+    "taxa_defeitos_por_servico": 1.4
+  },
+  "metricas_status": {
+    "cobertura_requisitos": "semiautomatico_nao_executado",
+    "conflitos_de_posse": "semiautomatico_nao_executado",
+    "consistencia_interna": "d07_nao_aplicavel",
+    "densidade_ciclos": "calculado",
+    "endpoints_por_responsabilidade": "calculado",
+    "estabilidade_jaccard_arestas": "calculado",
+    "estabilidade_jaccard_servicos": "calculado",
+    "gini_granularidade": "calculado",
+    "precisao_servicos": "semiautomatico_nao_executado",
+    "taxa_defeitos_por_servico": "calculado"
+  },
+  "sistema": "PetClinic",
+  "versao_via": "1.0.0"
+}

@@ -1,0 +1,52 @@
+{"id": "R01", "linha": "1", "texto": "The system must provide a home page for user entry."}
+{"id": "R02", "linha": "2", "texto": "The system must offer navigation to the main functionalities for owners and veterinarians."}
+{"id": "R03", "linha": "3", "texto": "The system must have a simple web interface, with easy-to-understand forms and navigation."}
+{"id": "R04", "linha": "4", "texto": "The system must present clear success, error, and validation messages."}
+{"id": "R05", "linha": "5", "texto": "The system must be usable on different screen sizes, such as desktop and mobile."}
+{"id": "R06", "linha": "6", "texto": "The system must support multiple interface languages."}
+{"id": "R07", "linha": "7", "texto": "Messages and labels must remain consistent across supported languages."}
+{"id": "R08", "linha": "8", "texto": "The system must display understandable error pages for known and unexpected failures."}
+{"id": "R09", "linha": "10", "texto": "The system must allow registering owners with first name, last name, address, city, and telephone."}
+{"id": "R10", "linha": "11", "texto": "The system must allow updating the data of an already registered owner."}
+{"id": "R11", "linha": "12", "texto": "The system must allow searching owners by the beginning of the informed last name."}
+{"id": "R12", "linha": "13", "texto": "The system must allow broad owner search when no last name is provided."}
+{"id": "R13", "linha": "14", "texto": "The system must direct directly to the detailed owner registration when the search returns only one result."}
+{"id": "R14", "linha": "15", "texto": "The system must present a paginated list when the search returns several owners."}
+{"id": "R15", "linha": "16", "texto": "The system must inform the user when no owner match is found."}
+{"id": "R16", "linha": "17", "texto": "The system must display the complete data of the selected owner."}
+{"id": "R17", "linha": "18", "texto": "The system must maintain owner management as a separate capability, responsible exclusively for owner data and consultation."}
+{"id": "R18", "linha": "20", "texto": "The system must allow registering an animal linked to an owner."}
+{"id": "R19", "linha": "21", "texto": "The system must allow updating the data of an already registered animal."}
+{"id": "R20", "linha": "22", "texto": "The system must record, for each animal, name, type, and birth date."}
+{"id": "R21", "linha": "23", "texto": "The system must provide a predefined list of animal types for selection."}
+{"id": "R22", "linha": "24", "texto": "The system must prevent the same owner from having two animals with the same name."}
+{"id": "R23", "linha": "25", "texto": "The system must prevent registering a future birth date for the animal."}
+{"id": "R24", "linha": "26", "texto": "The system must maintain animal management as a separate capability, responsible for animal data and the link with the owner."}
+{"id": "R25", "linha": "27", "texto": "The animal management capability depends on owner management to validate the owner link."}
+{"id": "R26", "linha": "29", "texto": "The system must allow registering a visit for a specific animal."}
+{"id": "R27", "linha": "30", "texto": "The visit record must contain at least date and service description."}
+{"id": "R28", "linha": "31", "texto": "The system must suggest the current date as the initial value for a new visit."}
+{"id": "R29", "linha": "32", "texto": "The system must associate the registered visit with the animal history and the respective owner."}
+{"id": "R30", "linha": "33", "texto": "The system must display the visit history of the animals linked to the owner."}
+{"id": "R31", "linha": "34", "texto": "Visit registration must remain consistent even when veterinarian assignment occurs in a separate step."}
+{"id": "R32", "linha": "35", "texto": "The system must resume pending internal processes after restart, avoiding loss of relevant events."}
+{"id": "R33", "linha": "36", "texto": "The system must maintain visit management as a separate capability, responsible for visit registration and service history."}
+{"id": "R34", "linha": "37", "texto": "The visit management capability depends on animal management to validate the animal."}
+{"id": "R35", "linha": "38", "texto": "The visit management capability depends on veterinarian management to assign the visit."}
+{"id": "R36", "linha": "40", "texto": "The system must list registered veterinarians with their names and specialties."}
+{"id": "R37", "linha": "41", "texto": "The system must inform the next expected visit for each veterinarian."}
+{"id": "R38", "linha": "42", "texto": "The system must present the veterinarian list in a paginated manner."}
+{"id": "R39", "linha": "43", "texto": "The system must automatically assign each new visit to a veterinarian."}
+{"id": "R40", "linha": "44", "texto": "Automatic assignment must prioritize the veterinarian with the lowest future workload."}
+{"id": "R41", "linha": "45", "texto": "The system must periodically disregard past visit assignments when calculating veterinarian workload."}
+{"id": "R42", "linha": "46", "texto": "The system must provide the veterinarian list in a structured format for consumption by other systems."}
+{"id": "R43", "linha": "47", "texto": "Frequent veterinarian queries must be optimized to reduce response time."}
+{"id": "R44", "linha": "48", "texto": "The system must maintain veterinarian management as a separate capability, responsible for veterinarian data, specialties, and workload."}
+{"id": "R45", "linha": "49", "texto": "The veterinarian management capability depends on visit management to calculate workload and next visits."}
+{"id": "R46", "linha": "51", "texto": "The system must validate required data before completing registrations and updates."}
+{"id": "R47", "linha": "52", "texto": "The system must not allow direct modification of internal identifiers through forms."}
+{"id": "R48", "linha": "53", "texto": "Static interface resources must be temporarily reusable by the browser to improve loading."}
+{"id": "R49", "linha": "54", "texto": "The system must support growth in the volume of owners and veterinarians without compromising basic navigation, using pagination."}
+{"id": "R50", "linha": "55", "texto": "The system must be able to operate with different data storage configurations."}
+{"id": "R51", "linha": "56", "texto": "The system must be organized to facilitate isolated evolution of owners, veterinarians, and general functions."}
+{"id": "R52", "linha": "57", "texto": "The main system behaviors must be verifiable through automated tests."}

@@ -1,0 +1,45 @@
+{"id": "R01", "linha": "2", "texto": "The system must allow maintaining support records used by other areas."}
+{"id": "R02", "linha": "3", "texto": "These records include departments, contract types, user categories, organization types, interaction types, tax reasons, billing regimes, and frequencies."}
+{"id": "R03", "linha": "4", "texto": "The system must allow individual user configurations."}
+{"id": "R04", "linha": "5", "texto": "This capability provides basic parameters to identity, workforce, CRM, billing, and notification areas."}
+{"id": "R05", "linha": "8", "texto": "The system must allow registering and maintaining users with personal, contractual, department, category, access profile, and work agreement data."}
+{"id": "R06", "linha": "9", "texto": "The system must allow password change, administrative reset, and forced renewal."}
+{"id": "R07", "linha": "10", "texto": "The system must control access by user profile and scope."}
+{"id": "R08", "linha": "11", "texto": "This capability depends on administration to obtain user categories and general parameters."}
+{"id": "R09", "linha": "12", "texto": "It provides user validation to workforce, project tracking, content management, and other areas."}
+{"id": "R10", "linha": "15", "texto": "The system must allow maintaining work agreements and vacation requests."}
+{"id": "R11", "linha": "16", "texto": "It must control vacation request states and calculate balances."}
+{"id": "R12", "linha": "17", "texto": "This capability depends on identity to validate employees."}
+{"id": "R13", "linha": "18", "texto": "It depends on administration to obtain contract types and work rules."}
+{"id": "R14", "linha": "19", "texto": "It sends notifications for vacation approvals and contract expiration."}
+{"id": "R15", "linha": "22", "texto": "The system must allow maintaining projects linked to clients."}
+{"id": "R16", "linha": "23", "texto": "It must register internal and external activities."}
+{"id": "R17", "linha": "24", "texto": "It must classify activities and calculate worked hours."}
+{"id": "R18", "linha": "25", "texto": "It must support evidence policies."}
+{"id": "R19", "linha": "26", "texto": "This capability depends on workforce to validate employees."}
+{"id": "R20", "linha": "27", "texto": "It depends on identity to validate access."}
+{"id": "R21", "linha": "28", "texto": "It depends on file storage to attach evidence."}
+{"id": "R22", "linha": "31", "texto": "The system must allow maintaining organizations, contacts, interactions, and proposals."}
+{"id": "R23", "linha": "32", "texto": "It must control proposal states and composition."}
+{"id": "R24", "linha": "33", "texto": "This capability depends on administration for organization and interaction types."}
+{"id": "R25", "linha": "34", "texto": "It depends on project tracking to link proposals to projects."}
+{"id": "R26", "linha": "37", "texto": "The system must maintain accounts, entries, and financial indicators."}
+{"id": "R27", "linha": "38", "texto": "It depends on billing to obtain invoice data."}
+{"id": "R28", "linha": "39", "texto": "It depends on project tracking to import billable hours and costs."}
+{"id": "R29", "linha": "42", "texto": "The system must detail invoices and calculate totals, taxes, and balances."}
+{"id": "R30", "linha": "43", "texto": "It depends on CRM for proposal conversion."}
+{"id": "R31", "linha": "44", "texto": "It depends on project tracking for billable hours."}
+{"id": "R32", "linha": "45", "texto": "It depends on financial management for entries and payments."}
+{"id": "R33", "linha": "46", "texto": "It depends on file storage for attachments."}
+{"id": "R34", "linha": "49", "texto": "The system must organize documents by categories and versions."}
+{"id": "R35", "linha": "50", "texto": "It depends on file storage."}
+{"id": "R36", "linha": "51", "texto": "It depends on identity to associate documents with users and areas."}
+{"id": "R37", "linha": "54", "texto": "The system must register and manage orders/commissions."}
+{"id": "R38", "linha": "55", "texto": "It depends on project tracking, workforce, file storage, and notification."}
+{"id": "R39", "linha": "58", "texto": "The system must consolidate and export reports."}
+{"id": "R40", "linha": "59", "texto": "It depends on all main business domains."}
+{"id": "R41", "linha": "62", "texto": "The system must send email notifications."}
+{"id": "R42", "linha": "63", "texto": "It depends on administration for settings."}
+{"id": "R43", "linha": "64", "texto": "It is used by workforce, project tracking, commissioning, and other areas."}
+{"id": "R44", "linha": "67", "texto": "The system must store and retrieve files."}
+{"id": "R45", "linha": "68", "texto": "It depends on administration for storage settings."}

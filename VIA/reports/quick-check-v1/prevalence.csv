@@ -1,0 +1,8 @@
+codigo,familia,severidade,achados,artefatos_com_achado,n,share_artefatos,media_por_artefato,media_por_servico
+D03,completude,baixa,41,41,356,0.115169,0.115169,0.018304
+D04,coerencia,alta,297,271,356,0.761236,0.834270,0.132589
+D05,coerencia,alta,89,36,356,0.101124,0.250000,0.039732
+D06,coerencia,media,12,12,356,0.033708,0.033708,0.005357
+D07,coerencia,media,0,0,356,0.000000,0.000000,0.000000
+D11,interface,media,1977,353,356,0.991573,5.553371,0.882589
+D12,interface,baixa,93,93,356,0.261236,0.261236,0.041518

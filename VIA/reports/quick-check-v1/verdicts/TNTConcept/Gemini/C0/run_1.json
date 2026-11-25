@@ -1,0 +1,154 @@
+{
+  "achados": [
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Administration Service",
+        "contract types"
+      ],
+      "evidencia": "nome nao resolvido: contract types",
+      "familia": "coerencia",
+      "id": "D05-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Billing Service",
+        "taxes"
+      ],
+      "evidencia": "nome nao resolvido: taxes",
+      "familia": "coerencia",
+      "id": "D05-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "CRM and Proposals Service",
+        "contacts"
+      ],
+      "evidencia": "nome nao resolvido: contacts",
+      "familia": "coerencia",
+      "id": "D05-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Financial Management Service",
+        "entries"
+      ],
+      "evidencia": "nome nao resolvido: entries",
+      "familia": "coerencia",
+      "id": "D05-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Identity and Access Service",
+        "contractual"
+      ],
+      "evidencia": "nome nao resolvido: contractual",
+      "familia": "coerencia",
+      "id": "D05-005",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Project and Work Tracking Service"
+      ],
+      "evidencia": "1 endpoint(s) para 4 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.25
+    },
+    {
+      "codigo": "D12",
+      "confirmado": true,
+      "elementos": [],
+      "evidencia": "nenhuma mencao a autenticacao ou autorizacao no artefato",
+      "familia": "interface",
+      "id": "D12-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "baixa"
+    }
+  ],
+  "avisos": [
+    "12 non-bullet lines ignored in requirements"
+  ],
+  "contagens": {
+    "D05": 5,
+    "D11": 1,
+    "D12": 1
+  },
+  "d07_status": "not_applicable",
+  "descartados": [],
+  "entrada": {
+    "arestas": 27,
+    "duplicatas_normalizadas": [],
+    "requisitos": 45,
+    "schema": "en",
+    "servicos": 12,
+    "yaml_sha256": "9eb8b96e921d9e104bf16bfe8487643d745215f70f636d4e4c77122e477fc005"
+  },
+  "execucao": {
+    "commit_davinci": null,
+    "configuracao": "C0",
+    "execution_id": "20260903_205150_127417",
+    "max_tokens": null,
+    "modelo": "Gemini",
+    "modelo_versao": null,
+    "rodada": 1,
+    "temperatura": null
+  },
+  "gerado_em": "2026-11-24T00:00:00+00:00",
+  "metricas": {
+    "cobertura_requisitos": null,
+    "conflitos_de_posse": null,
+    "consistencia_interna": null,
+    "densidade_ciclos": 0.0,
+    "endpoints_por_responsabilidade": 0.75,
+    "estabilidade_jaccard_arestas": 0.416052,
+    "estabilidade_jaccard_servicos": 0.78022,
+    "gini_granularidade": 0.21875,
+    "precisao_servicos": null,
+    "taxa_defeitos_por_servico": 0.583333
+  },
+  "metricas_status": {
+    "cobertura_requisitos": "semiautomatico_nao_executado",
+    "conflitos_de_posse": "semiautomatico_nao_executado",
+    "consistencia_interna": "d07_nao_aplicavel",
+    "densidade_ciclos": "calculado",
+    "endpoints_por_responsabilidade": "calculado",
+    "estabilidade_jaccard_arestas": "calculado",
+    "estabilidade_jaccard_servicos": "calculado",
+    "gini_granularidade": "calculado",
+    "precisao_servicos": "semiautomatico_nao_executado",
+    "taxa_defeitos_por_servico": "calculado"
+  },
+  "sistema": "TNTConcept",
+  "versao_via": "1.0.0"
+}

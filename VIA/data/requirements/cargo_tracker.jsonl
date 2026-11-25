@@ -1,0 +1,71 @@
+{"id": "R01", "linha": "1", "texto": "The system must allow registering a new cargo by providing origin, destination, and arrival deadline."}
+{"id": "R02", "linha": "2", "texto": "Each registered cargo must receive a unique tracking identifier."}
+{"id": "R03", "linha": "3", "texto": "The origin and destination of the cargo must be different."}
+{"id": "R04", "linha": "4", "texto": "The origin of the cargo must remain fixed throughout the logistics cycle."}
+{"id": "R05", "linha": "5", "texto": "Cargo registration may be completed even before the route is defined."}
+{"id": "R06", "linha": "6", "texto": "The arrival deadline must be required and must serve as a criterion for voyage planning."}
+{"id": "R07", "linha": "7", "texto": "The system must allow selecting origin and destination only among previously registered logistics locations."}
+{"id": "R08", "linha": "8", "texto": "The system must maintain cargo management as a separate capability, responsible for cargo registration and lifecycle."}
+{"id": "R09", "linha": "10", "texto": "The system must retrieve and present candidate routes compatible with the cargo needs."}
+{"id": "R10", "linha": "11", "texto": "A candidate route must be considered valid only when it respects the cargo origin, final destination, and arrival deadline."}
+{"id": "R11", "linha": "12", "texto": "The user must be able to choose one of the presented routes and assign it to the cargo."}
+{"id": "R12", "linha": "13", "texto": "When the cargo does not have a route yet, it must remain identified as \"not routed\"."}
+{"id": "R13", "linha": "14", "texto": "When no route meets the informed criteria, the system must inform that there is no feasible option for the current specification."}
+{"id": "R14", "linha": "15", "texto": "The system must display the legs of the chosen route, including load points, unload points, voyages, and expected dates."}
+{"id": "R15", "linha": "16", "texto": "Route planning depends on origin, destination, and deadline information provided by cargo management."}
+{"id": "R16", "linha": "17", "texto": "The system must maintain route planning as an independent capability, responsible for selecting and validating route options."}
+{"id": "R17", "linha": "19", "texto": "The system must allow changing the destination of an already registered cargo."}
+{"id": "R18", "linha": "20", "texto": "The new destination cannot be equal to the origin or to the current destination."}
+{"id": "R19", "linha": "21", "texto": "When the destination changes, the system must reevaluate the current route."}
+{"id": "R20", "linha": "22", "texto": "When the current route no longer satisfies the new destination, the cargo must require new routing."}
+{"id": "R21", "linha": "23", "texto": "The system must allow replanning routes for cargos that are off the expected route or whose destination has changed."}
+{"id": "R22", "linha": "25", "texto": "The system must allow consulting a cargo by tracking identifier."}
+{"id": "R23", "linha": "26", "texto": "The consultation must show the current situation of the cargo."}
+{"id": "R24", "linha": "27", "texto": "The system must inform the last known location of the cargo."}
+{"id": "R25", "linha": "28", "texto": "The system must inform the estimated arrival when the cargo has a valid route and is progressing according to plan."}
+{"id": "R26", "linha": "29", "texto": "The system must maintain and display the history of logistics events associated with the cargo."}
+{"id": "R27", "linha": "30", "texto": "The history must distinguish expected events from unexpected events."}
+{"id": "R28", "linha": "31", "texto": "The system must signal when the cargo is off the expected route."}
+{"id": "R29", "linha": "32", "texto": "The system must allow viewing the cargo with geographic support, highlighting origin, final destination, and last known location."}
+{"id": "R30", "linha": "33", "texto": "Cargo tracking depends on information maintained by cargo management, route planning, and logistics events."}
+{"id": "R31", "linha": "34", "texto": "The system must maintain cargo tracking as a separate capability, responsible for consolidating operational status and history."}
+{"id": "R32", "linha": "36", "texto": "The system must allow registering logistics events of the following types: reception, load, unload, customs, and pickup."}
+{"id": "R33", "linha": "37", "texto": "Every logistics event must be associated with an existing cargo."}
+{"id": "R34", "linha": "38", "texto": "Every logistics event must inform the location where it occurred and the occurrence date."}
+{"id": "R35", "linha": "39", "texto": "Load and unload events must be associated with the corresponding voyage."}
+{"id": "R36", "linha": "40", "texto": "Events that are not load or unload must not require voyage identification."}
+{"id": "R37", "linha": "41", "texto": "The system must reject registration attempts with nonexistent cargo, location, or voyage."}
+{"id": "R38", "linha": "42", "texto": "A valid event registration must update the operational situation of the cargo."}
+{"id": "R39", "linha": "43", "texto": "After each valid event, the system must recalculate information such as transport status, last known location, next expected step, and plan adherence."}
+{"id": "R40", "linha": "44", "texto": "When an event indicates execution different from the planned route, the cargo must be marked as off route."}
+{"id": "R41", "linha": "45", "texto": "When the cargo is unloaded at the final destination, the system must mark it as arrived."}
+{"id": "R42", "linha": "46", "texto": "When pickup by the recipient is registered, the cargo must be considered complete from a logistics perspective."}
+{"id": "R43", "linha": "47", "texto": "Event registration depends on the existence of cargo and voyage maintained by other capabilities."}
+{"id": "R44", "linha": "48", "texto": "The system must maintain logistics event registration as a separate capability, responsible for processing and validating received events."}
+{"id": "R45", "linha": "50", "texto": "The system must allow logistics event registration through more than one operational channel."}
+{"id": "R46", "linha": "51", "texto": "Supported channels must include at least an operational interface, an integration service, and input file processing."}
+{"id": "R47", "linha": "52", "texto": "The system must provide a consolidated view of cargos for monitoring channels."}
+{"id": "R48", "linha": "53", "texto": "Integration channels depend on logistics events and cargo tracking."}
+{"id": "R49", "linha": "54", "texto": "The system must maintain integration as a separate capability, responsible for receiving events and providing standardized information."}
+{"id": "R50", "linha": "56", "texto": "The system must preserve consistency among cargo registration, planned route, and executed events."}
+{"id": "R51", "linha": "57", "texto": "No invalid event may change the cargo state."}
+{"id": "R52", "linha": "58", "texto": "Origin, destination, deadline, and route compatibility rules must be applied uniformly across all operational channels."}
+{"id": "R53", "linha": "59", "texto": "Cargo status must be recalculated whenever there is a relevant planning or execution change."}
+{"id": "R54", "linha": "61", "texto": "The system must maintain enough history to reconstruct the cargo logistics cycle."}
+{"id": "R55", "linha": "62", "texto": "Each event must keep at least the moment it occurred and the moment it was registered."}
+{"id": "R56", "linha": "63", "texto": "Rejected registration attempts must be identifiable for later operational analysis."}
+{"id": "R57", "linha": "64", "texto": "The system must allow distinguishing correctly delivered cargos, cargos still in transit, and cargos with operational deviation."}
+{"id": "R58", "linha": "66", "texto": "Cargo status updates must occur in a timely manner for operational tracking."}
+{"id": "R59", "linha": "67", "texto": "Event reception must continue even when detailed status recalculation occurs in the background."}
+{"id": "R60", "linha": "68", "texto": "File inputs must be processed periodically, without depending on constant manual action."}
+{"id": "R61", "linha": "69", "texto": "Monitoring channels must reflect the most recent available information about the cargo."}
+{"id": "R62", "linha": "71", "texto": "Information presented to the user must be organized by business situation, not only by technical structure."}
+{"id": "R63", "linha": "72", "texto": "Operational navigation must facilitate frequent tasks such as locating cargo, consulting details, choosing a route, and registering an event."}
+{"id": "R64", "linha": "73", "texto": "The system must reduce operation errors through controlled lists of locations, voyages, event types, and cargo identifiers."}
+{"id": "R65", "linha": "74", "texto": "Error messages and missing route alerts must be understandable for administrative and logistics use."}
+{"id": "R66", "linha": "76", "texto": "Failures in an isolated registration attempt must not compromise the processing of other cargos."}
+{"id": "R67", "linha": "77", "texto": "Invalid input records must be separated for later handling without interrupting the rest of the workload."}
+{"id": "R68", "linha": "78", "texto": "The system must treat off-route cargos as visible operational exceptions to allow fast corrective action."}
+{"id": "R69", "linha": "79", "texto": "The system must maintain consistency among data presented in the administrative interface, tracking, mobile channels, and integrations."}
+{"id": "R70", "linha": "80", "texto": "Main cargo information must be exchangeable in standardized formats to facilitate integration with other systems."}
+{"id": "R71", "linha": "81", "texto": "The tracking model must be unique regardless of the channel used to register or consult the cargo."}

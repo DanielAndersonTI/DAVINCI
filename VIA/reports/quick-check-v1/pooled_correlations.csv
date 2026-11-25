@@ -1,0 +1,8 @@
+metric,rho,ci_low,ci_high,n,scope
+structural_defect_rate,-0.106916,-0.447634,0.212419,356,pooled_cluster
+defect_rate,-0.011112,-0.443646,0.422131,356,pooled_cluster
+cycle_density,-0.034230,-0.362055,0.375667,356,pooled_cluster
+gini,-0.310861,-0.545400,-0.045426,356,pooled_cluster
+endpoints_per_responsibility,0.048383,-0.285000,0.333243,356,pooled_cluster
+stability_edges,0.453682,0.294834,0.548962,356,pooled_cluster
+d11_share,0.326544,0.045617,0.586381,356,pooled_cluster

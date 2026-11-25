@@ -1,0 +1,28 @@
+{
+  "celulas": 120,
+  "configuracoes": [
+    "C0",
+    "C1",
+    "C2",
+    "C3",
+    "C4"
+  ],
+  "modelos": [
+    "Claude",
+    "DeepSeek",
+    "Gemini"
+  ],
+  "n_artefatos": 356,
+  "n_data_csv": 360,
+  "n_sem_par": 0,
+  "sistemas": [
+    "7ep",
+    "AcmeAir",
+    "Cargo-Tracker",
+    "DayTrader7",
+    "JPetStore",
+    "Jokul",
+    "PetClinic",
+    "TNTConcept"
+  ]
+}

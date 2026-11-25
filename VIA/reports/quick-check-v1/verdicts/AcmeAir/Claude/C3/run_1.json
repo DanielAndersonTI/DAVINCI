@@ -1,0 +1,139 @@
+{
+  "achados": [
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Authentication Service"
+      ],
+      "evidencia": "1 endpoint(s) para 6 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.166667
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Booking Service"
+      ],
+      "evidencia": "1 endpoint(s) para 8 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.125
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Customer Profile Service"
+      ],
+      "evidencia": "1 endpoint(s) para 5 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.2
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Environment Administration Service"
+      ],
+      "evidencia": "1 endpoint(s) para 6 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.166667
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Flight Search Service"
+      ],
+      "evidencia": "1 endpoint(s) para 6 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-005",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.166667
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Loyalty Service"
+      ],
+      "evidencia": "1 endpoint(s) para 4 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-006",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.25
+    }
+  ],
+  "avisos": [],
+  "contagens": {
+    "D11": 6
+  },
+  "d07_status": "not_applicable",
+  "descartados": [],
+  "entrada": {
+    "arestas": 8,
+    "duplicatas_normalizadas": [],
+    "requisitos": 61,
+    "schema": "en",
+    "servicos": 6,
+    "yaml_sha256": "452fb41f19afc137117c876cb461fc3a4151a7e31425a094decc94295c68e077"
+  },
+  "execucao": {
+    "commit_davinci": null,
+    "configuracao": "C3",
+    "execution_id": "20260919_002211_165797",
+    "max_tokens": null,
+    "modelo": "Claude",
+    "modelo_versao": null,
+    "rodada": 1,
+    "temperatura": null
+  },
+  "gerado_em": "2026-11-24T00:00:00+00:00",
+  "metricas": {
+    "cobertura_requisitos": null,
+    "conflitos_de_posse": null,
+    "consistencia_interna": null,
+    "densidade_ciclos": 0.0,
+    "endpoints_por_responsabilidade": 0.171429,
+    "estabilidade_jaccard_arestas": 1.0,
+    "estabilidade_jaccard_servicos": 1.0,
+    "gini_granularidade": 0.109524,
+    "precisao_servicos": null,
+    "taxa_defeitos_por_servico": 1.0
+  },
+  "metricas_status": {
+    "cobertura_requisitos": "semiautomatico_nao_executado",
+    "conflitos_de_posse": "semiautomatico_nao_executado",
+    "consistencia_interna": "d07_nao_aplicavel",
+    "densidade_ciclos": "calculado",
+    "endpoints_por_responsabilidade": "calculado",
+    "estabilidade_jaccard_arestas": "calculado",
+    "estabilidade_jaccard_servicos": "calculado",
+    "gini_granularidade": "calculado",
+    "precisao_servicos": "semiautomatico_nao_executado",
+    "taxa_defeitos_por_servico": "calculado"
+  },
+  "sistema": "AcmeAir",
+  "versao_via": "1.0.0"
+}

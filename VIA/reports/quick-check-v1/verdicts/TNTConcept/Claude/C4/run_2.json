@@ -1,0 +1,241 @@
+{
+  "achados": [
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Billing Service",
+        "Financial Service"
+      ],
+      "evidencia": "componente fortemente conexa com 2 servicos",
+      "familia": "coerencia",
+      "id": "D04-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Billing Service",
+        "Financial Service"
+      ],
+      "evidencia": "Billing Service -> Financial Service; Financial Service -> Billing Service",
+      "familia": "coerencia",
+      "id": "D04-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Administration Service"
+      ],
+      "evidencia": "1 endpoint(s) para 9 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.111111
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Billing Service"
+      ],
+      "evidencia": "1 endpoint(s) para 8 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.125
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "CRM Service"
+      ],
+      "evidencia": "1 endpoint(s) para 7 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.142857
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Commissioning Service"
+      ],
+      "evidencia": "1 endpoint(s) para 5 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.2
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Content Management Service"
+      ],
+      "evidencia": "1 endpoint(s) para 4 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-005",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.25
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "File Storage Service"
+      ],
+      "evidencia": "1 endpoint(s) para 3 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-006",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.333333
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Financial Service"
+      ],
+      "evidencia": "1 endpoint(s) para 5 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-007",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.2
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Identity Service"
+      ],
+      "evidencia": "1 endpoint(s) para 11 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-008",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.090909
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Notification Service"
+      ],
+      "evidencia": "1 endpoint(s) para 4 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-009",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.25
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Project Tracking Service"
+      ],
+      "evidencia": "1 endpoint(s) para 7 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-010",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.142857
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Workforce Service"
+      ],
+      "evidencia": "1 endpoint(s) para 5 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-011",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.2
+    }
+  ],
+  "avisos": [
+    "12 non-bullet lines ignored in requirements"
+  ],
+  "contagens": {
+    "D04": 1,
+    "D11": 11
+  },
+  "d07_status": "not_applicable",
+  "descartados": [],
+  "entrada": {
+    "arestas": 30,
+    "duplicatas_normalizadas": [],
+    "requisitos": 45,
+    "schema": "en",
+    "servicos": 12,
+    "yaml_sha256": "17949923701fac0b9f54f87016af84caa875299abbd59f57bce2402f768de9e1"
+  },
+  "execucao": {
+    "commit_davinci": null,
+    "configuracao": "C4",
+    "execution_id": "20260923_203646_754009",
+    "max_tokens": null,
+    "modelo": "Claude",
+    "modelo_versao": null,
+    "rodada": 2,
+    "temperatura": null
+  },
+  "gerado_em": "2026-11-24T00:00:00+00:00",
+  "metricas": {
+    "cobertura_requisitos": null,
+    "conflitos_de_posse": null,
+    "consistencia_interna": null,
+    "densidade_ciclos": 0.083333,
+    "endpoints_por_responsabilidade": 0.171429,
+    "estabilidade_jaccard_arestas": 0.591837,
+    "estabilidade_jaccard_servicos": 1.0,
+    "gini_granularidade": 0.240476,
+    "precisao_servicos": null,
+    "taxa_defeitos_por_servico": 1.0
+  },
+  "metricas_status": {
+    "cobertura_requisitos": "semiautomatico_nao_executado",
+    "conflitos_de_posse": "semiautomatico_nao_executado",
+    "consistencia_interna": "d07_nao_aplicavel",
+    "densidade_ciclos": "calculado",
+    "endpoints_por_responsabilidade": "calculado",
+    "estabilidade_jaccard_arestas": "calculado",
+    "estabilidade_jaccard_servicos": "calculado",
+    "gini_granularidade": "calculado",
+    "precisao_servicos": "semiautomatico_nao_executado",
+    "taxa_defeitos_por_servico": "calculado"
+  },
+  "sistema": "TNTConcept",
+  "versao_via": "1.0.0"
+}

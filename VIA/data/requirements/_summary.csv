@@ -1,0 +1,9 @@
+system,requirements,source,source_sha256,warnings
+7ep,78,C:\Users\Daniel\OneDrive\I.T\UFCG\Minha_Pesquisa\DAVINCI\Experimento_Multiagente\Dates\davinci_inputs\7ep\requirements.txt,21a6f39a098a0ffa32adffcc06a7634e48fc116df87c18f8f9ef689e9d76cef1,
+AcmeAir,61,C:\Users\Daniel\OneDrive\I.T\UFCG\Minha_Pesquisa\DAVINCI\Experimento_Multiagente\Dates\davinci_inputs\acmeair\requirements.txt,19527dfacc75b78a5b5b5d873d44dc5e4196a530128203b14768638f295e9c7d,
+Cargo-Tracker,71,C:\Users\Daniel\OneDrive\I.T\UFCG\Minha_Pesquisa\DAVINCI\Experimento_Multiagente\Dates\davinci_inputs\cargo-tracker\requirements.txt,4e64ea4db0a5ec516d246301210032b081905036e4cf40edf46f65b3ca8fd6ca,
+DayTrader7,76,C:\Users\Daniel\OneDrive\I.T\UFCG\Minha_Pesquisa\DAVINCI\Experimento_Multiagente\Dates\davinci_inputs\daytrader7\requirements.txt,b6c0b4e10bbadc14528545290d03819aa3a3c26540f019f695ef813f1f5ad045,
+JPetStore,77,C:\Users\Daniel\OneDrive\I.T\UFCG\Minha_Pesquisa\DAVINCI\Experimento_Multiagente\Dates\davinci_inputs\jpetstore\requirements.txt,d5a06728b937ce6ae3d80afb564c4ca0cd45eb56e8f94ef9c4e790f9d344f49b,
+Jokul,66,C:\Users\Daniel\OneDrive\I.T\UFCG\Minha_Pesquisa\DAVINCI\Experimento_Multiagente\Dates\davinci_inputs\jokul\requirements.txt,e724f417739c113e83ea17ae68d771a07ddb8511b5ac9998eb2876e623a893ae,
+PetClinic,52,C:\Users\Daniel\OneDrive\I.T\UFCG\Minha_Pesquisa\DAVINCI\Experimento_Multiagente\Dates\davinci_inputs\pet-clinic\requirements.txt,e5093d00a439684e3064797a033ed75bb4981a7483424755b73b0a38a06c0b9e,
+TNTConcept,45,C:\Users\Daniel\OneDrive\I.T\UFCG\Minha_Pesquisa\DAVINCI\Experimento_Multiagente\Dates\davinci_inputs\TNTConcept\requirements.txt,1eedbe1b682dbda1f2486adfc05103687581105541fc5f0828a74d929e31419c,12 non-bullet lines ignored in requirements

@@ -1,0 +1,61 @@
+{"id": "R01", "linha": "1", "texto": "The system must allow customers to access their account using login and password."}
+{"id": "R02", "linha": "2", "texto": "The system must create a usage session after successful authentication."}
+{"id": "R03", "linha": "3", "texto": "The system must allow customers to end their session through logout."}
+{"id": "R04", "linha": "4", "texto": "The system must require an active session to access restricted areas, such as customer profile and bookings."}
+{"id": "R05", "linha": "5", "texto": "The system must restrict private functionalities to authenticated customers."}
+{"id": "R06", "linha": "6", "texto": "The customer session must have limited validity and expire automatically after the configured period."}
+{"id": "R07", "linha": "7", "texto": "Logout must invalidate the current session immediately."}
+{"id": "R08", "linha": "8", "texto": "Customer personal data must be protected against improper access by other customers."}
+{"id": "R09", "linha": "9", "texto": "The system must maintain authentication as a separate capability, responsible exclusively for login, session creation, active session validation, and logout."}
+{"id": "R10", "linha": "11", "texto": "The system must allow flight search by informing origin airport, destination airport, and travel date."}
+{"id": "R11", "linha": "12", "texto": "The system must allow one-way or round-trip searches."}
+{"id": "R12", "linha": "13", "texto": "The system must present the flight options found for each trip segment."}
+{"id": "R13", "linha": "14", "texto": "For each flight found, the system must show departure time, arrival time, and reference fare values."}
+{"id": "R14", "linha": "15", "texto": "The system must work with a set of previously registered airports."}
+{"id": "R15", "linha": "16", "texto": "Flight searches must prioritize fast response, as they represent a recurring customer journey flow."}
+{"id": "R16", "linha": "17", "texto": "The system must maintain flight search as an independent capability, responsible for airports, routes, schedules, and reference fares."}
+{"id": "R17", "linha": "19", "texto": "The system must allow an authenticated customer to create a booking for a one-way flight."}
+{"id": "R18", "linha": "20", "texto": "The system must allow an authenticated customer to create a booking for outbound and return flights in the same operation."}
+{"id": "R19", "linha": "21", "texto": "The system must generate an identifier for each created booking."}
+{"id": "R20", "linha": "22", "texto": "The system must record the booking date."}
+{"id": "R21", "linha": "23", "texto": "The system must inform the customer of the booking identifier after operation completion."}
+{"id": "R22", "linha": "24", "texto": "The system must allow customers to consult existing bookings."}
+{"id": "R23", "linha": "25", "texto": "The system must present the list of completed bookings."}
+{"id": "R24", "linha": "26", "texto": "The system must allow canceling a selected booking."}
+{"id": "R25", "linha": "27", "texto": "After cancellation, the booking must no longer appear as active in the customer listing."}
+{"id": "R26", "linha": "28", "texto": "The booking capability depends on customer authentication."}
+{"id": "R27", "linha": "29", "texto": "The booking capability depends on flight search to obtain available flights."}
+{"id": "R28", "linha": "31", "texto": "The system must allow customers to consult their own profile."}
+{"id": "R29", "linha": "32", "texto": "The profile must show customer contact data, including phone, phone type, and address."}
+{"id": "R30", "linha": "33", "texto": "The system must allow updating contact and address data."}
+{"id": "R31", "linha": "34", "texto": "The system must require the current password to confirm profile changes."}
+{"id": "R32", "linha": "35", "texto": "The system must prevent customers from viewing or changing another customer profile."}
+{"id": "R33", "linha": "36", "texto": "The system must maintain the customer profile as a separate capability from authentication, responsible only for registration and contact data."}
+{"id": "R34", "linha": "37", "texto": "The customer profile capability depends on authentication to validate customer access."}
+{"id": "R35", "linha": "39", "texto": "The system must show the customer loyalty program status."}
+{"id": "R36", "linha": "40", "texto": "The system must show the number of miles accumulated in the year."}
+{"id": "R37", "linha": "41", "texto": "The system must show the total accumulated miles."}
+{"id": "R38", "linha": "42", "texto": "Loyalty information must be presented as read-only data, not as editable fields."}
+{"id": "R39", "linha": "43", "texto": "The system must maintain loyalty as a separate capability from the customer profile, responsible exclusively for status and accumulated miles."}
+{"id": "R40", "linha": "44", "texto": "The loyalty capability depends on authentication to validate customer access."}
+{"id": "R41", "linha": "46", "texto": "The system must allow initial loading or reloading of the application database."}
+{"id": "R42", "linha": "47", "texto": "The loading process must allow defining the number of sample customers to be generated."}
+{"id": "R43", "linha": "48", "texto": "The database load must recreate the main operational data, including flights, customers, sessions, and test bookings."}
+{"id": "R44", "linha": "49", "texto": "The system must provide summarized operational information, such as numbers of customers, sessions, flights, segments, bookings, and registered airports."}
+{"id": "R45", "linha": "50", "texto": "The environment must offer simple ways to prepare and verify the database for tests, demonstrations, or operational reset."}
+{"id": "R46", "linha": "51", "texto": "The system must provide basic operational indicators without requiring direct database access."}
+{"id": "R47", "linha": "52", "texto": "The system must maintain environment administration as a separate capability, responsible for preparing, reloading, and supervising operational data."}
+{"id": "R48", "linha": "53", "texto": "The environment administration capability depends on authentication, flight search, booking, and customer profile to prepare and reset their data."}
+{"id": "R49", "linha": "55", "texto": "The application must support high call and query volume, especially in authentication, flight search, and booking flows."}
+{"id": "R50", "linha": "56", "texto": "The solution must be suitable for growth without manual support for main self-service operations."}
+{"id": "R51", "linha": "57", "texto": "The application must run in different environments, including local infrastructure, public cloud, and hybrid scenarios."}
+{"id": "R52", "linha": "58", "texto": "The solution must keep customer, flight, session, and booking data persisted between requests."}
+{"id": "R53", "linha": "59", "texto": "Each session and booking must have a unique identifier."}
+{"id": "R54", "linha": "60", "texto": "Booking and cancellation operations must maintain enough consistency to correctly reflect the current booking state."}
+{"id": "R55", "linha": "61", "texto": "The application must record minimal operational tracking data, such as booking date and operational record counts."}
+{"id": "R56", "linha": "63", "texto": "Navigation must support self-service, allowing customers to search flights, manage bookings, and update their profile without human intermediation."}
+{"id": "R57", "linha": "64", "texto": "The system must show schedules, dates, and values clearly."}
+{"id": "R58", "linha": "65", "texto": "Main journeys must be accessible through a simple web interface, with clear separation among flight search, bookings, profile, and support."}
+{"id": "R59", "linha": "67", "texto": "No public customer registration flow was identified. Customer accounts are generated by administrative data loading."}
+{"id": "R60", "linha": "68", "texto": "No payment flow, seat selection, or formal fare class selection was identified at booking time; the system shows prices, but the observed booking is simplified."}
+{"id": "R61", "linha": "69", "texto": "A Support interface with real-time chat appearance exists, but the corresponding backend was not found. Therefore, this item was not treated as a consolidated functional requirement."}

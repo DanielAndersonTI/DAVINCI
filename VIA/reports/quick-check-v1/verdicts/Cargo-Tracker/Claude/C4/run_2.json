@@ -1,0 +1,195 @@
+{
+  "achados": [
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Cargo Tracking Service",
+        "Logistics Event Service"
+      ],
+      "evidencia": "componente fortemente conexa com 2 servicos",
+      "familia": "coerencia",
+      "id": "D04-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Cargo Tracking Service",
+        "Logistics Event Service"
+      ],
+      "evidencia": "Cargo Tracking Service -> Logistics Event Service; Logistics Event Service -> Cargo Tracking Service",
+      "familia": "coerencia",
+      "id": "D04-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Cargo Management Service"
+      ],
+      "evidencia": "1 endpoint(s) para 9 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.111111
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Cargo Tracking Service"
+      ],
+      "evidencia": "1 endpoint(s) para 10 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.1
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Integration Service"
+      ],
+      "evidencia": "1 endpoint(s) para 7 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.142857
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Location Registry Service"
+      ],
+      "evidencia": "1 endpoint(s) para 3 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.333333
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Logistics Event Service"
+      ],
+      "evidencia": "1 endpoint(s) para 11 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-005",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.090909
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Route Planning Service"
+      ],
+      "evidencia": "1 endpoint(s) para 9 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-006",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.111111
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Voyage Registry Service"
+      ],
+      "evidencia": "1 endpoint(s) para 3 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-007",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.333333
+    },
+    {
+      "codigo": "D12",
+      "confirmado": true,
+      "elementos": [],
+      "evidencia": "nenhuma mencao a autenticacao ou autorizacao no artefato",
+      "familia": "interface",
+      "id": "D12-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "baixa"
+    }
+  ],
+  "avisos": [],
+  "contagens": {
+    "D04": 1,
+    "D11": 7,
+    "D12": 1
+  },
+  "d07_status": "not_applicable",
+  "descartados": [],
+  "entrada": {
+    "arestas": 10,
+    "duplicatas_normalizadas": [],
+    "requisitos": 71,
+    "schema": "en",
+    "servicos": 7,
+    "yaml_sha256": "38b68ae18bac03ccc9b8df1153dc322d7121fe920efb28a2b0befc4797acbede"
+  },
+  "execucao": {
+    "commit_davinci": null,
+    "configuracao": "C4",
+    "execution_id": "20260923_203205_073469",
+    "max_tokens": null,
+    "modelo": "Claude",
+    "modelo_versao": null,
+    "rodada": 2,
+    "temperatura": null
+  },
+  "gerado_em": "2026-11-24T00:00:00+00:00",
+  "metricas": {
+    "cobertura_requisitos": null,
+    "conflitos_de_posse": null,
+    "consistencia_interna": null,
+    "densidade_ciclos": 0.142857,
+    "endpoints_por_responsabilidade": 0.134615,
+    "estabilidade_jaccard_arestas": 0.120773,
+    "estabilidade_jaccard_servicos": 0.444444,
+    "gini_granularidade": 0.21978,
+    "precisao_servicos": null,
+    "taxa_defeitos_por_servico": 1.285714
+  },
+  "metricas_status": {
+    "cobertura_requisitos": "semiautomatico_nao_executado",
+    "conflitos_de_posse": "semiautomatico_nao_executado",
+    "consistencia_interna": "d07_nao_aplicavel",
+    "densidade_ciclos": "calculado",
+    "endpoints_por_responsabilidade": "calculado",
+    "estabilidade_jaccard_arestas": "calculado",
+    "estabilidade_jaccard_servicos": "calculado",
+    "gini_granularidade": "calculado",
+    "precisao_servicos": "semiautomatico_nao_executado",
+    "taxa_defeitos_por_servico": "calculado"
+  },
+  "sistema": "Cargo-Tracker",
+  "versao_via": "1.0.0"
+}

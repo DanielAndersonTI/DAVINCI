@@ -1,0 +1,200 @@
+{
+  "achados": [
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Animal Management Service",
+        "Owner Management Service",
+        "Veterinarian Management Service",
+        "Visit Management Service"
+      ],
+      "evidencia": "componente fortemente conexa com 4 servicos",
+      "familia": "coerencia",
+      "id": "D04-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Animal Management Service",
+        "Owner Management Service"
+      ],
+      "evidencia": "Animal Management Service -> Owner Management Service; Owner Management Service -> Animal Management Service",
+      "familia": "coerencia",
+      "id": "D04-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Animal Management Service",
+        "Visit Management Service"
+      ],
+      "evidencia": "Animal Management Service -> Visit Management Service; Visit Management Service -> Animal Management Service",
+      "familia": "coerencia",
+      "id": "D04-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Owner Management Service",
+        "Visit Management Service"
+      ],
+      "evidencia": "Owner Management Service -> Visit Management Service; Visit Management Service -> Owner Management Service",
+      "familia": "coerencia",
+      "id": "D04-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Veterinarian Management Service",
+        "Visit Management Service"
+      ],
+      "evidencia": "Veterinarian Management Service -> Visit Management Service; Visit Management Service -> Veterinarian Management Service",
+      "familia": "coerencia",
+      "id": "D04-005",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Animal Management Service"
+      ],
+      "evidencia": "1 endpoint(s) para 5 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.2
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Owner Management Service"
+      ],
+      "evidencia": "1 endpoint(s) para 5 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.2
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Veterinarian Management Service"
+      ],
+      "evidencia": "1 endpoint(s) para 7 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.142857
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Visit Management Service"
+      ],
+      "evidencia": "1 endpoint(s) para 5 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.2
+    },
+    {
+      "codigo": "D12",
+      "confirmado": true,
+      "elementos": [],
+      "evidencia": "nenhuma mencao a autenticacao ou autorizacao no artefato",
+      "familia": "interface",
+      "id": "D12-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "baixa"
+    }
+  ],
+  "avisos": [],
+  "contagens": {
+    "D04": 1,
+    "D11": 4,
+    "D12": 1
+  },
+  "d07_status": "not_applicable",
+  "descartados": [],
+  "entrada": {
+    "arestas": 8,
+    "duplicatas_normalizadas": [],
+    "requisitos": 52,
+    "schema": "en",
+    "servicos": 4,
+    "yaml_sha256": "9b2dc52ed5a93af24db29a67e999e5912c2a8b146c6bd7137ad78d4edc9f8ac7"
+  },
+  "execucao": {
+    "commit_davinci": null,
+    "configuracao": "C1",
+    "execution_id": "20260909_103630_563812",
+    "max_tokens": null,
+    "modelo": "DeepSeek",
+    "modelo_versao": null,
+    "rodada": 1,
+    "temperatura": null
+  },
+  "gerado_em": "2026-11-24T00:00:00+00:00",
+  "metricas": {
+    "cobertura_requisitos": null,
+    "conflitos_de_posse": null,
+    "consistencia_interna": null,
+    "densidade_ciclos": 0.25,
+    "endpoints_por_responsabilidade": 0.181818,
+    "estabilidade_jaccard_arestas": 1.0,
+    "estabilidade_jaccard_servicos": 1.0,
+    "gini_granularidade": 0.068182,
+    "precisao_servicos": null,
+    "taxa_defeitos_por_servico": 1.5
+  },
+  "metricas_status": {
+    "cobertura_requisitos": "semiautomatico_nao_executado",
+    "conflitos_de_posse": "semiautomatico_nao_executado",
+    "consistencia_interna": "d07_nao_aplicavel",
+    "densidade_ciclos": "calculado",
+    "endpoints_por_responsabilidade": "calculado",
+    "estabilidade_jaccard_arestas": "calculado",
+    "estabilidade_jaccard_servicos": "calculado",
+    "gini_granularidade": "calculado",
+    "precisao_servicos": "semiautomatico_nao_executado",
+    "taxa_defeitos_por_servico": "calculado"
+  },
+  "sistema": "PetClinic",
+  "versao_via": "1.0.0"
+}

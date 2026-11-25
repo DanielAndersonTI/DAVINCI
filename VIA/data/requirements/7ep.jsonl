@@ -1,0 +1,78 @@
+{"id": "R01", "linha": "1", "texto": "The system must allow librarian registration using username and password."}
+{"id": "R02", "linha": "2", "texto": "The system must not allow registering a librarian with an already existing username."}
+{"id": "R03", "linha": "3", "texto": "The system must require filling in username and password during registration."}
+{"id": "R04", "linha": "4", "texto": "The system must accept only passwords considered strong enough for safe use."}
+{"id": "R05", "linha": "5", "texto": "The system must reject very short passwords."}
+{"id": "R06", "linha": "6", "texto": "The system must allow authenticated librarians to provide username and password to enter the system."}
+{"id": "R07", "linha": "7", "texto": "The system must grant access only when username and password exactly match the existing registration."}
+{"id": "R08", "linha": "8", "texto": "The system must deny access when username or password are incorrect or not provided."}
+{"id": "R09", "linha": "9", "texto": "The system must handle librarian credentials securely, without depending on plain-text passwords for later validation."}
+{"id": "R10", "linha": "10", "texto": "The system must respond clearly to denied access attempts, without exposing sensitive internal processing details."}
+{"id": "R11", "linha": "11", "texto": "The system must maintain authentication as a separate capability, responsible for registration, login, and session validation."}
+{"id": "R12", "linha": "13", "texto": "The system must allow registering books in the collection by title."}
+{"id": "R13", "linha": "14", "texto": "The system must not allow duplicate registration of the same book."}
+{"id": "R14", "linha": "15", "texto": "The system must inform when book registration fails due to missing title."}
+{"id": "R15", "linha": "16", "texto": "The system must allow deleting already registered books."}
+{"id": "R16", "linha": "17", "texto": "The system must not allow deleting books that were never registered."}
+{"id": "R17", "linha": "18", "texto": "The system must also remove the loan link when a removed book is currently on loan."}
+{"id": "R18", "linha": "19", "texto": "The system must allow listing all registered books."}
+{"id": "R19", "linha": "20", "texto": "The system must allow consulting a book by identifier."}
+{"id": "R20", "linha": "21", "texto": "The system must allow consulting a book by title."}
+{"id": "R21", "linha": "22", "texto": "The system must allow listing only books available for loan."}
+{"id": "R22", "linha": "23", "texto": "The system must inform when there are no registered books or when a search returns no results."}
+{"id": "R23", "linha": "24", "texto": "The system must maintain the book catalog as a separate capability."}
+{"id": "R24", "linha": "26", "texto": "The system must allow registering readers eligible for loans."}
+{"id": "R25", "linha": "27", "texto": "The system must not allow duplicate registration of the same reader."}
+{"id": "R26", "linha": "28", "texto": "The system must inform when reader registration fails due to missing name."}
+{"id": "R27", "linha": "29", "texto": "The system must allow deleting already registered readers."}
+{"id": "R28", "linha": "30", "texto": "The system must not allow deleting readers that were never registered."}
+{"id": "R29", "linha": "31", "texto": "The system must also remove loan links when a removed reader has borrowed books."}
+{"id": "R30", "linha": "32", "texto": "The system must allow listing all registered readers."}
+{"id": "R31", "linha": "33", "texto": "The system must allow consulting a reader by identifier."}
+{"id": "R32", "linha": "34", "texto": "The system must allow consulting a reader by name."}
+{"id": "R33", "linha": "35", "texto": "The system must inform when there are no registered readers or when a search returns no results."}
+{"id": "R34", "linha": "36", "texto": "The system must not accept simultaneous search by identifier and by name/title in the same query."}
+{"id": "R35", "linha": "37", "texto": "The system must maintain reader management as a separate capability."}
+{"id": "R36", "linha": "39", "texto": "The system must allow registering a book loan for a registered reader."}
+{"id": "R37", "linha": "40", "texto": "The system must record the loan date."}
+{"id": "R38", "linha": "41", "texto": "The system must not allow loans for people not registered as readers."}
+{"id": "R39", "linha": "42", "texto": "The system must not allow loans for unregistered books."}
+{"id": "R40", "linha": "43", "texto": "The system must not allow loans for books already borrowed by another person."}
+{"id": "R41", "linha": "44", "texto": "The system must allow the same reader to borrow multiple books at the same time."}
+{"id": "R42", "linha": "45", "texto": "The system must ensure the same book is loaned to only one reader at a time."}
+{"id": "R43", "linha": "46", "texto": "The system must clearly inform when a loan cannot be completed."}
+{"id": "R44", "linha": "47", "texto": "The system must consult reader and book data during loan registration, ensuring information is current."}
+{"id": "R45", "linha": "48", "texto": "The system must preserve consistency among books, readers, and loans, avoiding invalid or contradictory records."}
+{"id": "R46", "linha": "49", "texto": "The system must maintain loan management as a separate capability."}
+{"id": "R47", "linha": "50", "texto": "The loan capability depends on the reader management capability to validate the reader."}
+{"id": "R48", "linha": "51", "texto": "The loan capability depends on the book catalog capability to validate the book."}
+{"id": "R49", "linha": "53", "texto": "The system must allow clearing data and base structure to reset the environment."}
+{"id": "R50", "linha": "54", "texto": "The system must allow recreating the base structure when necessary."}
+{"id": "R51", "linha": "55", "texto": "The system must allow quickly restoring the environment to a clean state ready for new tests."}
+{"id": "R52", "linha": "56", "texto": "To perform these reset operations, the system must coordinate the involved functional areas, ensuring data is restored consistently."}
+{"id": "R53", "linha": "57", "texto": "The system must maintain environment management as a separate capability."}
+{"id": "R54", "linha": "59", "texto": "The system must allow summing two integers informed by the user."}
+{"id": "R55", "linha": "60", "texto": "The system must allow calculating Fibonacci sequence values using more than one calculation approach."}
+{"id": "R56", "linha": "61", "texto": "The system must allow calculating Ackermann function results using more than one calculation approach."}
+{"id": "R57", "linha": "62", "texto": "The system must inform an error when mathematical services receive values outside the expected format."}
+{"id": "R58", "linha": "63", "texto": "The system must offer a service catalog for consulting and testing available endpoints."}
+{"id": "R59", "linha": "64", "texto": "The system must maintain demo utility as a separate capability."}
+{"id": "R60", "linha": "66", "texto": "The system must record main operations to support traceability and problem analysis."}
+{"id": "R61", "linha": "67", "texto": "To achieve this, relevant operations from registration, authentication, consultation, and loan flows must be reported to a central event recording mechanism."}
+{"id": "R62", "linha": "68", "texto": "The system must maintain this record decoupled from business areas, allowing failure and behavior tracking without coupling audit persistence to functional domains."}
+{"id": "R63", "linha": "69", "texto": "The system must maintain audit as a separate capability."}
+{"id": "R64", "linha": "70", "texto": "The authentication, book catalog, reader management, and loan capabilities depend on the audit capability to record their main operations."}
+{"id": "R65", "linha": "72", "texto": "The system must be usable through simple web forms, with fast and readable feedback for each action."}
+{"id": "R66", "linha": "73", "texto": "The system must offer clear success, denial, and error messages."}
+{"id": "R67", "linha": "74", "texto": "The system must reduce manual typing in repetitive flows, such as book loans, through lists or suggestions."}
+{"id": "R68", "linha": "75", "texto": "The system must facilitate loan completion by showing available books and registered readers."}
+{"id": "R69", "linha": "76", "texto": "The system must adapt the loan selection method according to the number of available options."}
+{"id": "R70", "linha": "77", "texto": "The system must block the loan selection field when no data is available."}
+{"id": "R71", "linha": "78", "texto": "The system must display the result of each operation immediately after form submission."}
+{"id": "R72", "linha": "80", "texto": "The system must maintain consistent behavior across the main interface and data query/sending endpoints."}
+{"id": "R73", "linha": "81", "texto": "The system must work in common browsers and consider small screen usage."}
+{"id": "R74", "linha": "82", "texto": "Central registration, authentication, consultation, and loan rules must be repeatably verifiable by automated tests."}
+{"id": "R75", "linha": "83", "texto": "The system must be organized by business domains, supporting maintenance and feature expansion."}
+{"id": "R76", "linha": "85", "texto": "The code implements book and reader deletion rules, but the current main screen does not directly expose these commands."}
+{"id": "R77", "linha": "86", "texto": "The system has librarian authentication, but the current code does not show session blocking in other library operations."}
+{"id": "R78", "linha": "87", "texto": "The library and authentication part is the clearest business core; mathematical modules appear as auxiliary demonstration features."}

@@ -1,0 +1,675 @@
+{
+  "achados": [
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Administration and Configuration Service",
+        "Billing Service",
+        "CRM and Proposals Service",
+        "Commissioning Service",
+        "Content and Document Management Service",
+        "File Storage Service",
+        "Financial Management Service",
+        "Identity and Access Service",
+        "Notification Service",
+        "Project and Work Tracking Service",
+        "Reporting Service",
+        "Workforce Management Service"
+      ],
+      "evidencia": "componente fortemente conexa com 12 servicos",
+      "familia": "coerencia",
+      "id": "D04-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Administration and Configuration Service",
+        "Billing Service"
+      ],
+      "evidencia": "Administration and Configuration Service -> Billing Service; Billing Service -> Administration and Configuration Service",
+      "familia": "coerencia",
+      "id": "D04-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Administration and Configuration Service",
+        "CRM and Proposals Service"
+      ],
+      "evidencia": "Administration and Configuration Service -> CRM and Proposals Service; CRM and Proposals Service -> Administration and Configuration Service",
+      "familia": "coerencia",
+      "id": "D04-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Administration and Configuration Service",
+        "File Storage Service"
+      ],
+      "evidencia": "Administration and Configuration Service -> File Storage Service; File Storage Service -> Administration and Configuration Service",
+      "familia": "coerencia",
+      "id": "D04-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Administration and Configuration Service",
+        "Identity and Access Service"
+      ],
+      "evidencia": "Administration and Configuration Service -> Identity and Access Service; Identity and Access Service -> Administration and Configuration Service",
+      "familia": "coerencia",
+      "id": "D04-005",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Administration and Configuration Service",
+        "Notification Service"
+      ],
+      "evidencia": "Administration and Configuration Service -> Notification Service; Notification Service -> Administration and Configuration Service",
+      "familia": "coerencia",
+      "id": "D04-006",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Administration and Configuration Service",
+        "Reporting Service"
+      ],
+      "evidencia": "Administration and Configuration Service -> Reporting Service; Reporting Service -> Administration and Configuration Service",
+      "familia": "coerencia",
+      "id": "D04-007",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Administration and Configuration Service",
+        "Workforce Management Service"
+      ],
+      "evidencia": "Administration and Configuration Service -> Workforce Management Service; Workforce Management Service -> Administration and Configuration Service",
+      "familia": "coerencia",
+      "id": "D04-008",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Billing Service",
+        "CRM and Proposals Service"
+      ],
+      "evidencia": "Billing Service -> CRM and Proposals Service; CRM and Proposals Service -> Billing Service",
+      "familia": "coerencia",
+      "id": "D04-009",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Billing Service",
+        "File Storage Service"
+      ],
+      "evidencia": "Billing Service -> File Storage Service; File Storage Service -> Billing Service",
+      "familia": "coerencia",
+      "id": "D04-010",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Billing Service",
+        "Financial Management Service"
+      ],
+      "evidencia": "Billing Service -> Financial Management Service; Financial Management Service -> Billing Service",
+      "familia": "coerencia",
+      "id": "D04-011",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Billing Service",
+        "Project and Work Tracking Service"
+      ],
+      "evidencia": "Billing Service -> Project and Work Tracking Service; Project and Work Tracking Service -> Billing Service",
+      "familia": "coerencia",
+      "id": "D04-012",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Billing Service",
+        "Reporting Service"
+      ],
+      "evidencia": "Billing Service -> Reporting Service; Reporting Service -> Billing Service",
+      "familia": "coerencia",
+      "id": "D04-013",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "CRM and Proposals Service",
+        "Project and Work Tracking Service"
+      ],
+      "evidencia": "CRM and Proposals Service -> Project and Work Tracking Service; Project and Work Tracking Service -> CRM and Proposals Service",
+      "familia": "coerencia",
+      "id": "D04-014",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "CRM and Proposals Service",
+        "Reporting Service"
+      ],
+      "evidencia": "CRM and Proposals Service -> Reporting Service; Reporting Service -> CRM and Proposals Service",
+      "familia": "coerencia",
+      "id": "D04-015",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Commissioning Service",
+        "File Storage Service"
+      ],
+      "evidencia": "Commissioning Service -> File Storage Service; File Storage Service -> Commissioning Service",
+      "familia": "coerencia",
+      "id": "D04-016",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Commissioning Service",
+        "Notification Service"
+      ],
+      "evidencia": "Commissioning Service -> Notification Service; Notification Service -> Commissioning Service",
+      "familia": "coerencia",
+      "id": "D04-017",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Commissioning Service",
+        "Project and Work Tracking Service"
+      ],
+      "evidencia": "Commissioning Service -> Project and Work Tracking Service; Project and Work Tracking Service -> Commissioning Service",
+      "familia": "coerencia",
+      "id": "D04-018",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Commissioning Service",
+        "Reporting Service"
+      ],
+      "evidencia": "Commissioning Service -> Reporting Service; Reporting Service -> Commissioning Service",
+      "familia": "coerencia",
+      "id": "D04-019",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Commissioning Service",
+        "Workforce Management Service"
+      ],
+      "evidencia": "Commissioning Service -> Workforce Management Service; Workforce Management Service -> Commissioning Service",
+      "familia": "coerencia",
+      "id": "D04-020",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Content and Document Management Service",
+        "File Storage Service"
+      ],
+      "evidencia": "Content and Document Management Service -> File Storage Service; File Storage Service -> Content and Document Management Service",
+      "familia": "coerencia",
+      "id": "D04-021",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Content and Document Management Service",
+        "Identity and Access Service"
+      ],
+      "evidencia": "Content and Document Management Service -> Identity and Access Service; Identity and Access Service -> Content and Document Management Service",
+      "familia": "coerencia",
+      "id": "D04-022",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Content and Document Management Service",
+        "Reporting Service"
+      ],
+      "evidencia": "Content and Document Management Service -> Reporting Service; Reporting Service -> Content and Document Management Service",
+      "familia": "coerencia",
+      "id": "D04-023",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "File Storage Service",
+        "Project and Work Tracking Service"
+      ],
+      "evidencia": "File Storage Service -> Project and Work Tracking Service; Project and Work Tracking Service -> File Storage Service",
+      "familia": "coerencia",
+      "id": "D04-024",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Financial Management Service",
+        "Project and Work Tracking Service"
+      ],
+      "evidencia": "Financial Management Service -> Project and Work Tracking Service; Project and Work Tracking Service -> Financial Management Service",
+      "familia": "coerencia",
+      "id": "D04-025",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Financial Management Service",
+        "Reporting Service"
+      ],
+      "evidencia": "Financial Management Service -> Reporting Service; Reporting Service -> Financial Management Service",
+      "familia": "coerencia",
+      "id": "D04-026",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Identity and Access Service",
+        "Project and Work Tracking Service"
+      ],
+      "evidencia": "Identity and Access Service -> Project and Work Tracking Service; Project and Work Tracking Service -> Identity and Access Service",
+      "familia": "coerencia",
+      "id": "D04-027",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Identity and Access Service",
+        "Reporting Service"
+      ],
+      "evidencia": "Identity and Access Service -> Reporting Service; Reporting Service -> Identity and Access Service",
+      "familia": "coerencia",
+      "id": "D04-028",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Identity and Access Service",
+        "Workforce Management Service"
+      ],
+      "evidencia": "Identity and Access Service -> Workforce Management Service; Workforce Management Service -> Identity and Access Service",
+      "familia": "coerencia",
+      "id": "D04-029",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Notification Service",
+        "Project and Work Tracking Service"
+      ],
+      "evidencia": "Notification Service -> Project and Work Tracking Service; Project and Work Tracking Service -> Notification Service",
+      "familia": "coerencia",
+      "id": "D04-030",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Notification Service",
+        "Workforce Management Service"
+      ],
+      "evidencia": "Notification Service -> Workforce Management Service; Workforce Management Service -> Notification Service",
+      "familia": "coerencia",
+      "id": "D04-031",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Project and Work Tracking Service",
+        "Reporting Service"
+      ],
+      "evidencia": "Project and Work Tracking Service -> Reporting Service; Reporting Service -> Project and Work Tracking Service",
+      "familia": "coerencia",
+      "id": "D04-032",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Project and Work Tracking Service",
+        "Workforce Management Service"
+      ],
+      "evidencia": "Project and Work Tracking Service -> Workforce Management Service; Workforce Management Service -> Project and Work Tracking Service",
+      "familia": "coerencia",
+      "id": "D04-033",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Reporting Service",
+        "Workforce Management Service"
+      ],
+      "evidencia": "Reporting Service -> Workforce Management Service; Workforce Management Service -> Reporting Service",
+      "familia": "coerencia",
+      "id": "D04-034",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Administration and Configuration Service"
+      ],
+      "evidencia": "1 endpoint(s) para 3 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.333333
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Billing Service"
+      ],
+      "evidencia": "1 endpoint(s) para 4 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.25
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "CRM and Proposals Service"
+      ],
+      "evidencia": "1 endpoint(s) para 3 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.333333
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Financial Management Service"
+      ],
+      "evidencia": "1 endpoint(s) para 3 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.333333
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Identity and Access Service"
+      ],
+      "evidencia": "1 endpoint(s) para 4 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-005",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.25
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Project and Work Tracking Service"
+      ],
+      "evidencia": "1 endpoint(s) para 4 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-006",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.25
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Workforce Management Service"
+      ],
+      "evidencia": "1 endpoint(s) para 3 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-007",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.333333
+    }
+  ],
+  "avisos": [
+    "12 non-bullet lines ignored in requirements"
+  ],
+  "contagens": {
+    "D04": 1,
+    "D11": 7
+  },
+  "d07_status": "not_applicable",
+  "descartados": [],
+  "entrada": {
+    "arestas": 66,
+    "duplicatas_normalizadas": [],
+    "requisitos": 45,
+    "schema": "en",
+    "servicos": 12,
+    "yaml_sha256": "78d2436d37b704fe7263da53ab159d9f69ab2a17b01d0a5b489a1c503c9bf975"
+  },
+  "execucao": {
+    "commit_davinci": null,
+    "configuracao": "C4",
+    "execution_id": "20260924_003112_676069",
+    "max_tokens": null,
+    "modelo": "Gemini",
+    "modelo_versao": null,
+    "rodada": 2,
+    "temperatura": null
+  },
+  "gerado_em": "2026-11-24T00:00:00+00:00",
+  "metricas": {
+    "cobertura_requisitos": null,
+    "conflitos_de_posse": null,
+    "consistencia_interna": null,
+    "densidade_ciclos": 0.083333,
+    "endpoints_por_responsabilidade": 0.352941,
+    "estabilidade_jaccard_arestas": 0.80303,
+    "estabilidade_jaccard_servicos": 1.0,
+    "gini_granularidade": 0.151961,
+    "precisao_servicos": null,
+    "taxa_defeitos_por_servico": 0.666667
+  },
+  "metricas_status": {
+    "cobertura_requisitos": "semiautomatico_nao_executado",
+    "conflitos_de_posse": "semiautomatico_nao_executado",
+    "consistencia_interna": "d07_nao_aplicavel",
+    "densidade_ciclos": "calculado",
+    "endpoints_por_responsabilidade": "calculado",
+    "estabilidade_jaccard_arestas": "calculado",
+    "estabilidade_jaccard_servicos": "calculado",
+    "gini_granularidade": "calculado",
+    "precisao_servicos": "semiautomatico_nao_executado",
+    "taxa_defeitos_por_servico": "calculado"
+  },
+  "sistema": "TNTConcept",
+  "versao_via": "1.0.0"
+}

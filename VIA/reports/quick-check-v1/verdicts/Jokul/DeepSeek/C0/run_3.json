@@ -1,0 +1,158 @@
+{
+  "achados": [
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Authentication Service",
+        "Media Service",
+        "Movie Catalog Service"
+      ],
+      "evidencia": "componente fortemente conexa com 3 servicos",
+      "familia": "coerencia",
+      "id": "D04-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Authentication Service",
+        "Media Service"
+      ],
+      "evidencia": "Authentication Service -> Media Service; Media Service -> Authentication Service",
+      "familia": "coerencia",
+      "id": "D04-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Authentication Service",
+        "Movie Catalog Service"
+      ],
+      "evidencia": "Authentication Service -> Movie Catalog Service; Movie Catalog Service -> Authentication Service",
+      "familia": "coerencia",
+      "id": "D04-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D04",
+      "confirmado": true,
+      "elementos": [
+        "Media Service",
+        "Movie Catalog Service"
+      ],
+      "evidencia": "Media Service -> Movie Catalog Service; Movie Catalog Service -> Media Service",
+      "familia": "coerencia",
+      "id": "D04-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta",
+      "subtipo": "ciclo2"
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Authentication Service"
+      ],
+      "evidencia": "1 endpoint(s) para 6 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.166667
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Media Service"
+      ],
+      "evidencia": "1 endpoint(s) para 5 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.2
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Movie Catalog Service"
+      ],
+      "evidencia": "1 endpoint(s) para 7 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.142857
+    }
+  ],
+  "avisos": [],
+  "contagens": {
+    "D04": 1,
+    "D11": 3
+  },
+  "d07_status": "not_applicable",
+  "descartados": [],
+  "entrada": {
+    "arestas": 6,
+    "duplicatas_normalizadas": [],
+    "requisitos": 66,
+    "schema": "en",
+    "servicos": 3,
+    "yaml_sha256": "a6679d4dd2db8c147871729955fed716780010c49442e08c93af33fca9e11318"
+  },
+  "execucao": {
+    "commit_davinci": null,
+    "configuracao": "C0",
+    "execution_id": "20260909_001722_534070",
+    "max_tokens": null,
+    "modelo": "DeepSeek",
+    "modelo_versao": null,
+    "rodada": 3,
+    "temperatura": null
+  },
+  "gerado_em": "2026-11-24T00:00:00+00:00",
+  "metricas": {
+    "cobertura_requisitos": null,
+    "conflitos_de_posse": null,
+    "consistencia_interna": null,
+    "densidade_ciclos": 0.333333,
+    "endpoints_por_responsabilidade": 0.166667,
+    "estabilidade_jaccard_arestas": 0.785714,
+    "estabilidade_jaccard_servicos": 1.0,
+    "gini_granularidade": 0.074074,
+    "precisao_servicos": null,
+    "taxa_defeitos_por_servico": 1.333333
+  },
+  "metricas_status": {
+    "cobertura_requisitos": "semiautomatico_nao_executado",
+    "conflitos_de_posse": "semiautomatico_nao_executado",
+    "consistencia_interna": "d07_nao_aplicavel",
+    "densidade_ciclos": "calculado",
+    "endpoints_por_responsabilidade": "calculado",
+    "estabilidade_jaccard_arestas": "calculado",
+    "estabilidade_jaccard_servicos": "calculado",
+    "gini_granularidade": "calculado",
+    "precisao_servicos": "semiautomatico_nao_executado",
+    "taxa_defeitos_por_servico": "calculado"
+  },
+  "sistema": "Jokul",
+  "versao_via": "1.0.0"
+}

@@ -1,0 +1,66 @@
+{"id": "R01", "linha": "1", "texto": "The system must allow user registration with username and password."}
+{"id": "R02", "linha": "2", "texto": "The system must allow login for already registered users."}
+{"id": "R03", "linha": "3", "texto": "The system must differentiate at least two usage profiles: regular user and administrator."}
+{"id": "R04", "linha": "4", "texto": "The system must deny access when the user does not exist, when the password is incorrect, or when the informed profile does not match the registration."}
+{"id": "R05", "linha": "5", "texto": "The system must maintain the logged user identification during browser navigation."}
+{"id": "R06", "linha": "6", "texto": "The system must show the resource management area only to users identified as administrators."}
+{"id": "R07", "linha": "7", "texto": "The system must allow the user to end the session."}
+{"id": "R08", "linha": "8", "texto": "The system must operate with separation between regular user and administrator profiles."}
+{"id": "R09", "linha": "9", "texto": "Collection management functions must be restricted to the administrator profile."}
+{"id": "R10", "linha": "10", "texto": "The user session must remain identified in the browser until logout or local data clearing."}
+{"id": "R11", "linha": "11", "texto": "The system must prevent duplicate user registration with the same username."}
+{"id": "R12", "linha": "12", "texto": "The system must maintain authentication as a separate capability, responsible exclusively for registration, login, session, and profile control."}
+{"id": "R13", "linha": "14", "texto": "The system must display a home page with the list of available movies."}
+{"id": "R14", "linha": "15", "texto": "Each listed movie must show at least title, poster, and rating."}
+{"id": "R15", "linha": "16", "texto": "The system must organize the movie listing into pages."}
+{"id": "R16", "linha": "17", "texto": "The system must allow consulting the total number of registered movies to support paginated navigation."}
+{"id": "R17", "linha": "18", "texto": "The system must allow opening the movie details page from the listing."}
+{"id": "R18", "linha": "19", "texto": "The system must present a details page for each movie."}
+{"id": "R19", "linha": "20", "texto": "The details page must show at least title, rating, alternative name, release date, duration, direction, screenplay, cast, synopsis, poster, and categories."}
+{"id": "R20", "linha": "21", "texto": "The system must allow viewing the full movie cast."}
+{"id": "R21", "linha": "22", "texto": "The system must prevent consulting details of nonexistent movies, returning an appropriate error message."}
+{"id": "R22", "linha": "23", "texto": "The system must provide a navigation area for movie categories."}
+{"id": "R23", "linha": "24", "texto": "The system must allow viewing all registered categories."}
+{"id": "R24", "linha": "25", "texto": "The system must allow listing only movies belonging to a selected category."}
+{"id": "R25", "linha": "26", "texto": "A movie must be able to belong to more than one category."}
+{"id": "R26", "linha": "27", "texto": "The system must allow returning from the category view to the general catalog view."}
+{"id": "R27", "linha": "28", "texto": "The system must maintain the movie catalog as a separate capability, responsible for listing, details, and categories."}
+{"id": "R28", "linha": "29", "texto": "The catalog capability depends on authentication to validate user access and restrict management operations."}
+{"id": "R29", "linha": "31", "texto": "The system must allow starting movie playback from the details page."}
+{"id": "R30", "linha": "32", "texto": "The system must provide a download link for the movie file when the resource is ready for consumption."}
+{"id": "R31", "linha": "33", "texto": "Before playback, the system must ensure that the video file is available in the area used by the application for content delivery."}
+{"id": "R32", "linha": "34", "texto": "If the file is not yet available in the delivery area, the system must try to obtain it from the configured local repository."}
+{"id": "R33", "linha": "35", "texto": "The standard playback process assumes that the physical movie file corresponds to the registered title."}
+{"id": "R34", "linha": "36", "texto": "Video file upload and movie registration are related but independent steps."}
+{"id": "R35", "linha": "37", "texto": "Automatic playback depends on the existence of an MP4 file corresponding to the registered title."}
+{"id": "R36", "linha": "38", "texto": "The source movie filename must follow the expected pattern configured in the environment for automatic loading to work."}
+{"id": "R37", "linha": "39", "texto": "The system must support large video file uploads, up to 2 GB per file."}
+{"id": "R38", "linha": "40", "texto": "The operational process must consider MP4 as the standard video format."}
+{"id": "R39", "linha": "41", "texto": "The application environment must have a local area to temporarily store or serve the video files used during playback."}
+{"id": "R40", "linha": "42", "texto": "The application environment must have a configured local repository from which movies can be loaded on demand."}
+{"id": "R41", "linha": "43", "texto": "The system must maintain media as a separate capability from the catalog, responsible for upload, storage, and video delivery."}
+{"id": "R42", "linha": "44", "texto": "The media capability depends on the catalog to identify the registered movie corresponding to each video file."}
+{"id": "R43", "linha": "45", "texto": "The media capability depends on authentication to validate access before playback and download."}
+{"id": "R44", "linha": "47", "texto": "The administrator must be able to register a new movie in the catalog."}
+{"id": "R45", "linha": "48", "texto": "Movie registration must include at least title, rating, alternative name, release date, duration, direction, screenplay, cast, categories, synopsis, and poster."}
+{"id": "R46", "linha": "49", "texto": "The system must prevent duplicate movie registration with the same title."}
+{"id": "R47", "linha": "50", "texto": "The administrator must be able to upload the movie video file to the application."}
+{"id": "R48", "linha": "51", "texto": "The administrator must be able to delete a movie from the catalog."}
+{"id": "R49", "linha": "52", "texto": "The system must allow batch deletion of more than one movie."}
+{"id": "R50", "linha": "53", "texto": "The system must inform the administrator which movies were selected before batch deletion."}
+{"id": "R51", "linha": "54", "texto": "The system must prevent deleting nonexistent movies."}
+{"id": "R52", "linha": "55", "texto": "The movie title must be treated as the unique identifier in the catalog registration."}
+{"id": "R53", "linha": "57", "texto": "The application must be accessible through a web interface."}
+{"id": "R54", "linha": "58", "texto": "Catalog navigation must be simple and direct, with visible access to the home page, categories, details, and playback."}
+{"id": "R55", "linha": "59", "texto": "The application must present clear success, warning, and failure messages for main operations such as login, registration, inclusion, deletion, upload, and playback."}
+{"id": "R56", "linha": "60", "texto": "Catalog display must be paginated in blocks of up to 12 movies per page, supporting visual organization and perceived performance."}
+{"id": "R57", "linha": "61", "texto": "The system must maintain a single response pattern for operations, indicating status, message, and returned data."}
+{"id": "R58", "linha": "63", "texto": "User, movie, and category information must be durably persisted."}
+{"id": "R59", "linha": "64", "texto": "The system must preserve user and movie uniqueness to avoid duplicates in the collection and access."}
+{"id": "R60", "linha": "65", "texto": "Error handling must return controlled messages to the user whenever possible."}
+{"id": "R61", "linha": "66", "texto": "User, movie, and category data must be stored in a structured database that supports catalog relationships."}
+{"id": "R62", "linha": "67", "texto": "The solution must allow the user interface and application services to evolve separately."}
+{"id": "R63", "linha": "68", "texto": "The user interface must be able to consume application services even when published in a different environment."}
+{"id": "R64", "linha": "70", "texto": "The intention to restrict resource management to the administrator is clear in the interface, but this restriction is not completely validated in the backend."}
+{"id": "R65", "linha": "71", "texto": "The current system is more oriented to a local movie collection than to remote storage or an external streaming service."}
+{"id": "R66", "linha": "72", "texto": "Playback availability depends on both movie registration and the existence of the corresponding physical file."}

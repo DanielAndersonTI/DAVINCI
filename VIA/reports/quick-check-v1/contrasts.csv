@@ -1,0 +1,4 @@
+hipotese,comparacao,efeito,ci_low,ci_high,p_raw,p_holm,n_unidades,detalhe
+H1,"rho(F1_inter, defeitos estruturais por serviço) por sistema, mediana",-0.080324,-0.554840,0.082186,0.252350,0.373926,8,"5 de 8 sistemas com rho negativo; D03-D06, sem D11/D12"
+H2,densidade de ciclos C1 - C0,-0.021379,-0.052778,0.003356,0.186963,0.373926,24,"unidade: sistema x modelo, media das 3 execucoes"
+H3,endpoints por responsabilidade Gemini - DeepSeek,0.087768,0.062221,0.114710,0.000200,0.000600,40,"unidade: sistema x configuracao, media das 3 execucoes"

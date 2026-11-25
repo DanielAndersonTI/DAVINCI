@@ -1,0 +1,97 @@
+{
+  "achados": [
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Authentication Service"
+      ],
+      "evidencia": "1 endpoint(s) para 5 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.2
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Media Service"
+      ],
+      "evidencia": "1 endpoint(s) para 5 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.2
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Movie Catalog Service"
+      ],
+      "evidencia": "1 endpoint(s) para 6 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.166667
+    }
+  ],
+  "avisos": [],
+  "contagens": {
+    "D11": 3
+  },
+  "d07_status": "not_applicable",
+  "descartados": [],
+  "entrada": {
+    "arestas": 3,
+    "duplicatas_normalizadas": [],
+    "requisitos": 66,
+    "schema": "en",
+    "servicos": 3,
+    "yaml_sha256": "154b027f917f36639fb7bf577294b40b0fc9a7418771b34f58a1449b2e0127ae"
+  },
+  "execucao": {
+    "commit_davinci": null,
+    "configuracao": "C0",
+    "execution_id": "20260903_205056_388571",
+    "max_tokens": null,
+    "modelo": "Gemini",
+    "modelo_versao": null,
+    "rodada": 1,
+    "temperatura": null
+  },
+  "gerado_em": "2026-11-24T00:00:00+00:00",
+  "metricas": {
+    "cobertura_requisitos": null,
+    "conflitos_de_posse": null,
+    "consistencia_interna": null,
+    "densidade_ciclos": 0.0,
+    "endpoints_por_responsabilidade": 0.1875,
+    "estabilidade_jaccard_arestas": 1.0,
+    "estabilidade_jaccard_servicos": 1.0,
+    "gini_granularidade": 0.041667,
+    "precisao_servicos": null,
+    "taxa_defeitos_por_servico": 1.0
+  },
+  "metricas_status": {
+    "cobertura_requisitos": "semiautomatico_nao_executado",
+    "conflitos_de_posse": "semiautomatico_nao_executado",
+    "consistencia_interna": "d07_nao_aplicavel",
+    "densidade_ciclos": "calculado",
+    "endpoints_por_responsabilidade": "calculado",
+    "estabilidade_jaccard_arestas": "calculado",
+    "estabilidade_jaccard_servicos": "calculado",
+    "gini_granularidade": "calculado",
+    "precisao_servicos": "semiautomatico_nao_executado",
+    "taxa_defeitos_por_servico": "calculado"
+  },
+  "sistema": "Jokul",
+  "versao_via": "1.0.0"
+}

@@ -1,0 +1,152 @@
+{
+  "achados": [
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Cargo Management Service",
+        "destination"
+      ],
+      "evidencia": "nome nao resolvido: destination",
+      "familia": "coerencia",
+      "id": "D05-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Cargo Tracking Service",
+        "estimated arrival"
+      ],
+      "evidencia": "nome nao resolvido: estimated arrival",
+      "familia": "coerencia",
+      "id": "D05-002",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Integration Service",
+        "integration API"
+      ],
+      "evidencia": "nome nao resolvido: integration API",
+      "familia": "coerencia",
+      "id": "D05-003",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Logistics Event Registration Service",
+        "load"
+      ],
+      "evidencia": "nome nao resolvido: load",
+      "familia": "coerencia",
+      "id": "D05-004",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D05",
+      "confirmado": true,
+      "elementos": [
+        "Route Planning Service",
+        "destination"
+      ],
+      "evidencia": "nome nao resolvido: destination",
+      "familia": "coerencia",
+      "id": "D05-005",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "alta"
+    },
+    {
+      "codigo": "D11",
+      "confirmado": true,
+      "elementos": [
+        "Cargo Tracking Service"
+      ],
+      "evidencia": "1 endpoint(s) para 3 responsabilidade(s)",
+      "familia": "interface",
+      "id": "D11-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "media",
+      "valor": 0.333333
+    },
+    {
+      "codigo": "D12",
+      "confirmado": true,
+      "elementos": [],
+      "evidencia": "nenhuma mencao a autenticacao ou autorizacao no artefato",
+      "familia": "interface",
+      "id": "D12-001",
+      "origem": "automatica",
+      "reparavel_por_remocao": false,
+      "severidade": "baixa"
+    }
+  ],
+  "avisos": [],
+  "contagens": {
+    "D05": 5,
+    "D11": 1,
+    "D12": 1
+  },
+  "d07_status": "not_applicable",
+  "descartados": [],
+  "entrada": {
+    "arestas": 5,
+    "duplicatas_normalizadas": [],
+    "requisitos": 71,
+    "schema": "en",
+    "servicos": 5,
+    "yaml_sha256": "9ede61774e209db81004178d3c75c1fec16ef8473572e3d03752b8f29de231cf"
+  },
+  "execucao": {
+    "commit_davinci": null,
+    "configuracao": "C3",
+    "execution_id": "20260908_092551_086975",
+    "max_tokens": null,
+    "modelo": "Gemini",
+    "modelo_versao": null,
+    "rodada": 1,
+    "temperatura": null
+  },
+  "gerado_em": "2026-11-24T00:00:00+00:00",
+  "metricas": {
+    "cobertura_requisitos": null,
+    "conflitos_de_posse": null,
+    "consistencia_interna": null,
+    "densidade_ciclos": 0.0,
+    "endpoints_por_responsabilidade": 0.625,
+    "estabilidade_jaccard_arestas": 0.0,
+    "estabilidade_jaccard_servicos": 0.857143,
+    "gini_granularidade": 0.25,
+    "precisao_servicos": null,
+    "taxa_defeitos_por_servico": 1.4
+  },
+  "metricas_status": {
+    "cobertura_requisitos": "semiautomatico_nao_executado",
+    "conflitos_de_posse": "semiautomatico_nao_executado",
+    "consistencia_interna": "d07_nao_aplicavel",
+    "densidade_ciclos": "calculado",
+    "endpoints_por_responsabilidade": "calculado",
+    "estabilidade_jaccard_arestas": "calculado",
+    "estabilidade_jaccard_servicos": "calculado",
+    "gini_granularidade": "calculado",
+    "precisao_servicos": "semiautomatico_nao_executado",
+    "taxa_defeitos_por_servico": "calculado"
+  },
+  "sistema": "Cargo-Tracker",
+  "versao_via": "1.0.0"
+}
