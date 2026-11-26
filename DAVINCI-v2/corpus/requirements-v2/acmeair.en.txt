@@ -1,0 +1,52 @@
+RF-01: The system must allow the customer to access their account via login and password.
+RF-02: The system must create a usage session after successful authentication.
+RF-03: The system must allow the customer to close their session through logout.
+RF-04: The system must require an active session to access restricted areas, such as customer profile and reservations.
+RF-05: The system must allow searching for flights by informing the origin airport, destination airport and travel date.
+RF-06: The system must allow one-way or round-trip travel searches.
+RF-07: The system must display the flight options found for each leg of the trip.
+RF-08: The system must display, for each flight found, information on departure time, arrival time and reference values â€‹â€‹for the classes displayed to the customer.
+RF-09: The system must work with a set of previously registered airports.
+RF-10: The system must allow an authenticated customer to book an outbound flight.
+RF-11: The system must allow an authenticated customer to book round-trip flights in the same operation.
+RF-12: The system must generate an identifier for each reservation created.
+RF-13: The system must record the date on which the reservation was made.
+RF-14: The system must inform the customer of the identifier of the reservation created after completing the operation.
+RF-15: The system must allow the customer to consult their existing reservations.
+RF-16: The system must present the customer with a list of reservations already made.
+RF-17: The system must allow canceling a selected reservation.
+RF-18: After cancellation, the reservation should no longer appear as active in the customer's listing.
+RF-19: The system must allow the customer to consult their own profile.
+RF-20: The system must display the customer's contact details in the profile, including telephone number, telephone type and address.
+RF-21: The system must allow updating the customer's contact details and address.
+RF-22: The system must require the customer's current password to confirm changes to the profile.
+RF-23: The system must prevent a client from consulting or changing another client's profile.
+RF-24: The system must display to the customer their status in the loyalty program.
+RF-25: The system must display the number of miles accumulated during the year.
+RF-26: The system must display the total number of miles accumulated.
+RF-27: Loyalty information should be presented to the customer as query data, not as edit fields in the main interface flow.
+RF-28: The system must allow initial loading or reloading of the application database.
+RF-29: The loading process must allow defining the number of example clients to be generated.
+RF-30: The base payload must recreate key operation data, including flights, customers, sessions, and test bookings.
+RF-31: The system must provide summary operating information, such as number of customers, sessions, flights, segments, reservations and registered airports.
+RNF-32: The application must restrict private functionalities to authenticated clients.
+RNF-33: The client session must have limited validity and automatically expire after the configured period.
+RNF-34: Logout should invalidate the session in use immediately.
+RNF-35: Customer personal data must be protected against undue access by other customers.
+RNF-36: The application must support a high volume of calls and queries, especially in the authentication, flight search and reservation flows.
+RNF-37: Flight queries should prioritize quick responses, as they represent a recurring flow in the customer journey.
+RNF-38: The solution must be suitable for growth in usage without relying on manual fulfillment for core self-service operations.
+RNF-39: The application must be able to run in different environments, including local infrastructure, public cloud and hybrid scenarios.
+RNF-40: The solution must keep customer, flight, session and reservation data persisted between application requests.
+RNF-41: Each session and each reservation must have a unique identification.
+RNF-42: Reservation and cancellation operations must maintain sufficient consistency to correctly reflect the current state of the customer's reservations.
+RNF-43: The application must record minimum data for monitoring operations, such as reservation date and count of operational records.
+RNF-44: Navigation should favor self-service, allowing the customer to search for flights, manage reservations and update their profile without human intermediation.
+RNF-45: The system must present times, dates and values â€‹â€‹in a way that is legible to the customer.
+RNF-46: The main journeys must be accessible via a simple web interface, with clear separation between flight search, reservations, profile and support.
+RNF-47: The environment must offer a simple means of preparing and checking the database for testing, demonstrations or operational restart.
+RNF-48: The system must provide basic operating indicators to monitor the environment without requiring direct consultation of the database.
+RNF-49: The flow called `Check-in` in the interface, in practice, works as querying and canceling reservations; A complete passenger check-in process was not identified in this repository.
+RNF-50: There is a `Support` interface with the appearance of a real-time chat, but the corresponding backend was not found in the analyzed code. Therefore, this item was not treated above as a consolidated functional requirement.
+RNF-51: No public registration flow for new customers was identified. Customer accounts are generated by administrative data loading routine.
+RNF-52: No payment flow, seat choice or formal fare class selection was identified at the time of booking; the system displays prices, but the reservation observed in the code is simplified.

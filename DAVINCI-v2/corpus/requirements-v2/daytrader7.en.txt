@@ -1,0 +1,70 @@
+RF-01: The system must allow the registration of new investors.
+RF-02: Investor registration must include, at a minimum, user identification, password, password confirmation, full name, address, email, card and initial opening balance.
+RF-03: The system must validate that the password and password confirmation entered during registration are identical.
+RF-04: The system should not allow the registration of an investor with an already existing identification.
+RF-05: The system must authenticate the investor using username and password.
+RF-06: The system must allow login for authenticated investors.
+RF-07: The system must allow the investor's session to be closed via logout.
+RF-08: The system must prevent access to account, portfolio and trading resources when the investor is not authenticated.
+RF-09: The system must maintain an individual account for each registered investor.
+RF-10: The investor's account must record current balance, initial balance, creation date, last access date, total logins and total logouts.
+RF-11: The system must allow consultation of the investor's account registration and financial data.
+RF-12: The system must allow updating the investor profile.
+RF-13: Updating your profile must include, at a minimum, a password, full name, address, email and registered card.
+RF-14: The system must require the completion of essential fields to update the profile.
+RF-15: The system must prevent profile updates when the password and password confirmation are different.
+RF-16: The system must allow consulting of asset quotes based on their codes.
+RF-17: The system must allow simultaneous consultation of more than one asset.
+RF-18: For each asset consulted, the system must present information such as company name, traded volume, price range, opening price, current price and variation.
+RF-19: The system must provide a consolidated summary of the market.
+RF-20: The consolidated market summary must present, at a minimum, a general performance index, opening index, traded volume, assets with the biggest increases and assets with the biggest drops.
+RF-21: The system must handle invalid asset codes without interrupting the investor's navigation.
+RF-22: The system must allow the investor to purchase assets by providing information on the asset code and the desired quantity.
+RF-23: The system must allow the sale of assets already in the investor's portfolio.
+RF-24: Every purchase or sale operation must generate an individual trading order.
+RF-25: Every order must have its own identification, type, quantity, price, opening date, completion date, status and transaction fee.
+RF-26: The system must apply a fixed operating fee to purchase and sale orders.
+RF-27: In purchase operations, the system must debit the investor's balance with the value corresponding to the traded asset plus the operation fee.
+RF-28: In sales operations, the system must credit the investor's balance with the net value of the operation, considering the applicable rate discount.
+RF-29: The system must allow orders to be processed immediately or later, depending on the operational configuration of the simulation.
+RF-30: The system must record the progress of the order through business status, including at least the states open, in processing, completed and canceled.
+RF-31: The system must not allow the same order to be completed repeatedly.
+RF-32: The system must cancel the sale when the position entered has already been negotiated previously or is no longer available.
+RF-33: The system must present the investor with confirmation of sending the order for processing.
+RF-34: The system must maintain the investor's portfolio with the positions resulting from purchases made.
+RF-35: When a purchase order is completed, the system must register the new position in the investor's portfolio.
+RF-36: When a sell order is completed, the system must remove the corresponding position from the portfolio.
+RF-37: The system must allow consultation of the investor's portfolio.
+RF-38: For each position in the portfolio, the system must present, at a minimum, position identification, purchase date, asset, quantity, purchase price, current price, applied value, market value and gain or loss.
+RF-39: The system must inform when the investor's portfolio is empty.
+RF-40: The system must allow the sale of a position directly from the portfolio.
+RF-41: The system must calculate the total amount invested in the portfolio, the current market value and the consolidated gain or loss.
+RF-42: The system must present the investor with a consolidated summary of their financial position, including cash balance, number of positions, market value of the portfolio and accumulated result in relation to the initial balance.
+RF-43: The system must maintain a history of orders associated with the investor.
+RF-44: The system should display a summary view of the investor's most recent orders.
+RF-45: The system must allow expanded consultation of the order history.
+RF-46: The system must alert the investor about completed orders that have not yet been presented to him.
+RF-47: The alert presentation must inform, at a minimum, order identification, status, relevant dates, type, asset, quantity and rate applied.
+RF-48: The system must update the traded volume and market indicators of assets after purchase and sale operations.
+RF-49: The system must reflect these updates in subsequent quote queries and in the consolidated market summary.
+RF-50: The system must allow the configuration of simulation operational parameters.
+RF-51: Among the operational parameters, the system must allow defining the order processing mode, the maximum number of simulated users, the maximum number of simulated assets and the market summary update interval.
+RF-52: The system must allow enabling or disabling alerts for completed orders.
+RF-53: The system must allow preparing or rebuilding the simulation database.
+RF-54: The system must allow resetting the simulation's operational data.
+RF-55: When resetting the data, the system must provide summary statistics of the execution, including users, assets, orders, cancellations and existing positions.
+RNF-56: The system must require prior authentication to access the investor's restricted resources.
+RNF-57: The system must ensure that the operations executed during the session are associated with the authenticated investor.
+RNF-58: The system must properly terminate the investor's session upon logout, reducing the risk of subsequent misuse.
+RNF-59: The system must preserve consistency between balance, orders, quotes and portfolio after each operation.
+RNF-60: The system must maintain minimum traceability of the order life cycle through identification, dates and status.
+RNF-61: The system must handle processing failures without compromising the integrity of investor data.
+RNF-62: The system must prevent, whenever possible, duplication of conclusions or improper reuse of orders and positions.
+RNF-63: The system must support immediate or subsequent processing of orders, in order to meet different operational strategies of the simulation.
+RNF-64: The system must allow the use of configurable updating of the market summary to balance information timeliness and operational cost.
+RNF-65: The system must support operation with high volumes of users, assets and simulated orders.
+RNF-66: The system must present business information to the investor in a clear, objective and organized manner by context of use.
+RNF-67: The system must offer understandable messages for situations such as login failure, registration error, password mismatch, missing mandatory data and invalid operations.
+RNF-68: The system must allow simple navigation between the main views of home, account, portfolio, quotes, orders and market summary.
+RNF-69: The system must provide administrative mechanisms for preparation, configuration and controlled restart of the simulation environment.
+RNF-70: The system must provide summary execution indicators to support operational monitoring of the simulation.

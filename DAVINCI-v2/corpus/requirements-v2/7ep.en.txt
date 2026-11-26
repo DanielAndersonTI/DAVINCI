@@ -1,0 +1,69 @@
+RF-01: The system should allow registering of librarians by username and password.
+RF-02: The system should not allow registering of a librarian with an existing username.
+RF-03: The system must require the completion of a username and password in the registration.
+RF-04: The system should only accept passwords considered strong enough for safe use.
+RF-05: The system must reject very short passwords.
+RF-06: The system should allow authenticated librarians to enter username and password to enter the system.
+RF-07: The system should grant access only when user and password exactly match the existing record.
+RF-08: The system must deny access when the user or password are incorrect or are not informed.
+RF-09: The system should allow registering of books in the collection by title.
+RF-10: The system should not allow duplicate registration of the same book.
+RF-11: The system must inform when the attempt to register the book fails due to lack of title.
+RF-12: The system should allow deleting of books already registered.
+RF-13: The system should not allow deleting of books that have never been registered.
+RF-14: The system should also delete the loan link when a removed book is borrowed.
+RF-15: The system should allow registering of readers able to receive loans.
+RF-16: The system should not allow duplicate registration of the same reader.
+RF-17: The system must inform when the attempt to register the reader fails due to lack of name.
+RF-18: The system should allow deleting of readers already registered.
+RF-19: The system should not allow deleting of readers who have never been registered.
+RF-20: The system should also delete loan links when a removed reader has borrowed books.
+RF-21: The system should allow recording of the loan of a book to a registered reader.
+RF-22: The system must record the date on which the loan was made.
+RF-23: The system should not allow lending to a person who is not registered as a reader.
+RF-24: The system should not allow borrowing of a book that is not registered.
+RF-25: The system should not allow borrowing of a book that is already lent to another person.
+RF-26: The system should allow the same reader to borrow more than one book at the same time.
+RF-27: The system must ensure that the same book is loaned to only one reader at a time.
+RF-28: The system should clearly inform when a loan cannot be completed.
+RF-29: The system should allow listing of all registered books.
+RF-30: The system should allow consulting of a book by identifier.
+RF-31: The system should allow consulting of one book by title.
+RF-32: The system should inform when there are no registered books or when a search finds no result.
+RF-33: The system should allow listing of only the books available for loan.
+RF-34: The system should allow listing of all registered readers.
+RF-35: The system should allow consulting of a reader by identifier.
+RF-36: The system should allow consulting of a reader by name.
+RF-37: The system should inform when there are no registered readers or when a search finds no result.
+RF-38: The system should not accept, in the same query, simultaneous search by identifier and by name/title.
+RF-39: The system should make it easier to fill out the loan by displaying options for available books and registered readers.
+RF-40: The system must adapt the form of choice on the loan screen according to the number of options available, using direct selection when there are few options and search suggestions when there are many.
+RF-41: The system should lock the loan selection field when no data is available to choose from.
+RF-42: The system should display the result of each operation immediately after sending the form.
+RF-43: The system should allow cleaning of the data and the base structure to restart the environment.
+RF-44: The system should allow recreating of the base structure when necessary.
+RF-45: The system should allow quickly restoring of the environment to a clean state and ready for further testing.
+RF-46: The system must offer a catalog of services for consultation and testing of available endpoints.
+RF-47: The system should allow adding of two integers informed by the user.
+RF-48: The system should allow calculating of Fibonacci sequence values with more than one calculation approach.
+RF-49: The system should allow calculating of the results of the Ackermann function with more than one calculation approach.
+RF-50: The system must report an error when the mathematical services receive values outside the expected format.
+RNF-51: The system should handle librarian credentials in a protected manner, without relying on the plaintext password for further validation.
+RNF-52: The system must require passwords with a minimum level of robustness before completing the registration of a librarian.
+RNF-53: The system must respond clearly to denied access attempts, without exposing sensitive details of the internal processing.
+RNF-54: The system should preserve consistency between books, readers, and loans by avoiding invalid or contradictory records.
+RNF-55: The system should prevent duplicates in the main records when the record already exists.
+RNF-56: The system should keep the base coherent when books or readers are deleted, also removing linked loans.
+RNF-57: The system must validate mandatory data before performing business operations.
+RNF-58: The system must be able to be used through simple web forms, with quick and legible feedback for each action.
+RNF-59: The system must offer objective messages of success, denial and error to guide the user.
+RNF-60: The system should reduce manual typing in repetitive flows, such as borrowing books, through lists or suggestions.
+RNF-61: The system should work in common browsers and consider use in smaller screens.
+RNF-62: The system should allow restarting of the data environment in a predictable way for repetition of tests and demonstrations.
+RNF-63: The system must maintain consistent behavior across both the main interface and the query and data submission endpoints.
+RNF-64: The system shall record key operations to support traceability and problem analysis.
+RNF-65: The central rules of registration, authentication, consultation and lending must be verified in a repeatable manner by automated tests.
+RNF-66: The system must be organized by business domains, favoring maintenance and expansion of functionalities.
+RNF-67: The code implements book and reader deletion rules, but the current main screen does not expose these commands directly.
+RNF-68: The system has librarian authentication, but the current code does not show session blocking in other library operations.
+RNF-69: The library and authentication part and the clearest business core of the application; mathematical modules appear as demonstration helper functionalities.

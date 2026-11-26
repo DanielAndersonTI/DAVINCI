@@ -1,0 +1,62 @@
+RF-01: The system must allow visitors and customers to enter the virtual store and browse the main catalog.
+RF-02: The system must organize products by animal categories, including fish, dogs, reptiles, cats and birds.
+RF-03: The system must allow access to categories through different navigation paths, such as the main menu, quick shortcuts and visual elements on the home page.
+RF-04: The system must allow viewing the list of products for each category.
+RF-05: The system must allow viewing of available items for each product.
+RF-06: The system must allow viewing of the details of each item, including description, identification, price and stock status.
+RF-07: The system must allow searching for products by keyword.
+RF-08: The search must consider the product name as the basis for returning results.
+RF-09: When no keyword is entered, the system must prevent the search and guide the user to fill in the search field.
+RF-10: The system must allow the registration of new customers by filling in identification, contact, address and access credentials.
+RF-11: The system must allow the client to authenticate by providing username and password.
+RF-12: The system must inform you when authentication cannot be completed due to an invalid username or password.
+RF-13: The system must allow the customer to end their usage session.
+RF-14: The system must allow the customer to edit their registration data and profile preferences.
+RF-15: The system must allow the customer to define their preferred language.
+RF-16: The system must allow the customer to choose a favorite category.
+RF-17: The system should allow the customer to enable a personalized list of products based on their favorite category.
+RF-18: The system must allow the customer to enable the display of a promotional banner related to their favorite category.
+RF-19: The system must allow adding items to the shopping cart from the product and item detail pages.
+RF-20: When the same item is added more than once, the system must consolidate the item in the cart and increase its quantity.
+RF-21: The system must allow viewing the cart with a list of selected items, quantities, unit prices and totals per item.
+RF-22: The system must inform, for each item in the cart, whether it is available in stock at the time of inclusion.
+RF-23: The system must allow updating the quantities of items in the cart.
+RF-24: The system must allow removing items from the cart.
+RF-25: When the quantity entered for an item is less than 1, the system must remove it from the cart.
+RF-26: The system should automatically calculate the cart subtotal based on the selected items and quantities.
+RF-27: The system must inform stock availability when viewing the item.
+RF-28: When there is no quantity available in stock, the system must indicate that the item is on order.
+RF-29: When completing an order, the system must record the write-off of the quantity purchased from stock.
+RF-30: The system must require the user to be authenticated to begin the purchase closing process.
+RF-31: When starting an order, the system must use the customer's registration data to initially fill in the billing and delivery information.
+RF-32: The system must use the items in the cart to automatically compose the order.
+RF-33: The system must allow the customer to enter or adjust the order's payment details.
+RF-34: The system must allow choosing the type of card from the options provided by the application.
+RF-35: The system must allow the customer to indicate a delivery address different from the billing address.
+RF-36: When the customer chooses a different delivery address, the system must present a specific step to fill in that address.
+RF-37: Before completion, the system must present a confirmation step with the billing and delivery data entered.
+RF-38: The system should complete the order only after explicit confirmation from the customer.
+RF-39: When completing the order, the system must generate a unique identifier for the purchase.
+RF-40: When completing the order, the system must record the purchase date, the items purchased, the quantities, values â€‹â€‹and the initial status of the order.
+RF-41: After completing the purchase, the system must clear the customer's cart.
+RF-42: After completing the purchase, the system should display a message confirming receipt of the order.
+RF-43: The system must allow the customer to consult the list of orders already placed.
+RF-44: The system must present, in the order list, at least the order number, the date and the total value.
+RF-45: The system must allow consultation of the details of a specific order.
+RF-46: When detailing the order, the system must present payment data, addresses, carrier, status, purchased items, quantities, prices and total purchase value.
+RF-47: The system must restrict the viewing of orders to the respective customer responsible for the purchase.
+RNF-48: The system must protect the purchase closing and order query functionalities through customer authentication.
+RNF-49: The system must properly terminate the client session during the logout process, avoiding undue continuity of authenticated access.
+RNF-50: The system should not unnecessarily expose the customer's password during navigation after login.
+RNF-51: The system must maintain consistency between cart, order and stock, avoiding discrepancies between the purchase made and the registered items.
+RNF-52: The system must ensure that the order is recorded with all its main elements, including header, status and purchased items.
+RNF-53: The system must guarantee unique order numbering, allowing traceability of purchases.
+RNF-54: The system must automatically calculate cart and order values, reducing the risk of manual error.
+RNF-55: The system must handle invalid entries in a controlled manner, displaying appropriate messages to the user without compromising the continuity of the application.
+RNF-56: The system must prevent inconsistent operations, such as starting a purchase without authentication or trying to manipulate non-existent items silently.
+RNF-57: The system must preserve the order history for later consultation by the customer.
+RNF-58: The system must offer simple and understandable navigation, with clear access to categories, search, cart, customer account and help.
+RNF-59: The purchasing process must be conducted in logical and progressive steps, facilitating customer understanding during checkout.
+RNF-60: The system must provide guidance and confirmation messages at important points in the flow, such as login failure, empty search field and completed order.
+RNF-61: The system must consult the stock situation in an up-to-date manner at critical points in the purchasing journey.
+RNF-62: The system must reflect the preferences registered by the customer, such as a personalized list and banner associated with the favorite category.

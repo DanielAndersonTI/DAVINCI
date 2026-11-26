@@ -1,0 +1,44 @@
+RF-01: The system must provide a home page for user entry.
+RF-02: The system must offer navigation to the main functionalities for owners and veterinarians.
+RF-03: The system must allow registering guardians with name, surname, address, city and telephone number.
+RF-04: The system must allow changing the data of an already registered tutor.
+RF-05: The system should allow you to consult tutors based on the beginning of the last name entered.
+RF-06: The system must allow extensive consultation of tutors when no surname is provided.
+RF-07: The system must direct directly to the tutor's detailed registration when the search returns only one result.
+RF-08: The system must present a paginated list when the search returns several tutors.
+RF-09: The system should inform the user when no tutor matches are found.
+RF-10: The system must display the complete data of the selected tutor.
+RF-11: The system must allow registering an animal linked to a guardian.
+RF-12: The system must allow changing the data of an already registered animal.
+RF-13: The system must record, for each animal, name, type and date of birth.
+RF-14: The system must provide a pre-defined list of animal types for selection.
+RF-15: The system must prevent the same owner from owning two animals with the same name.
+RF-16: The system must prevent the registration of a future date of birth for the animal.
+RF-17: The system must allow recording a visit for a specific animal.
+RF-18: The visit record must contain, at a minimum, the date and description of the service.
+RF-19: The system must suggest the current date as the starting value for a new visit.
+RF-20: The system must associate the registered visit with the history of the animal and its owner.
+RF-21: The system must display the visit history of animals linked to the owner.
+RF-22: The system must list registered veterinarians with their names and specialties.
+RF-23: The system must inform the next scheduled visit for each veterinarian.
+RF-24: The system must present the list of veterinarians in a paged form.
+RF-25: The system should automatically assign each new visit to a veterinarian.
+RF-26: Automatic assignment should prioritize the veterinarian with the lowest burden of future care.
+RF-27: The system must periodically disregard past visit assignments when calculating the veterinarians' workload.
+RF-28: The system must make the list of veterinarians available in a structured format for consumption by other systems.
+RNF-29: : Usability (Operability). The system must have a simple web interface, with easy-to-understand forms and navigation.
+RNF-30: The system must present clear success, error and validation messages.
+RNF-31: The system must be usable on different screen sizes, such as computer and cell phone.
+RNF-32: The system must support multiple interface languages.
+RNF-33: Messages and labels must maintain consistency across supported languages.
+RNF-34: The system must validate mandatory data before making registrations and changes.
+RNF-35: The system must display understandable error pages for known and unexpected failures.
+RNF-36: The visit record must remain consistent even when distribution to the veterinarian occurs in a separate stage.
+RNF-37: The system must resume pending internal processing after restart, avoiding loss of relevant events.
+RNF-38: The system must not allow the direct change of internal identifiers through forms.
+RNF-39: Frequent veterinary consultations should be optimized to reduce response time.
+RNF-40: Static interface resources must be able to be temporarily reused by the browser to improve loading.
+RNF-41: The system must support growth in the volume of owners and veterinarians without compromising basic navigation, using pagination.
+RNF-42: The system must be able to operate with different data storage configurations.
+RNF-43: The system must be organized in a way that facilitates the isolated evolution of the areas of guardians, veterinarians and general functions.
+RNF-44: The system's main behaviors must be capable of verification by automated tests.

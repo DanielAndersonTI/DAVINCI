@@ -1,0 +1,62 @@
+RF-01: The system must allow users to register with a username and password.
+RF-02: The system must allow registered users to log in.
+RF-03: The system must distinguish at least two user roles: regular user and administrator.
+RF-04: The system must deny access when the user does not exist, the password is incorrect, or the stated role does not match the registration.
+RF-05: The system must retain the identity of the logged-in user while the user navigates in the browser.
+RF-06: The system must display the resource-management area only to users identified as administrators.
+RF-07: The system must allow a user to end the session.
+RF-08: The system must display a home page listing the available movies.
+RF-09: Each listed movie must display, at a minimum, its title, poster, and rating.
+RF-10: The system must organize the movie listing into pages.
+RF-11: The system must allow the total number of registered movies to be retrieved to support paginated navigation.
+RF-12: The system must allow a movie-details page to be opened from the listing.
+RF-13: The system must provide a details page for each movie.
+RF-14: The details page must display, at a minimum, the title, rating, alternate title, release date, duration, director, screenplay, cast, synopsis, poster, and categories.
+RF-15: The system must allow the complete cast of a movie to be viewed.
+RF-16: The system must prevent access to the details of nonexistent movies and return an appropriate error message.
+RF-17: The system must provide a browsing area organized by movie categories.
+RF-18: The system must allow all registered categories to be viewed.
+RF-19: The system must allow only the movies belonging to a selected category to be listed.
+RF-20: A movie must be able to belong to more than one category.
+RF-21: The system must allow users to return from a category view to the overall catalog view.
+RF-22: The system must allow movie playback to be started from its details page.
+RF-23: The system must provide a download link for the movie file when the resource is ready for use.
+RF-24: Before playback, the system must ensure that the video file is available in the application area used to deliver content.
+RF-25: If the file is not yet available in that delivery area, the system must attempt to obtain it from the configured local repository.
+RF-26: An administrator must be able to register a new movie in the catalog.
+RF-27: Movie registration must include, at a minimum, the title, rating, alternate title, release date, duration, director, screenplay, cast, categories, synopsis, and poster.
+RF-28: The system must prevent duplicate registration of movies with the same title.
+RF-29: An administrator must be able to upload a movie video file to the application.
+RF-30: An administrator must be able to delete a movie from the catalog.
+RF-31: The system must allow more than one movie to be deleted in a batch.
+RF-32: Before a batch deletion, the system must inform the administrator which movies have been selected.
+RF-33: The system must prevent the deletion of nonexistent movies.
+RF-34: The system must prevent duplicate registration of users with the same username.
+RF-35: A movie title must be treated as the unique identifier for catalog registration.
+RF-36: The standard playback process assumes that the physical movie file corresponds to the registered title.
+RNF-37: The application must be accessible through a web interface.
+RNF-38: Catalog navigation must be simple and straightforward, with visible access to the home page, categories, details, and playback.
+RNF-39: The application must present clear success, warning, and failure messages for key operations, including login, registration, addition, deletion, upload, and playback.
+RNF-40: The catalog must be displayed in pages of up to 12 movies to promote visual organization and perceived performance.
+RNF-41: The system must maintain a consistent response format for operations, indicating status, message, and returned data.
+RNF-42: User, movie, and category information must be persistently stored.
+RNF-43: The system must preserve the uniqueness of users and movies to prevent duplicates in the catalog and access records.
+RNF-44: Whenever possible, error handling must return controlled messages to the user.
+RNF-45: The system must operate with separate roles for regular users and administrators.
+RNF-46: Catalog-management functions must be restricted to the administrator role.
+RNF-47: The user's session must remain identified in the browser until the user logs out or clears local data.
+RNF-48: The system must support uploads of large video files, up to 2 GB per file.
+RNF-49: The application's operating process must treat MP4 as the standard video format.
+RNF-50: The application environment must provide a local area to temporarily store or serve the video files used for playback.
+RNF-51: The application environment must provide a configured local repository from which movies can be loaded on demand.
+RNF-52: The solution must allow the user interface and the application services to evolve independently.
+RNF-53: The user interface must be able to consume the application services even when it is deployed in a different environment.
+RNF-54: User, movie, and category data must be stored in a structured database that supports the catalog relationships.
+RNF-55: The system uses two types of users: regular users and administrators.
+RNF-56: A movie can have multiple associated categories.
+RNF-57: Uploading the video file and registering the movie are related but independent steps.
+RNF-58: Automatic playback depends on the existence of an MP4 file corresponding to the registered title.
+RNF-59: The source movie filename must follow the pattern expected by the environment configuration for automatic loading to work.
+RNF-60: The intention to restrict resource management to administrators is clear in the interface, but this restriction is not fully validated in the backend.
+RNF-61: The current system is oriented more toward a local movie catalog than toward remote storage or an external streaming service.
+RNF-62: Availability for playback depends on both movie registration and the existence of the corresponding physical file.

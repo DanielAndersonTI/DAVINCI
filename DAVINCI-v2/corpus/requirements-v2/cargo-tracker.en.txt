@@ -1,0 +1,67 @@
+RF-0: The system shall allow a new shipment to be registered by providing its origin, destination, and delivery deadline.
+RF-02: Each registered shipment shall receive a unique tracking identifier.
+RF-03: The shipment origin and destination shall be different.
+RF-04: The shipment origin shall remain fixed throughout the logistics lifecycle.
+RF-05: Shipment registration may be completed even before a route is defined.
+RF-06: The delivery deadline shall be mandatory and shall serve as a criterion for trip planning.
+RF-07: The system shall allow the origin and destination to be selected only from previously registered logistics locations.
+RF-08: The system shall query and present candidate routes compatible with the shipment's needs.
+RF-09: A candidate route shall be considered valid only when it satisfies the shipment's origin, final destination, and delivery deadline.
+RF-10: The user shall be able to choose one of the presented routes and associate it with the shipment.
+RF-11: When a shipment does not yet have a defined route, it shall be identified as "unrouted".
+RF-12: When no route meets the specified criteria, the system shall inform the user that no feasible option exists for the current specification.
+RF-13: The system shall display the legs of the selected route, including loading and unloading points, trips, and planned dates.
+RF-14: The system shall allow the destination of an existing shipment to be changed.
+RF-15: The new destination shall be neither the shipment's origin nor its current destination.
+RF-16: When the destination is changed, the system shall reassess the shipment's current route.
+RF-17: When the current route no longer serves the new destination, the shipment shall require a new routing decision.
+RF-18: The system shall allow routes to be replanned for shipments that have deviated from the planned route or whose destination has changed.
+RF-19: The system shall allow a shipment to be looked up by its tracking identifier.
+RF-20: When a shipment is looked up, the system shall present its current status.
+RF-21: The system shall provide the shipment's last known location.
+RF-22: The system shall provide the estimated arrival time when the shipment has a valid route and is progressing in accordance with the plan.
+RF-23: The system shall retain and display the history of logistics events associated with the shipment.
+RF-24: The history shall distinguish expected events from events that occurred outside the plan.
+RF-25: The system shall flag when a shipment has deviated from its expected route.
+RF-26: The system shall allow the shipment to be viewed with geographic support, highlighting its origin, final destination, and last known location.
+RF-27: The system shall provide a consolidated administrative view of shipments.
+RF-28: Shipments shall be grouped, at a minimum, into the categories "unrouted", "routed and in transit", and "collected by the recipient".
+RF-29: The system shall allow the details of any shipment to be opened from the administrative view.
+RF-30: Routed shipments that have not yet been collected shall be trackable as shipments in transit.
+RF-31: The system shall allow logistics events of the following types to be recorded: receipt, loading, unloading, customs clearance, and pickup.
+RF-32: Every logistics event shall be associated with an existing shipment.
+RF-33: Every logistics event shall specify the location where it occurred and the date of occurrence.
+RF-34: Loading and unloading events shall be associated with the corresponding trip.
+RF-35: Events other than loading or unloading shall not require a trip identifier.
+RF-36: The system shall reject attempts to record an event with a non-existent shipment, location, or trip.
+RF-37: Recording a valid event shall update the shipment's operational status.
+RF-38: After each valid event, the system shall recalculate information such as transport status, known location, expected next step, and adherence to the plan.
+RF-39: When an event indicates execution that differs from the planned route, the shipment shall be marked as off route.
+RF-40: When a shipment is unloaded at its final destination, the system shall mark it as having arrived at the destination.
+RF-41: When pickup by the recipient is recorded, the shipment shall be considered complete from a logistics perspective.
+RF-42: The system shall allow logistics events to be recorded through more than one operational channel.
+RF-43: The supported channels shall include, at a minimum, an operational interface, an integration service, and input-file processing.
+RF-44: The system shall provide a consolidated view of shipments for use by monitoring channels.
+RF-45: The system shall keep monitoring channels aligned with the most recent status of each shipment.
+RNF-46: The system shall preserve consistency among shipment registration, the planned route, and completed events.
+RNF-47: No invalid event may alter the shipment's state.
+RNF-48: Rules concerning origin, destination, deadline, and route compatibility shall be applied uniformly across all operational channels.
+RNF-49: The shipment's status shall be recalculated whenever there is a relevant change in planning or execution.
+RNF-50: The system shall maintain sufficient history to reconstruct the shipment's logistics lifecycle.
+RNF-51: Each event shall retain, at a minimum, the time at which it occurred and the time at which it was recorded in the system.
+RNF-52: Rejected recording attempts shall be identifiable for subsequent operational analysis.
+RNF-53: The system shall allow correctly delivered shipments, shipments still in transit, and shipments with operational deviations to be distinguished.
+RNF-54: Shipment status updates shall occur in time to support operational monitoring.
+RNF-55: Event intake shall continue even when detailed status recalculation occurs in the background.
+RNF-56: Inputs received through files shall be processed periodically without requiring constant manual triggering.
+RNF-57: Monitoring channels shall reflect the most recent available information about the shipment.
+RNF-58: Information presented to users shall be organized by business status rather than solely by technical structure.
+RNF-59: Operational navigation shall facilitate frequent tasks such as locating a shipment, viewing details, selecting a route, and recording an event.
+RNF-60: The system shall reduce operational errors through controlled lists of locations, trips, event types, and shipment identifiers.
+RNF-61: Error messages and no-route messages shall be understandable for administrative and logistics use.
+RNF-62: A failure in an isolated recording attempt shall not compromise the processing of other shipments.
+RNF-63: Records received in an invalid format shall be separated for later handling without interrupting the remainder of the workload.
+RNF-64: The system shall treat off-route shipments as visible operational exceptions to enable prompt corrective action.
+RNF-65: The system shall maintain consistency among the data shown in the administrative interface, tracking, mobile channels, and integrations.
+RNF-66: The shipment's primary information shall be exchangeable in standardized formats to facilitate integration with other systems.
+RNF-67: The tracking model shall be unique regardless of the channel used to record or look up the shipment.

@@ -1,0 +1,83 @@
+RF-01: The system shall allow users to maintain supporting master data used by the other areas, such as departments, contract types, user categories, organization types, interaction types, tax reasons, billing schemes, and frequencies.
+RF-02: The system shall allow users to register and maintain projects associated with clients, including their active period, open or closed status, involved roles, and related costs.
+RF-03: The system shall allow users to maintain employment agreements with rules that apply over a period, including annual workload and vacation allowance. - RF-ADM-04 The system shall allow individual user settings to personalize the use of the application.
+RF-04: The system shall allow users to register and maintain users with personal and contractual data, department, category, access profile, and employment agreement.
+RF-05: The system shall allow users to change passwords, administratively reset passwords, and require password renewal when a password expires.
+RF-06: The system shall prevent password changes if the current password is incorrect, the new password is not confirmed correctly, or the new password is the same as the previous one.
+RF-06: The system shall allow users to record vacation requests with start and end dates, a compensation year, requester comments, and review notes.
+RF-08: The system shall control the vacation-request lifecycle with pending, accepted, rejected, and cancelled states.
+RF-09: The system shall prevent vacation requests with an invalid date range.
+RF-10: The system shall prevent requests that exceed an employee's available vacation balance.
+RF-11: The system shall calculate the vacation balance using only business days, excluding weekends and holidays.
+RF-12: The system shall calculate annual vacation entitlement proportionally when an employee is in the first year of their contract.
+RF-13: The system shall consider only approved requests when deducting from the vacation balance.
+RF-14: The system shall notify configured approvers by email when a new vacation request is submitted.
+RF-15: The system shall send an email notification when contracts or probation periods are approaching expiry.
+RF-16: The system shall allow users to register and maintain organizations, contacts, external collaborators, job roles, and interaction types.
+RF-17: The system shall allow users to record commercial and relationship interactions linked to contacts, proposals, and projects.
+RF-18: The system shall allow users to search contacts using advanced criteria and export the results to CSV.
+RF-19: The system shall allow users to classify proposals by business potential at levels such as high, medium, and low.
+RF-20: The system shall control the proposal lifecycle with open, accepted, and rejected states.
+RF-21: The system shall allow users to record reasons for rejecting proposals.
+RF-22: The system shall allow users to compose proposals with work roles, estimated hours, materials, costs, and an indication of which items may or may not be billed.
+RF-23: The system shall allow users to duplicate a proposal while preserving its composition, without reusing unique identifiers.
+RF-24: The system shall allow users to convert a proposal into a billing draft, reusing its contact, description, and billable items.
+RF-25: The system shall allow users to record internal and external activities by employee, date, client, project, role performed, and description.
+RF-26: The system shall prioritize open projects and roles eligible for execution in operational time reporting.
+RF-27: The system shall allow users to classify activities as billable or non-billable.
+RF-28: The system shall distinguish time that counts toward the workday from time that does not, so that worked hours are calculated correctly.
+RF-29: The system shall allow users to maintain objectives and work allocations linked to the operational routine.
+RF-30: The system shall present consolidated reports of hours by user, project, and organization.
+RF-31: The system shall allow users to attach evidence to activities when a project or role requires proof.
+RF-32: The system shall support evidence policies with no requirement, a one-time requirement, or a weekly requirement.
+RF-33: The system shall alert by email employees who have recent activities in projects with a weekly evidence requirement but have not yet attached proof.
+RF-34: The system shall allow users to maintain accounts, transaction types, transaction groups, and recurring financial transactions.
+RF-35: The system shall allow users to copy recurring transactions to reuse financial recurrence patterns.
+RF-36: The system shall allow users to record accounts receivable and accounts payable through issued and received billing records.
+RF-37: The system shall allow users to detail billing records by items, quantities, amounts, taxes, notes, and attachments.
+RF-38: The system shall automatically calculate the total billing amount from the detailed items.
+RF-39: The system shall automatically calculate the net amount payable when individual income-tax withholding applies to self-employed suppliers.
+RF-40: The system shall allow users to record multiple due dates for a single billing record.
+RF-41: The primary due date of a billing record shall reflect the date of the last scheduled payment.
+RF-42: The system shall allow users to import billable hours and project costs already recorded in operations into billing.
+RF-43: The system shall allow users to convert billable items from proposals into billing items.
+RF-44: The system shall automatically calculate the outstanding billing balance based on associated financial transactions.
+RF-45: The system shall mark a billing record as paid when the financial transactions cover the total amount due.
+RF-46: The system shall allow users to associate billing records with credit instruments, changing the billing state to reflect that association.
+RF-47: The system shall allow the association with a credit instrument to create a new due date or not, according to the user's choice.
+RF-48: The system shall allow users to track financial indicators, credit instruments, working-capital requirements, and tax routines already covered by the system.
+RF-49: The system shall allow users to organize documents by category.
+RF-50: The system shall allow users to maintain versions of the same document, including the file, date, and version identifier.
+RF-51: The system shall allow users to associate documents with responsible people and organizational areas.
+RF-52: The system shall automatically create and maintain a dedicated document category for each user, allowing individual documentation to be kept separate.
+RF-53: The system shall allow users to navigate from user data to the associated documentation.
+RF-54: The system shall allow users to maintain publications, magazines, and tutorials as an institutional knowledge base.
+RF-55: The system shall allow users to maintain notice boards by category.
+RF-56: The system shall display public notices at the system entry point.
+RF-57: The system shall allow users to maintain other content that supports management, such as ideas, inventory, tags, and links.
+RF-58: The system shall allow users to record orders and commissions linked to projects, reviewers, collaborators, and payment data.
+RF-59: The system shall control the order workflow with states such as created, approved, accepted, confirmed, validated, and completed.
+RF-60: The system shall allow users to record delays, changes, and files related to an order.
+RF-61: The system shall preserve a textual history of changes that occur throughout the order workflow.
+RF-62: The system shall allow users to send documents related to an order by email.
+RF-63: The system shall provide reports by business domain, including billing, hours, projects, proposals, interactions, organizations, personal use, and commissions.
+RF-64: The system shall allow users to export reports in multiple formats, including CSV, PDF, HTML, RTF, XLS, and ODT.
+RF-65: The system shall allow users to export specific operational queries, such as advanced contact search and the global hours report, in CSV format.
+RNF-66: The system shall control access by user profile, with distinct levels such as administrator, supervisor, internal team member, regular user, project manager, and client.
+RNF-67: The system shall restrict sensitive operations by scope of responsibility, allowing rules such as full access, access only to one's own records, or access by area.
+RNF-68: The system shall support local authentication and LDAP authentication, according to the environment configuration.
+RNF-69: The system shall apply access control to documents, billing records, users, and other critical entities.
+RNF-70: The system shall automatically perform critical business calculations, such as vacation balance, total billing amount, outstanding balance, withholdings, and final due date.
+RNF-71: The system shall maintain consistency between related modules, such as a user and their document folder, a proposal and billing, and billing and a credit instrument.
+RNF-72: The system shall preserve document versions and a history of changes in processes that require traceability, such as documents and commissions.
+RNF-73: The system shall allow email notifications for relevant business events, such as vacation requests, contract expiry, password reset, pending evidence, and orders.
+RNF-74: The system shall generate interoperable outputs for external consumption, especially through CSV files and reports in market-standard formats.
+RNF-75: The system shall operate with external storage for attachments and reports so that documents and outputs remain organized outside the application.
+RNF-76: The system shall validate at startup whether essential configuration directories and files are available.
+RNF-77: The system shall automatically prepare the minimum structure required to store files uploaded by users.
+RNF-78: The system shall allow specific operational rules to be enabled or disabled by configuration, such as editing billing records, using LDAP, and sending notifications.
+RNF-79: The system shall provide standardized navigation based on listing, detail, editing, creation, and search for the main modules.
+RNF-80: The system shall support the user's routine with filters, sorting, period-based searches, navigation shortcuts, and default values consistent with the context of use.
+RNF-81: The system shall allow simple export and visualization of information to support operational and managerial decisions.
+RNF-82: The system shall support at least Portuguese, Spanish, and English in interface messages and text.
+RNF-83: The system shall process text and files using an encoding compatible with international characters, preserving multilingual names, descriptions, and content.
