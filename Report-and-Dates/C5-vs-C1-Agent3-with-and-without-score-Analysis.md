@@ -2,7 +2,7 @@
 
 **Scope of this text:** comparative analysis of Agent 3 (consolidator) under two conditions — with access to the Precision/Recall/F1 scores calculated against the reference architecture (C1 configuration and *with-score* arm of C5) and without such access (*without-score* arm of C5). It addresses the question: **does Agent 3 deliver good results on its own, or can its results only be explained by access to the score?** All numbers come from artifacts stored on disk; none were manually recalculated.
 
-> **Article text.** Sections 1 to 7 are written for inclusion in the manuscript. The final section is a note to the author and **must not be published**.
+> **Article text.** Sections 1 to 8 are written for inclusion in the manuscript.
 
 ---
 
@@ -103,24 +103,3 @@ On Gemini, Agent 3 does not construct a new architecture: it returns one of the 
 The control test shows that **this success does not depend on the score**. With frozen and identical candidates in both arms, Agent 3 with and without the reference metrics produces the same interaction F1 in 14 of the 16 runs; the two divergences are explained by fallback, one in favor of each arm; and neither arm made an incorrect selection when it actually made a selection. The factor separating the outcomes is not the information the agent receives, but whether it was able to produce a valid architecture.
 
 For the article, this establishes two points. First, the nature of the gain: consolidation, on Gemini, is **selection**, and should be described as such. Second, the limit of the claim regarding the reference: the space in which the two variants differ is small in this corpus, and the observed difference is dominated by response validity rather than by the presence of the score. The safe claim, supported by the data, is that the consolidation gains are realized in the scenario in which the reference is available — the scenario assumed by the tool, since the interface provides the reference as an input — and that the reference-free variant was not shown to be inferior, because the divergent cases in the corpus are resolved equally by both approaches.
-
----
-
-## Note to the Author — Do Not Publish
-
-**1. Where the data and framing are in tension.** Emanuel's framing asks that the text state that the consolidation gains apply in the scenario in which the reference is available, which is true and is reflected in the synthesis. However, it also suggests that C5 would show the reference-free variant *performing worse*. **It does not.** Across the 16 paired runs, interaction F1 is identical in 14; the two divergences offset each other (one favors each arm), and both are fallbacks rather than selections. Writing that the score-free agent "fails to discriminate" would be contradicted by the artifact itself — and the review has the files. The formulation used in the text is stronger and more defensible: the control shows that the difference between the variants is dominated by **response validity**, rather than by the information received, and that the decisive cases in the corpus are too easy to distinguish between the two conditions. If a version more closely aligned with the original framing is preferred, the maximum supported by the data is:
-
-*"C5 did not allow us to isolate an effect of the score because the divergent cases in the corpus can be resolved through coherence"*
-
-— which still leaves the main claim standing.
-
-**2. Correction of an error in the two existing drafts.** The files `Gemini/C5/C5-Gemini-Synthesize-two-three-tests.txt` and `Synthesize-two-three-tests-C5-Gemini.txt` (which I did not modify) treat C5 as if it had **only** the without-score arm — their wording states that "Agent 3 performs consolidation without access to reference-based Precision/Recall/F1." This is not what C5 is: each run executes both arms, and both are recorded. Worse, the drafts interpret fallbacks as selections. Two literal examples:
-
-* Test-2, Cargo Tracker: the draft states *"A3 selected A ... the clearest failure of the reference-free configuration"*. The artifacts show `fallback_proposta_a: true` in **both** arms — there was no selection.
-* Test-2, TNTConcept: the draft states *"A3 selected A, missing the slightly better proposal"*. The without-score arm **fell back**; meanwhile, in the same run, the with-score arm selected B (0.7761), which was the better proposal. The draft loses the entire contrast.
-
-The drafts also ignore the 6 C5 fallbacks and the C1 baseline (22 exact copies in 24 runs), without which the comparison is not supported. I suggest not reusing them without revision.
-
-**3. Necessary adjustment to the project memories.** The previous C1 measurement (`a3-seleciona-nao-consolida`) recorded "9 discriminative runs, 9 correct." The correct count is **10 discriminative runs** — DayTrader7 FS1 was missing (A = 0.9091, B = 0.0000). The number of correct selections remains 9, with 1 original output worse than the best proposal (Cargo Tracker FS3). I have already corrected the memory.
-
-**4. Provenance.** Everything here comes from `result/<system>/c5_fewshot/run_<execution_id>/` (`sumario.json`, `c5_bracos.json`, the four CSVs by SHA-256) and from `Report-and-Dates/Gemini/C1/Test-{1,2,3}/execuion-metadados-C1-Gemini-FS{1,2,3}.json`. Both C5 arms use the same `max_tokens` (16,384), and the only difference between them is the prompt.

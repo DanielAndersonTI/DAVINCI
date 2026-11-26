@@ -9,6 +9,7 @@ Run from the VIA directory:
 from __future__ import annotations
 
 import csv
+import sys
 from pathlib import Path
 
 from pptx import Presentation
@@ -19,6 +20,10 @@ from pptx.util import Inches, Pt, Emu
 BASE = Path(__file__).resolve().parents[1]
 REL = BASE / "reports"
 OUT = REL / "Slides-2026-11-27.pptx"
+ASSETS = REL / "slides-assets"
+
+sys.path.insert(0, str(BASE))
+from via.figures import slide_prevalence  # noqa: E402
 
 SURFACE = RGBColor(0xFC, 0xFC, 0xFB)
 INK = RGBColor(0x0B, 0x0B, 0x0B)
@@ -187,11 +192,16 @@ def add_notes(slide, text: str) -> None:
 
 
 def build() -> None:
-    prevalencia = {row["codigo"]: row for row in read_csv("prevalence.csv")}
+    prevalencia_rows = read_csv("prevalence.csv")
+    prevalencia = {row["codigo"]: row for row in prevalencia_rows}
     modelos = {row["llm"]: row for row in read_csv("by_model.csv")}
     configs = {row["config"]: row for row in read_csv("by_config.csv")}
     contrastes = {row["hipotese"]: row for row in read_csv("contrasts.csv")}
     exploratorios = {row["codigo"]: row for row in read_csv("exploratory_contrasts.csv")}
+
+    ASSETS.mkdir(parents=True, exist_ok=True)
+    figure_prevalence = ASSETS / "fig1_prevalence_plain.png"
+    slide_prevalence(prevalencia_rows, figure_prevalence)
 
     prs = Presentation()
     prs.slide_width = WIDTH
@@ -199,85 +209,144 @@ def build() -> None:
 
     # Slide 1 -----------------------------------------------------------------
     slide = add_slide(prs)
-    add_text(slide, "Integridade arquitetural", 0.7, 1.25, 11.5, 0.9, size=44, bold=True)
-    add_text(slide, "além do F1", 0.7, 2.05, 11.5, 0.9, size=44, bold=True, color=BLUE)
+    add_text(slide, "Integridade arquitetural", 0.7, 1.15, 11.5, 0.9, size=44, bold=True)
+    add_text(slide, "além do F1", 0.7, 1.95, 11.5, 0.9, size=44, bold=True, color=BLUE)
     add_text(
         slide,
-        "O que 356 decomposições revelam sobre a qualidade das interações entre serviços",
+        "O que 356 decomposições automáticas revelam sobre a qualidade das ligações entre serviços",
         0.7,
-        3.25,
-        10.6,
-        0.9,
+        3.05,
+        10.8,
+        0.8,
         size=20,
         color=SECONDARY,
     )
-    add_rule(slide, 4.55, color=BLUE)
-    add_text(slide, "Daniel Anderson · Computação · UFCG", 0.7, 4.85, 8.0, 0.4, size=15, color=INK)
-    add_text(slide, "Workshop ISE · 27 de novembro de 2026", 0.7, 5.25, 8.0, 0.4, size=13, color=MUTED)
-    add_text(slide, "356 artefatos   ·   8 sistemas   ·   3 modelos", 0.7, 6.35, 11.0, 0.4, size=12, color=MUTED)
+    add_text(
+        slide,
+        "Oito sistemas Java foram decompostos em microserviços por três modelos de linguagem, em cinco configurações de pipeline.",
+        0.7,
+        3.85,
+        11.2,
+        0.6,
+        size=14,
+        color=MUTED,
+    )
+    add_rule(slide, 4.7, color=BLUE)
+    add_text(slide, "Daniel Anderson · Computação · UFCG", 0.7, 4.95, 8.0, 0.4, size=15, color=INK)
+    add_text(slide, "Workshop ISE · 27 de novembro de 2026", 0.7, 5.35, 8.0, 0.4, size=13, color=MUTED)
+    add_text(slide, "356 artefatos   ·   8 sistemas   ·   3 modelos   ·   5 configurações", 0.7, 6.4, 11.5, 0.4, size=12, color=MUTED)
     add_notes(
         slide,
-        "45 s. O F1 é o critério usual para comparar decomposições. Ele mede concordância com uma referência. "
-        "A pergunta desta apresentação é o que ele deixa de fora quando a referência não pune ciclos, serviços isolados ou interfaces estreitas.",
+        "45 s. O F1 é a métrica padrão para comparar uma decomposição com a referência. Ele mede a concordância das ligações. "
+        "A pergunta desta apresentação é o que fica de fora quando o grafo é internamente inconsistente.",
     )
 
     # Slide 2 -----------------------------------------------------------------
     slide = add_slide(prs)
-    add_title(slide, "O F1 mede fidelidade. Não mede integridade.", "Duas decomposições podem reproduzir a referência e diferir no que a referência não pune.", 2)
+    add_title(
+        slide,
+        "O F1 mede fidelidade. Não mede integridade.",
+        "O F1 compara as ligações propostas com as da referência. Ele não verifica se o conjunto faz sentido.",
+        2,
+    )
     add_bullets(
         slide,
         [
-            ("Ciclos", f"{pt(float(prevalencia['D04']['share_artefatos']) * 100, 1)}% dos artefatos têm componente fortemente conexa."),
-            ("Interface subespecificada", f"{pt(float(prevalencia['D11']['share_artefatos']) * 100, 1)}% dos artefatos; {pt(float(prevalencia['D11']['media_por_servico']) * 100, 1)}% dos pares serviço-artefato."),
-            ("Referência quebrada", f"{pt(float(prevalencia['D05']['share_artefatos']) * 100, 1)}% dos artefatos apontam para serviço inexistente."),
+            (
+                "Ciclos entre serviços",
+                f"{pt(float(prevalencia['D04']['share_artefatos']) * 100, 1)}% dos artefatos têm ao menos um ciclo. "
+                "Um serviço depende de outro que, direta ou indiretamente, depende do primeiro.",
+            ),
+            (
+                "Ligação não resolvida",
+                f"{pt(float(prevalencia['D05']['share_artefatos']) * 100, 1)}% dos artefatos citam um serviço que não existe. "
+                f"São {prevalencia['D05']['achados']} ligações em {prevalencia['D05']['artefatos_com_achado']} artefatos.",
+            ),
+            (
+                "Serviço isolado",
+                f"{pt(float(prevalencia['D03']['share_artefatos']) * 100, 1)}% dos artefatos declaram um serviço que não conversa com ninguém.",
+            ),
         ],
         0.7,
         2.35,
         4.9,
         3.5,
     )
-    add_figure(slide, REL / "quick-check-v1" / "figures" / "fig1_prevalence.png", 5.85, 2.25, 6.75)
-    add_text(slide, "O gargalo está na interface entre serviços.", 0.7, 6.25, 11.8, 0.45, size=20, bold=True, color=BLUE)
+    add_figure(slide, figure_prevalence, 5.7, 2.3, 6.9)
+    add_text(
+        slide,
+        "Um ciclo pode coincidir com a referência e continuar sendo um ciclo.",
+        0.7,
+        6.35,
+        11.8,
+        0.45,
+        size=19,
+        bold=True,
+        color=BLUE,
+    )
     add_notes(
         slide,
-        "60 s. D11 é quase universal: 99,2% dos artefatos têm ao menos um serviço com interface subespecificada, quase sempre um único endpoint para várias responsabilidades. "
-        "D04 mostra que 76,1% têm ciclos. O ponto não é que todo artefato seja igual; é que a camada de interação concentra o defeito.",
+        "60 s. Setenta e seis por cento dos artefatos têm ao menos um ciclo. Dez por cento citam um serviço inexistente, 89 ligações ao todo. "
+        "Onze e meio por cento declaram um serviço sem nenhuma ligação. O F1 conta ligações certas e erradas; ele não julga a consistência do conjunto.",
     )
 
     # Slide 3 -----------------------------------------------------------------
     slide = add_slide(prs)
-    add_title(slide, "F1 não ordena a qualidade estrutural", "Correlação por sistema entre F1 de interação e defeitos estruturais (D03 a D06).", 3)
-    add_figure(slide, REL / "quick-check-v1" / "figures" / "fig2_forest_f1_defects.png", 0.55, 2.1, 8.05)
+    add_title(
+        slide,
+        "F1 alto não garante arquitetura íntegra",
+        "Correlação de postos entre F1 de interação e defeitos estruturais por serviço, dentro de cada sistema.",
+        3,
+    )
+    add_figure(slide, REL / "quick-check-v1" / "figures" / "fig2_forest_f1_defects.png", 0.5, 2.15, 7.45)
     add_callout(
         slide,
-        "Mediana -0,08",
-        "IC 95% -0,55 a 0,08. Cinco de oito sistemas negativos; três positivos. O sinal depende do sistema.",
-        8.85,
-        2.25,
-        3.85,
-        1.95,
+        "Bootstrap: 5.000 reamostragens",
+        "Sorteamos sistemas inteiros, com reposição, e refazemos a correlação a cada sorteio. "
+        "Artefatos do mesmo sistema não são independentes, por isso o sorteio é por sistema.",
+        8.2,
+        2.2,
+        4.45,
+        1.62,
+    )
+    add_callout(
+        slide,
+        "O que ele conclui",
+        "Mediana −0,08; intervalo −0,55 a 0,08. O intervalo atravessa o zero: os dados não sustentam "
+        "uma relação consistente. Cinco sistemas têm sinal negativo; três, positivo.",
+        8.2,
+        3.95,
+        4.45,
+        1.55,
     )
     add_callout(
         slide,
         "Mesmo F1, outra integridade",
-        f"Claude e DeepSeek empatam no F1 ({pt(modelos['Claude']['f1_inter'], 3)} contra {pt(modelos['DeepSeek']['f1_inter'], 3)}). "
+        f"Claude e DeepSeek empatam no F1, {pt(modelos['Claude']['f1_inter'], 3)} contra {pt(modelos['DeepSeek']['f1_inter'], 3)}. "
         f"Claude tem {pt(abs(float(exploratorios['E3']['efeito'])), 3)} menos defeitos estruturais por serviço.",
-        8.85,
+        8.2,
+        5.62,
         4.45,
-        3.85,
-        1.95,
+        1.35,
         accent=ORANGE,
     )
     add_notes(
         slide,
-        "65 s. A hipótese era associação negativa consistente: mais F1, menos defeitos. O resultado é heterogêneo. "
-        "AcmeAir vai a -0,87; JPetStore a +0,40. O contraste Claude contra DeepSeek é o mais direto: F1 igual, taxa estrutural muito diferente.",
+        "65 s. Se o F1 ordenasse a integridade, a correlação seria negativa em todos os sistemas. Não é. "
+        "A mediana é -0,08, com intervalo de -0,55 a 0,08. O bootstrap refaz o cálculo em 5.000 sorteios de sistemas inteiros. "
+        "Intervalo que atravessa o zero quer dizer que não há relação estável. AcmeAir chega a -0,87; JPetStore a +0,40. "
+        "O contraste mais direto é Claude contra DeepSeek: F1 igual, integridade diferente.",
     )
 
     # Slide 4 -----------------------------------------------------------------
     slide = add_slide(prs)
-    add_title(slide, "Nenhum modelo domina todas as dimensões", "Médias por modelo. F1 e taxa estrutural apontam para lados diferentes.", 4)
-    rows = [["Modelo", "F1 de interação", "Defeitos estruturais", "Serviços com D11", "Endpoints por responsabilidade"]]
+    add_title(
+        slide,
+        "Nenhum modelo domina todas as dimensões",
+        "Médias por modelo. O F1 e a integridade estrutural apontam para lados diferentes.",
+        4,
+    )
+    rows = [["Modelo", "F1 de interação", "Defeitos por serviço", "Ciclos por serviço"]]
     for model in ("Claude", "DeepSeek", "Gemini"):
         row = modelos[model]
         rows.append(
@@ -285,45 +354,57 @@ def build() -> None:
                 model,
                 pt(row["f1_inter"], 3),
                 pt(row["structural_defect_rate"], 3),
-                f"{pt(float(row['d11_share']) * 100, 1)}%",
-                pt(row["endpoints_per_responsibility"], 3),
+                pt(row["cycle_density"], 3),
             ]
         )
-    add_table(slide, rows, 0.7, 2.25, 11.95, 2.25, highlight={(1, 2), (3, 1)})
+    add_table(slide, rows, 0.7, 2.2, 11.95, 2.0, highlight={(1, 2), (2, 2), (3, 1)})
     add_callout(
         slide,
         "Claude e DeepSeek empatam no F1",
-        "A taxa estrutural separa: 0,140 contra 0,266 defeitos por serviço. O F1 não vê essa diferença.",
+        f"{pt(modelos['Claude']['f1_inter'], 3)} contra {pt(modelos['DeepSeek']['f1_inter'], 3)}. "
+        f"A integridade separa: {pt(modelos['Claude']['structural_defect_rate'], 3)} contra "
+        f"{pt(modelos['DeepSeek']['structural_defect_rate'], 3)} defeitos por serviço.",
         0.7,
-        4.85,
+        4.55,
         5.8,
-        1.45,
+        1.55,
     )
     add_callout(
         slide,
-        "C1 lidera as duas camadas",
-        f"Taxa estrutural {pt(configs['C1']['structural_defect_rate'], 3)} contra {pt(configs['C0']['structural_defect_rate'], 3)} em C0. "
-        "O ganho vem de D05, não de ciclos.",
+        "O pipeline completo ajuda em parte",
+        f"{pt(configs['C1']['structural_defect_rate'], 3)} contra {pt(configs['C0']['structural_defect_rate'], 3)} "
+        "defeitos por serviço do agente único. A densidade de ciclos quase não muda: menos "
+        f"{pt(abs(float(contrastes['H2']['efeito'])), 3)}.",
         6.85,
-        4.85,
+        4.55,
         5.8,
-        1.45,
+        1.55,
         accent=ORANGE,
     )
-    add_text(slide, "Limite: oito sistemas, regras proxies, validação humana pendente.", 0.7, 6.75, 11.8, 0.35, size=11, color=MUTED)
+    add_text(
+        slide,
+        "Média de 116 a 120 artefatos por modelo. Limite: oito sistemas e regras heurísticas.",
+        0.7,
+        6.45,
+        11.8,
+        0.35,
+        size=11,
+        color=MUTED,
+    )
     add_notes(
         slide,
-        "60 s. Por F1, Gemini lidera. Por integridade estrutural, Claude lidera. Por taxa completa, Gemini volta a liderar porque D11 pesa mais. "
-        "C1 reduz referências quebradas, mas não ciclos nem interfaces estreitas. Nenhuma métrica isolada conta a história.",
+        "60 s. Gemini tem o maior F1, 0,877, e taxa estrutural intermediária, 0,232. Claude e DeepSeek empatam no F1, 0,831 e 0,829, "
+        "mas Claude tem 0,140 defeitos por serviço contra 0,266 de DeepSeek. Nenhum modelo vence nas duas dimensões. "
+        "O pipeline completo melhora a estrutura, 0,176 contra 0,247 do agente único, e o ganho vem de menos ligações não resolvidas, não de menos ciclos.",
     )
 
     # Slide 5 -----------------------------------------------------------------
     slide = add_slide(prs)
-    add_title(slide, "O VIA como portão de qualidade", "Determinístico, rastreável, sem LLM nas regras automáticas.", 5)
+    add_title(slide, "O verificador como portão de qualidade", "Determinístico, rastreável e sem modelo de linguagem nas regras.", 5)
     cards = [
-        ("Mede", "D03 a D07, D11 e D12. Laudo JSON e Markdown por artefato."),
-        ("Aponta", "Serviço, aresta e ciclo. O reparo deixa de ser reescrita às cegas."),
-        ("Decide", "Severidade e prevalência. Pode rodar em integração contínua."),
+        ("Mede", "Ciclos, ligações que não resolvem, serviços isolados e auto-dependências."),
+        ("Aponta", "Serviço, ligação e ciclo exatos. O reparo deixa de ser reescrita às cegas."),
+        ("Decide", "Severidade e prevalência por artefato. Roda em integração contínua porque é determinístico."),
     ]
     for index, (headline, detail) in enumerate(cards):
         left = 0.7 + index * 4.05
@@ -332,22 +413,33 @@ def build() -> None:
         shape.fill.fore_color.rgb = BLUE_LIGHT
         shape.line.fill.background()
         add_text(slide, headline, left + 0.25, 2.7, 3.2, 0.5, size=22, bold=True, color=BLUE)
-        add_text(slide, detail, left + 0.25, 3.25, 3.2, 1.1, size=14, color=SECONDARY)
-    add_text(slide, "Próximo passo: validar com arquitetos e testar o ciclo de reparação.", 0.7, 5.25, 11.8, 0.55, size=22, bold=True)
+        add_text(slide, detail, left + 0.25, 3.25, 3.2, 1.15, size=14, color=SECONDARY)
+    add_text(slide, "Próximo passo: validar as regras com arquitetos e medir se o laudo melhora a reparação.", 0.7, 5.3, 11.8, 0.55, size=20, bold=True)
     add_text(
         slide,
-        "O VIA não substitui o F1. Ele acrescenta a camada que o F1 não mede: a consistência interna do grafo declarado.",
+        "O verificador não substitui o F1. Ele acrescenta o que o F1 não mede: a consistência interna do grafo declarado.",
         0.7,
-        6.0,
+        6.05,
         11.8,
-        0.6,
+        0.55,
         size=15,
         color=SECONDARY,
     )
+    add_text(
+        slide,
+        "Limite: oito sistemas, regras heurísticas e validação humana pendente.",
+        0.7,
+        6.85,
+        11.8,
+        0.3,
+        size=11,
+        color=MUTED,
+    )
     add_notes(
         slide,
-        "60 s. A contribuição para uma equipe é operacional: um portão que reprova ciclos, referências quebradas e interfaces estreitas antes da revisão humana. "
-        "O limite é claro: as regras são proxies e ainda falta validação com arquitetos. O próximo passo é medir se o laudo melhora a reparação.",
+        "60 s. A contribuição prática é um portão que reprova ciclos, ligações quebradas e serviços isolados antes da revisão humana. "
+        "O laudo diz onde está o problema, então o reparo é direcionado. O limite é claro: oito sistemas, regras heurísticas e nenhuma validação com arquitetos. "
+        "O próximo passo é medir se o laudo melhora a reparação.",
     )
 
     OUT.parent.mkdir(parents=True, exist_ok=True)

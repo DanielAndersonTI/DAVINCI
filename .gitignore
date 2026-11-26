@@ -66,3 +66,25 @@ Thumbs.db
 # ==============================
 Interface/settings.json
 Interface/settings.json.tmp
+
+# ==============================
+# Submissão e pareceres do SAC 2027 (internos, não publicar)
+# ==============================
+*Reviewers*-for-SAC-2027*
+*_SAC_2027_*
+
+# ==============================
+# Manuscritos e documentos em preparação na raiz
+# (o LICENSE-*.pdf já versionado continua rastreado)
+# ==============================
+/*.pdf
+/*.docx
+/*.txt
+!LICENSE- Deed - Attribution 4.0 International - Creative Commons.pdf
+
+# ==============================
+# Notas internas e documentos de preparação
+# ==============================
+ZENODO-DEPOSIT-TREE.md
+Report-and-Dates/C5-nota-ao-autor.md
+*.bak

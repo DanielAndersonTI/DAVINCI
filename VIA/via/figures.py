@@ -29,6 +29,16 @@ SEQUENTIAL = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", 
 CONFIG_ORDER = ["C0", "C1", "C2", "C3", "C4"]
 MODEL_ORDER = ["Claude", "DeepSeek", "Gemini"]
 
+PLAIN_LABELS = {
+    "D03": "Serviço isolado",
+    "D04": "Ciclo entre serviços",
+    "D05": "Ligação não resolvida",
+    "D06": "Auto-dependência",
+    "D07": "Divergência de dependências",
+    "D11": "Interface subespecificada",
+    "D12": "Sem termo de autenticação",
+}
+
 
 def _style() -> None:
     plt.rcParams.update(
@@ -71,9 +81,19 @@ def _finish(ax, grid_axis: str = "x") -> None:
     ax.tick_params(length=0)
 
 
-def fig_prevalencia(prevalencia: list[dict], out: Path) -> None:
-    rows = sorted(prevalencia, key=lambda row: float(row["share_artefatos"]))
-    labels = [row["codigo"] for row in rows]
+def fig_prevalencia(
+    prevalencia: list[dict],
+    out: Path,
+    label_map: dict[str, str] | None = None,
+    exclude: tuple[str, ...] = (),
+    title: str = "Prevalência dos códigos automáticos",
+    subtitle: str = "356 artefatos. Azul: regras estruturais. Laranja: higiene lexical (D12).",
+    xlabel: str = "artefatos com ao menos um achado",
+) -> None:
+    rows = [row for row in prevalencia if row["codigo"] not in exclude]
+    rows.sort(key=lambda row: float(row["share_artefatos"]))
+    label_map = label_map or {}
+    labels = [label_map.get(row["codigo"], row["codigo"]) for row in rows]
     values = [float(row["share_artefatos"]) * 100 for row in rows]
     colors = [ORANGE if row["codigo"] == "D12" else BLUE for row in rows]
 
@@ -92,13 +112,13 @@ def fig_prevalencia(prevalencia: list[dict], out: Path) -> None:
     ax.set_xlim(0, 108)
     ax.set_xticks([0, 25, 50, 75, 100])
     ax.set_xticklabels(["0", "25", "50", "75", "100%"])
-    ax.set_xlabel("artefatos com ao menos um achado")
+    ax.set_xlabel(xlabel)
     _finish(ax, "x")
-    ax.set_title("Prevalência dos códigos automáticos", loc="left", pad=18)
+    ax.set_title(title, loc="left", pad=18)
     ax.text(
         0,
         1.03,
-        "356 artefatos. Azul: regras estruturais. Laranja: higiene lexical (D12).",
+        subtitle,
         transform=ax.transAxes,
         color=INK_SECONDARY,
         fontsize=9,
@@ -106,6 +126,26 @@ def fig_prevalencia(prevalencia: list[dict], out: Path) -> None:
     fig.tight_layout()
     fig.savefig(out, dpi=200, bbox_inches="tight", facecolor=SURFACE)
     plt.close(fig)
+
+
+def slide_prevalence(prevalencia: list[dict], out: Path) -> None:
+    """Prevalence figure for the five-slide deck.
+
+    Uses plain-language labels. Leaves out D07 and D11: D07 does not apply to
+    this corpus, and the YAML generator writes exactly one endpoint per service,
+    so D11 carries no variation from the model and would mislead an audience
+    that does not know the rule codes.
+    """
+    _style()
+    fig_prevalencia(
+        prevalencia,
+        out,
+        label_map=PLAIN_LABELS,
+        exclude=("D07", "D11", "D12"),
+        title="Falhas mais frequentes por artefato",
+        subtitle="356 artefatos. Quatro tipos de falha estrutural no grafo declarado.",
+        xlabel="artefatos com ao menos uma ocorrência",
+    )
 
 
 def fig_forest(per_system: list[dict], out: Path) -> None:
@@ -135,13 +175,13 @@ def fig_forest(per_system: list[dict], out: Path) -> None:
     ax.set_xlim(-1, 1)
     ax.set_xticks([-1, -0.5, 0, 0.5, 1])
     ax.set_xticklabels(["−1", "−0,5", "0", "0,5", "1"])
-    ax.set_xlabel("rho de Spearman entre F1 das interações e defeitos estruturais por serviço")
+    ax.set_xlabel("correlação de postos entre F1 das interações e defeitos estruturais por serviço")
     _finish(ax, "x")
     ax.set_title("F1 não acompanha a integridade estrutural", loc="left", pad=28)
     ax.text(
         0,
         1.06,
-        f"Por sistema, IC 95% bootstrap. Mediana {_pt(median, 2)}; "
+        f"Por sistema, com intervalo de confiança de 95% por reamostragem. Mediana {_pt(median, 2).replace('-', '−')}; "
         f"{negative} de {len(rho)} sistemas negativos.",
         transform=ax.transAxes,
         color=INK_SECONDARY,

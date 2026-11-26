@@ -1,9 +1,10 @@
 # Personal and unpublished documents, kept out of the public repository
 VIA-Plano-de-Execucao.md
 reports/Technical-Note-2026-11-27.md
-reports/Slides-2026-11-27.pptx
+reports/*.pptx
 reports/Slides-2026-11-27-script.md
 reports/Checklist-2026-11-27.md
+reports/slides-assets/
 VIA-Architectural-Integrity-Verifier-revision.docx
 VIA-Architectural-Integrity-Verifier-revision.pdf
 
